@@ -1,7 +1,7 @@
-namespace SampleDatabase.SampleDbContext.Migrations
-{
-    using System.Data.Entity.Migrations;
+using System.Data.Entity.Migrations;
 
+namespace SampleDatabase.DbContext.Migrations
+{
     public partial class _100 : DbMigration
     {
         public override void Up()

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity.ModelConfiguration;
 
-namespace SampleDatabase.SampleDbContext.Entities
+namespace SampleDatabase.DbContext.Entities
 {
     public class Bar
     {

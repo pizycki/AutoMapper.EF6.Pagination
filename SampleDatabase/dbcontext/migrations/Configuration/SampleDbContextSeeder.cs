@@ -1,7 +1,7 @@
 ﻿using Ploeh.AutoFixture;
-using SampleDatabase.SampleDbContext.Entities;
+using SampleDatabase.DbContext.Entities;
 
-namespace SampleDatabase.SampleDbContext.Migrations.Configuration
+namespace SampleDatabase.DbContext.Migrations.Configuration
 {
     public class SampleDbContextSeeder
     {

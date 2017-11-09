@@ -1,10 +1,10 @@
 ﻿using System.Data.Entity;
 using System.Reflection;
-using SampleDatabase.SampleDbContext.Entities;
+using SampleDatabase.DbContext.Entities;
 
-namespace SampleDatabase.SampleDbContext
+namespace SampleDatabase.DbContext
 {
-    public sealed class SampleDbContext : DbContext
+    public sealed class SampleDbContext : System.Data.Entity.DbContext
     {
         #region ////// DbSets //////
 

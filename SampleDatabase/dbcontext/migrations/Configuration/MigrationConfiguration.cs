@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity.Migrations;
 
-namespace SampleDatabase.SampleDbContext.Migrations.Configuration
+namespace SampleDatabase.DbContext.Migrations.Configuration
 {
     /**
      * Use this class to manage migrations
@@ -22,8 +22,8 @@ namespace SampleDatabase.SampleDbContext.Migrations.Configuration
             AutomaticMigrationDataLossAllowed = false;
             AutomaticMigrationsEnabled = false;
             ContextKey = SampleDbContext_ContextKey;
-            MigrationsNamespace = "SampleDatabase.SampleDbContext.Migrations";
-            MigrationsDirectory = @"SampleDbContext\Migrations";
+            MigrationsNamespace = "SampleDatabase.DbContext.Migrations";
+            MigrationsDirectory = @"DbContext\Migrations";
         }
 
         protected override void Seed(SampleDbContext context)

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SampleDatabase.SampleDbContext.Migrations {
+namespace SampleDatabase.DbContext.Migrations {
     using System;
     
     
@@ -19,7 +19,7 @@ namespace SampleDatabase.SampleDbContext.Migrations {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class _201708061947384_1_0_1 {
@@ -39,7 +39,7 @@ namespace SampleDatabase.SampleDbContext.Migrations {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SampleDatabase.SampleDbContext.Migrations.201708061947384_1.0.1", typeof(_201708061947384_1_0_1).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SampleDatabase.DbContext.Migrations.201708061947384_1.0.1", typeof(_201708061947384_1_0_1).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
