@@ -8,7 +8,7 @@ namespace SampleDatabase
         public readonly Expression<Func<T, K>> OrderBy;
         public readonly bool Descending;
 
-        protected Sorting(Expression<Func<T, K>> orderBy, bool descending)
+        protected Sorting(Expression<Func<T, K>> orderBy, bool descending = false)
         {
             OrderBy = orderBy ?? throw new ArgumentException(nameof(orderBy));
             Descending = descending;
@@ -17,7 +17,7 @@ namespace SampleDatabase
 
     public class Ascending<TEntity, TSort> : Sorting<TEntity, TSort>
     {
-        public Ascending(Expression<Func<TEntity, TSort>> orderBy) : base(orderBy, false) { }
+        public Ascending(Expression<Func<TEntity, TSort>> orderBy) : base(orderBy) { }
 
         public static Ascending<TEntity, TSort> By(Expression<Func<TEntity, TSort>> orderBy) => new Ascending<TEntity, TSort>(orderBy);
     }
