@@ -68,35 +68,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMapperPaginationExtensions.cs" />
     <Compile Include="BarDTO.cs" />
-    <Compile Include="DbContext\Entities\Bar.cs" />
-    <Compile Include="DbContext\Entities\Foo.cs" />
-    <Compile Include="DbContext\Migrations\201708061327120_1.0.0.cs" />
-    <Compile Include="DbContext\Migrations\201708061327120_1.0.0.Designer.cs">
-      <DependentUpon>201708061327120_1.0.0.cs</DependentUpon>
+    <Compile Include="Context\Entities\Address.cs" />
+    <Compile Include="Context\Entities\Company.cs" />
+    <Compile Include="Context\CompanyCreator.cs" />
+    <Compile Include="Context\Entities\Interfaces\IEntity.cs" />
+    <Compile Include="Context\Migrations\201711112021264_1.0.0.cs" />
+    <Compile Include="Context\Migrations\201711112021264_1.0.0.Designer.cs">
+      <DependentUpon>201711112021264_1.0.0.cs</DependentUpon>
     </Compile>
-    <Compile Include="DbContext\Migrations\201708061327120_1.0.01.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>201708061327120_1.0.0.resx</DependentUpon>
-    </Compile>
-    <Compile Include="DbContext\Migrations\201708061947384_1.0.1.cs" />
-    <Compile Include="DbContext\Migrations\201708061947384_1.0.1.Designer.cs">
-      <DependentUpon>201708061947384_1.0.1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DbContext\Migrations\201708061947384_1.0.11.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>201708061947384_1.0.1.resx</DependentUpon>
-    </Compile>
-    <Compile Include="DbContext\Migrations\Configuration\MigrationConfiguration.cs" />
-    <Compile Include="DbContext\Migrations\Configuration\SampleDbContextSeeder.cs" />
-    <Compile Include="DbContext\SampleDbContext.cs" />
-    <Compile Include="Pagination.cs" />
+    <Compile Include="Context\Migrations\Configuration\MigrationConfiguration.cs" />
+    <Compile Include="Context\CompanyDbContext.cs" />
+    <Compile Include="Context\Entities\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sorting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -105,19 +90,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DbContext\Migrations\201708061327120_1.0.0.resx">
-      <DependentUpon>201708061327120_1.0.0.cs</DependentUpon>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>201708061327120_1.0.01.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DbContext\Migrations\201708061947384_1.0.1.resx">
-      <DependentUpon>201708061947384_1.0.1.cs</DependentUpon>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>201708061947384_1.0.11.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <ProjectReference Include="..\AutoMapper.EF6.Pagination\AutoMapper.EF6.Pagination.csproj">
+      <Project>{B06DE0D1-91BD-4806-9F09-28CF912EE8F0}</Project>
+      <Name>AutoMapper.EF6.Pagination</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Automapper\" />
+    <EmbeddedResource Include="Context\Migrations\201711112021264_1.0.0.resx">
+      <DependentUpon>201711112021264_1.0.0.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

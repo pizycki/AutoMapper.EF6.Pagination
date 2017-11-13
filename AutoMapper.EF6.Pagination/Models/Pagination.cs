@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SampleDatabase
+namespace AutoMapper.EF6.Pagination.Models
 {
     public struct Pagination
     {
@@ -13,6 +13,6 @@ namespace SampleDatabase
             PageSize = pageSize <= 0 ? pageSize : throw new ArgumentException(nameof(pageSize));
         }
 
-        public static Pagination For(int page, int pageSize) => new Pagination(page, pageSize);
+        public static Pagination Set(int page, int pageSize) => new Pagination(page, pageSize);
     }
 }

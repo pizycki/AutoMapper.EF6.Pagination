@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using AutoMapper.EF6.Pagination.Models;
 
-namespace SampleDatabase
+namespace AutoMapper.EF6.Pagination
 {
+    using Pagination = Models.Pagination;
+
     public static class AutoMapperPaginationExtensions
     {
-        public static IQueryable<T> SortAndPaginate<T, K>(this IQueryable<T> queryable, int page, int pageSize, Expression<Func<T, K>> orderBy, bool descending = false)
+        public static IQueryable<T> SortAndPaginate<T, K>(this IQueryable<T> queryable, int page, int pageSize, Expression<Func<T, K>> columnToOrderBy, bool descending = false)
         {
-            var pagination = Pagination.For(page, pageSize);
-            var sorting = new Ascending<T, K>(orderBy);
+            var pagination = Pagination.Set(page, pageSize);
+            var sorting = Ascending<T, K>.By(columnToOrderBy);
             return queryable.SortAndPaginate(sorting, pagination);
         }
 
