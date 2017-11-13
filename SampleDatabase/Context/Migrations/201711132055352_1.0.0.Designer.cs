@@ -13,7 +13,7 @@ namespace SampleDatabase.Context.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201711112021264_1.0.0"; }
+            get { return "201711132055352_1.0.0"; }
         }
         
         string IMigrationMetadata.Source

@@ -4,23 +4,28 @@ namespace RealDatabaseTests.Setup
 {
     public class TestDatabaseManager
     {
-        public static TestDatabaseManager CreateFromScratch() => new TestDatabaseManager();
+        public static TestDatabaseManager Create() => new TestDatabaseManager();
 
         public CreateAndDropDatabase CreateAndDropDatabase { get; }
+        public FeedDatabaseWithData Feeder { get; }
 
         private TestDatabaseManager()
         {
             CreateAndDropDatabase = new CreateAndDropDatabase(
                 new CreateAndDropDatabase.Config(MasterConnString, DatabaseName, DatabaseFileName));
+
+            Feeder = new FeedDatabaseWithData();
         }
 
-        public void SetUpDatabase()
+        public void CreateDatabaseFromScratch()
         {
             CreateAndDropDatabase.DestroyDatabase();
             CreateAndDropDatabase.CreateDatabase();
+
+            Feeder.FeedWithSampleCompanies();
         }
 
-        public void TearDownDatabase()
+        public void DropDatabase()
         {
             CreateAndDropDatabase.DestroyDatabase();
         }

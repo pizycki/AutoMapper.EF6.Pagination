@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup\CreateAndDropDatabase.cs" />
+    <Compile Include="Setup\FeedDatabaseWithData.cs" />
     <Compile Include="Setup\TestDatabaseManager.cs" />
     <Compile Include="SqlCommands\SqlCommandHelpers.cs" />
     <Compile Include="Tests\Testo.cs" />

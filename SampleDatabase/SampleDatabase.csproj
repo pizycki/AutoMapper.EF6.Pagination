@@ -73,9 +73,9 @@
     <Compile Include="Context\Entities\Company.cs" />
     <Compile Include="Context\CompanyCreator.cs" />
     <Compile Include="Context\Entities\Interfaces\IEntity.cs" />
-    <Compile Include="Context\Migrations\201711112021264_1.0.0.cs" />
-    <Compile Include="Context\Migrations\201711112021264_1.0.0.Designer.cs">
-      <DependentUpon>201711112021264_1.0.0.cs</DependentUpon>
+    <Compile Include="Context\Migrations\201711132055352_1.0.0.cs" />
+    <Compile Include="Context\Migrations\201711132055352_1.0.0.Designer.cs">
+      <DependentUpon>201711132055352_1.0.0.cs</DependentUpon>
     </Compile>
     <Compile Include="Context\Migrations\Configuration\MigrationConfiguration.cs" />
     <Compile Include="Context\CompanyDbContext.cs" />
@@ -96,8 +96,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Migrations\201711112021264_1.0.0.resx">
-      <DependentUpon>201711112021264_1.0.0.cs</DependentUpon>
+    <EmbeddedResource Include="Context\Migrations\201711132055352_1.0.0.resx">
+      <DependentUpon>201711132055352_1.0.0.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

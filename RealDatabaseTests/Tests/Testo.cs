@@ -6,19 +6,13 @@ namespace RealDatabaseTests.Tests
     [TestFixture]
     public class Tiesto
     {
-        private TestDatabaseManager DbManager { get; } = TestDatabaseManager.CreateFromScratch();
+        private TestDatabaseManager DbManager { get; } = TestDatabaseManager.Create();
 
         [OneTimeSetUp]
-        public void Setup()
-        {
-            DbManager.SetUpDatabase();
-        }
+        public void Setup() => DbManager.CreateDatabaseFromScratch();
 
         [OneTimeTearDown]
-        public void Teardown()
-        {
-            DbManager.TearDownDatabase();
-        }
+        public void Teardown() => DbManager.DropDatabase();
 
         [Test]
         public void Bla()
