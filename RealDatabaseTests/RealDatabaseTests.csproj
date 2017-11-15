@@ -73,6 +73,7 @@
     <Compile Include="Setup\TestDatabaseManager.cs" />
     <Compile Include="SqlCommands\SqlCommandHelpers.cs" />
     <Compile Include="Tests\DatabaseBasedTestSuite.cs" />
+    <Compile Include="Tests\SortingTests.cs" />
     <Compile Include="Tests\PaginationTests.cs" />
   </ItemGroup>
   <ItemGroup>

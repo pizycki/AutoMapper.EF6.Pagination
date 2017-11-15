@@ -27,6 +27,6 @@ namespace AutoMapper.EF6.Pagination.Models
     {
         public Descending(Expression<Func<TEntity, TSort>> column) : base(column, true) { }
 
-        public static Descending<TEntity, TSort> Create(Expression<Func<TEntity, TSort>> orderBy) => new Descending<TEntity, TSort>(orderBy);
+        public static Descending<TEntity, TSort> By(Expression<Func<TEntity, TSort>> orderBy) => new Descending<TEntity, TSort>(orderBy);
     }
 }
