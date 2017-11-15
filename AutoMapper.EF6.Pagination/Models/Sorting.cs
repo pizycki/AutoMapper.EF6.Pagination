@@ -10,9 +10,11 @@ namespace AutoMapper.EF6.Pagination.Models
 
         protected Sorting(Expression<Func<T, K>> column, bool descending = false)
         {
-            OrderBy = column ?? throw new ArgumentException(nameof(column));
+            OrderBy = column ?? throw new ArgumentNullException(nameof(column));
             Descending = descending;
         }
+
+        public static Sorting<T, K> By(Expression<Func<T, K>> column) => new Ascending<T, K>(column);
     }
 
     public class Ascending<TEntity, TSort> : Sorting<TEntity, TSort>
