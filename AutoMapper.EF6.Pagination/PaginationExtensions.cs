@@ -14,6 +14,9 @@ namespace AutoMapper.EF6.Pagination
                 .Sort(sorting)
                 .Paginate(pagination);
 
+        public static IQueryable<T> SortAndPaginate<T, K>(this IQueryable<T> queryable, (Sorting<T, K> sorting, Pagination pagination) sortingAndPagination) => 
+            queryable.SortAndPaginate(sortingAndPagination.sorting, sortingAndPagination.pagination);
+
         public static IQueryable<T> SortAndPaginate<T, K>(this IQueryable<T> queryable, int page, int pageSize, Expression<Func<T, K>> columnToOrderBy, bool descending = false)
         {
             var pagination = Pagination.Set(page, pageSize);
