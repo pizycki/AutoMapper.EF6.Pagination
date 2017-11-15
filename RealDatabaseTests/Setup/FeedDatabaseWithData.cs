@@ -814,14 +814,19 @@ namespace RealDatabaseTests.Setup
                 idGenerator),
         };
 
+        public int CompaniesCount { get; private set; }
+
         public void FeedWithSampleCompanies()
         {
             var idGenerator = new IdGenerator();
             var companies = GetSampleCompanies(idGenerator);
+            CompaniesCount = companies.Count;
 
-            var dbContext = new CompanyDbContext();
-            dbContext.Companies.AddRange(companies);
-            dbContext.SaveChanges();
+            using (var dbContext = new CompanyDbContext())
+            {
+                dbContext.Companies.AddRange(companies);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

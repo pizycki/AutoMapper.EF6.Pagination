@@ -9,17 +9,17 @@ namespace AutoMapper.EF6.Pagination
 
     public static class AutoMapperPaginationExtensions
     {
+        public static IQueryable<T> SortAndPaginate<T, K>(this IQueryable<T> queryable, Sorting<T, K> sorting, Pagination pagination) =>
+            queryable
+                .Sort(sorting)
+                .Paginate(pagination);
+
         public static IQueryable<T> SortAndPaginate<T, K>(this IQueryable<T> queryable, int page, int pageSize, Expression<Func<T, K>> columnToOrderBy, bool descending = false)
         {
             var pagination = Pagination.Set(page, pageSize);
             var sorting = Ascending<T, K>.By(columnToOrderBy);
             return queryable.SortAndPaginate(sorting, pagination);
         }
-
-        public static IQueryable<T> SortAndPaginate<T, K>(this IQueryable<T> queryable, Sorting<T, K> sorting, Pagination pagination) =>
-            queryable
-                .Sort(sorting)
-                .Paginate(pagination);
 
         private static IOrderedQueryable<T> Sort<T, K>(this IQueryable<T> queryable, Sorting<T, K> sorting) =>
             sorting.Descending
