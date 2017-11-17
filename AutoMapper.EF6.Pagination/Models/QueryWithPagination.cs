@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace AutoMapper.EF6.Pagination.Models
 {
@@ -14,17 +12,12 @@ namespace AutoMapper.EF6.Pagination.Models
 
     public static class IQueryWithPaginationExtensions
     {
-        public static (Sorting<T, K> sorting, Pagination pagination) CreatePagination<T, K>(this IQueryWithPagination query)
+        public static (Sorting<T> sorting, Pagination pagination) CreatePagination<T>(this IQueryWithPagination query)
         {
             if (query == null) throw new ArgumentNullException(nameof(query));
-
             var pagination = Pagination.Set(query.Page, query.PageSize);
-
-            // TODO Parse lambda dynamicly
-            //https://stackoverflow.com/questions/821365/how-to-convert-a-string-to-its-equivalent-linq-expression-tree
-            //https://weblogs.asp.net/scottgu/dynamic-linq-part-1-using-the-linq-dynamic-query-library
-
-            throw new NotImplementedException();
+            var sorting = Sorting<T>.Create(query.OrderBy, query.Descending);
+            return (sorting, pagination);
         }
     }
 }

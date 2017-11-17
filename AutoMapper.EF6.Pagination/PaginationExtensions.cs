@@ -43,8 +43,8 @@ namespace AutoMapper.EF6.Pagination
         /// <param name="queryable"></param>
         /// <param name="query"></param>
         /// <returns></returns>
-        public static IQueryable<T> SortAndPaginate<T, K>(this IQueryable<T> queryable, IQueryWithPagination query) =>
-            queryable.SortAndPaginate(query.CreatePagination<T, K>());
+        public static IQueryable<T> SortAndPaginate<T>(this IQueryable<T> queryable, IQueryWithPagination query) =>
+            queryable.SortAndPaginate(query.CreatePagination<T>());
 
         /// <summary>
         /// 
@@ -59,6 +59,9 @@ namespace AutoMapper.EF6.Pagination
         /// <param name="sortingAndPagination"></param>
         /// <returns></returns>
         public static IQueryable<T> SortAndPaginate<T, K>(this IQueryable<T> queryable, (Sorting<T, K> sorting, Pagination pagination) sortingAndPagination) =>
+            queryable.SortAndPaginate(sortingAndPagination.sorting, sortingAndPagination.pagination);
+
+        public static IQueryable<T> SortAndPaginate<T>(this IQueryable<T> queryable, (Sorting<T> sorting, Pagination pagination) sortingAndPagination) =>
             queryable.SortAndPaginate(sortingAndPagination.sorting, sortingAndPagination.pagination);
 
         /// <summary>
