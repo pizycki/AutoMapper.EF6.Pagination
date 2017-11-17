@@ -25,9 +25,9 @@ namespace RealDatabaseTests.Tests
         {
             const int page = 1;
             const int pageSize = 5;
-            const string orderBy = "OwnerId";
+            const string columnName = "OwnerId";
 
-            var sorting = Ascending<Company>.Create(orderBy);
+            var sorting = Ascending<Company>.By(columnName);
             var pagination = Pagination.Set(page, pageSize);
 
             using (var ctx = new CompanyDbContext())

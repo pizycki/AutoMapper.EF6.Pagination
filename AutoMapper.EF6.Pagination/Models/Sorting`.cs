@@ -29,7 +29,7 @@ namespace AutoMapper.EF6.Pagination.Models
             return orderByExpression;
         }
 
-        public static Sorting<T> Create(string columnToOrderByName, bool descending) =>
+        public static Sorting<T> By(string columnToOrderByName, bool descending) =>
             new Sorting<T>(columnToOrderByName, descending);
     }
 
@@ -37,13 +37,13 @@ namespace AutoMapper.EF6.Pagination.Models
     {
         private Ascending(string columnNameToOrderBy) : base(columnNameToOrderBy, false) { }
 
-        public static Ascending<T> Create(string columnNameToOrderBy) => new Ascending<T>(columnNameToOrderBy);
+        public static Ascending<T> By(string columnNameToOrderBy) => new Ascending<T>(columnNameToOrderBy);
     }
 
     public class Descending<T> : Sorting<T>
     {
         private Descending(string columnNameToOrderBy) : base(columnNameToOrderBy, true) { }
 
-        public static Descending<T> Create(string columnNameToOrderBy) => new Descending<T>(columnNameToOrderBy);
+        public static Descending<T> By(string columnNameToOrderBy) => new Descending<T>(columnNameToOrderBy);
     }
 }

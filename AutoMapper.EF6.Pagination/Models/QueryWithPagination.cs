@@ -16,7 +16,7 @@ namespace AutoMapper.EF6.Pagination.Models
         {
             if (query == null) throw new ArgumentNullException(nameof(query));
             var pagination = Pagination.Set(query.Page, query.PageSize);
-            var sorting = Sorting<T>.Create(query.OrderBy, query.Descending);
+            var sorting = Sorting<T>.By(query.OrderBy, query.Descending);
             return (sorting, pagination);
         }
     }
