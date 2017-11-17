@@ -75,6 +75,7 @@
     <Compile Include="Tests\DatabaseBasedTestSuite.cs" />
     <Compile Include="Tests\SortingTests.cs" />
     <Compile Include="Tests\PaginationTests.cs" />
+    <Compile Include="Tests\SortingTests2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />

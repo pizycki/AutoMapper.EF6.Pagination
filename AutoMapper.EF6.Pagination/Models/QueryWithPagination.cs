@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace AutoMapper.EF6.Pagination.Models
 {

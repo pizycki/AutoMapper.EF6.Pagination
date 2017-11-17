@@ -42,10 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\QueryWithPagination.cs" />
+    <Compile Include="Models\Sorting`.cs" />
     <Compile Include="PaginationExtensions.cs" />
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Sorting.cs" />
+    <Compile Include="Models\Sorting``.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

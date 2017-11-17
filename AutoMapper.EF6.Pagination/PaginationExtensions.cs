@@ -26,6 +26,12 @@ namespace AutoMapper.EF6.Pagination
                 .Sort(sorting)
                 .Paginate(pagination);
 
+
+        public static IQueryable<T> SortAndPaginate<T>(this IQueryable<T> queryable, Sorting<T> sorting, Pagination pagination) =>
+            queryable
+                .Sort(sorting)
+                .Paginate(pagination);
+
         /// <summary>
         /// 
         /// </summary>
@@ -75,6 +81,26 @@ namespace AutoMapper.EF6.Pagination
             var sorting = Ascending<T, K>.By(columnToOrderBy);
             return queryable.SortAndPaginate(sorting, pagination);
         }
+
+        public static IQueryable<T> SortAndPaginate<T>(this IQueryable<T> queryable, int page, int pageSize, string columnToOrderBy, bool descending = false)
+        {
+            var pagination = Pagination.Set(page, pageSize);
+            var sorting = new Sorting<T>(columnToOrderBy, descending);
+            return queryable.SortAndPaginate(sorting, pagination);
+        }
+
+        private static IOrderedQueryable<T> Sort<T>(this IQueryable<T> queryable, Sorting<T> sorting) =>
+            (IOrderedQueryable<T>)queryable.Provider.CreateQuery<T>(
+                Expression.Call(
+                    type: typeof(Queryable),
+                    methodName: sorting.Descending ? "OrderByDescending" : "OrderBy",
+                    typeArguments: new[] { typeof(T), sorting.ColumnType },
+                    arguments: new[]
+                    {
+                        queryable.Expression,
+                        Expression.Quote(sorting.OrderBy)
+                    }));
+
 
         private static IOrderedQueryable<T> Sort<T, K>(this IQueryable<T> queryable, Sorting<T, K> sorting) =>
             sorting.Descending

@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace AutoMapper.EF6.Pagination.Models
 {
-    public class Sorting<T, K>
+    public abstract class Sorting<T, K>
     {
         public readonly Expression<Func<T, K>> OrderBy;
         public readonly bool Descending;
@@ -13,8 +13,6 @@ namespace AutoMapper.EF6.Pagination.Models
             OrderBy = column ?? throw new ArgumentNullException(nameof(column));
             Descending = descending;
         }
-
-        public static Sorting<T, K> By(Expression<Func<T, K>> column) => new Ascending<T, K>(column);
     }
 
     public class Ascending<TEntity, TSort> : Sorting<TEntity, TSort>
