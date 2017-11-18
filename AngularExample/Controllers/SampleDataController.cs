@@ -1,11 +1,60 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper.EF6.Pagination;
+using AutoMapper.EF6.Pagination.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AngularExample.Controllers
 {
+    public class AllCompaniesQuery : IQueryWithPagination
+    {
+        public string OrderBy { get; set; }
+        public bool Descending { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+    }
+
+    public class Company
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+    }
+
+    public class CompanyController : Controller
+    {
+        [HttpGet, Route("api/companies")]
+        public object GetAllCompanies(AllCompaniesQuery query)
+        {
+            var companies = new[]
+            {
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+                new Company (),
+            }.AsQueryable();
+
+            return companies.SortAndPaginate(query).ToList();
+        }
+    }
+
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
