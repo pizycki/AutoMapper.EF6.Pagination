@@ -96,7 +96,7 @@ namespace AutoMapper.EF6.Pagination
             (IOrderedQueryable<T>)queryable.Provider.CreateQuery<T>(
                 Expression.Call(
                     type: typeof(Queryable),
-                    methodName: sorting.Descending ? "OrderByDescending" : "OrderBy",
+                    methodName: sorting.Descending ? nameof(Queryable.OrderByDescending) : nameof(Queryable.OrderBy),
                     typeArguments: new[] { typeof(T), sorting.ColumnType },
                     arguments: new[]
                     {
