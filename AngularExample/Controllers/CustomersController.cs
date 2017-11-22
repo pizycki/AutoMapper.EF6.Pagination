@@ -15,16 +15,16 @@ namespace AngularExample.Controllers
         public int PageSize { get; set; }
     }
 
-    public class CompanyController : Controller
+    public class CustomersController : Controller
     {
         private readonly Context _context;
 
-        public CompanyController(Context context)
+        public CustomersController(Context context)
         {
             _context = context;
         }
 
-        [HttpGet, Route("api/companies")]
+        [HttpGet, Route("api/customers")]
         public IEnumerable<Customer> GetAllCompanies(AllCustomersQuery query) =>
             _context.Customers
                     .SortAndPaginate(query)
