@@ -28,7 +28,7 @@ namespace AngularExample
                 }
             }
 
-            BuildWebHost(args).Run();
+            host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
