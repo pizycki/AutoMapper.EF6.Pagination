@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AngularExample.EF;
@@ -25,9 +27,39 @@ namespace AngularExample.Controllers
         }
 
         [HttpGet, Route("api/customers")]
-        public IEnumerable<Customer> GetAllCompanies(AllCustomersQuery query) =>
+        public ItemsWithPagination<Customer> GetAllCompanies(AllCustomersQuery query) =>
             _context.Customers
                     .SortAndPaginate(query)
-                    .ToList();
+                    .ToList()
+                    .ToItemsWithPagination(query);
+    }
+
+    public static class ItemsWithPaginationExtensions
+    {
+        public static ItemsWithPagination<T> ToItemsWithPagination<T>(this IEnumerable<T> collection, IPaginationInfo pagination) =>
+            new ItemsWithPagination<T>(collection, pagination);
+    }
+
+    public class ItemsWithPagination<T> : IPaginationInfo
+    {
+        public IEnumerable<T> Items { get; }
+
+        public ItemsWithPagination(IEnumerable<T> items, IPaginationInfo pagination)
+            : this(pagination)
+        {
+            Items = items ?? throw new ArgumentException(nameof(items));
+        }
+
+        private ItemsWithPagination(IPaginationInfo pagination)
+        {
+            if (pagination == null)
+                throw new ArgumentNullException(nameof(pagination));
+
+            Page = pagination.Page;
+            PageSize = pagination.PageSize;
+        }
+
+        public int Page { get; }
+        public int PageSize { get; }
     }
 }

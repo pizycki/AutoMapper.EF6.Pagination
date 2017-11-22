@@ -1,18 +1,18 @@
-<p *ngIf="!customers"><em>Loading...</em></p>
+<p *ngIf="!items"><em>Loading...</em></p>
 
-<table class='table' *ngIf="customers">
+<table class='table' *ngIf="items">
     <thead>
-        <tr>
-            <th>Name</th>
-            <th>Birth</th>
-            <th>Gender</th>
-        </tr>
+    <tr>
+        <th>Name</th>
+        <th>Birth</th>
+        <th>Gender</th>
+    </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let customer of customers">
-            <td>{{customer.name}}</td>
-            <td>{{customer.birthDate}}</td>
-            <td>{{customer.gender}}</td>
-        </tr>
+    <tr *ngFor="let customer of items">
+        <td>{{customer.name}}</td>
+        <td>{{customer.birthDate}}</td>
+        <td>{{customer.gender}}</td>
+    </tr>
     </tbody>
 </table>

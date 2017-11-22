@@ -5,21 +5,37 @@ import { Http } from '@angular/http';
     selector: 'customers',
     templateUrl: './customers.component.html'
 })
-export class CustomersList {
+export class CustomersList implements IPaginatedView<ICustomer> {
 
-    public customers: Customer[];
+    public itemsWithPagination: IItemsWithPagination<ICustomer>;
 
-    private pageSize: number = 20;
-
+    get items(): ICustomer[] {
+        return !this.itemsWithPagination ? [] : this.itemsWithPagination.items;
+    }
+    
     constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
-        http.get(baseUrl + `api/customers?pageSize=${this.pageSize}&page=${1}&orderby=${'Id'}`)
+        http.get(baseUrl + `api/customers?pageSize=${20}&page=${1}&orderby=${'Id'}`)
             .subscribe(result => {
-                this.customers = result.json() as Customer[];
+                this.itemsWithPagination = result.json();
             }, error => console.error(error));
     }
 }
 
-interface Customer {
+interface IPaginatedView<T> {
+    itemsWithPagination: IItemsWithPagination<T>;
+    items: T[];
+}
+
+interface IItemsWithPagination<T> extends IPagination {
+    items: T[];
+}
+
+interface IPagination {
+    page: number;
+    pageSize: number;
+}
+
+interface ICustomer {
     name: string;
     birth: number;
     gender: number;
