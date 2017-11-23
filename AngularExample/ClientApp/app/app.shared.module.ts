@@ -7,12 +7,14 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { CustomersList } from "./components/customers/customers.component";
+import { Pager } from "./components/pager/pager.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         NavMenuComponent,
-        CustomersList
+        CustomersList,
+        Pager
     ],
     imports: [
         CommonModule,

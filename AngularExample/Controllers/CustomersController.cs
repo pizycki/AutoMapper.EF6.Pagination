@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using AngularExample.EF;
-using AutoMapper.EF6.Pagination;
+using AutoMapper.EF6.Pagination.Extensions;
 using AutoMapper.EF6.Pagination.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,38 +26,39 @@ namespace AngularExample.Controllers
 
         [HttpGet, Route("api/customers")]
         public ItemsWithPagination<Customer> GetAllCompanies(AllCustomersQuery query) =>
-            _context.Customers
-                    .SortAndPaginate(query)
-                    .ToList()
-                    .ToItemsWithPagination(query);
+            AllCustomersQuery
+                .SortAndPaginate(query)
+                .ToList()
+                .ToItemsWithPagination(query);
+
+        private IQueryable<Customer> AllCustomersQuery => _context.Customers.AsQueryable();
+
+        [HttpGet, Route("api/customers/pagination")]
+        public PagerModel GetAllCompaniesPagerModel(AllCustomersQuery pagination) => AllCustomersQuery.GetPagerModel(pagination);
     }
 
-    public static class ItemsWithPaginationExtensions
+    public class CommonPaginationQuery : IPaginationInfo
     {
-        public static ItemsWithPagination<T> ToItemsWithPagination<T>(this IEnumerable<T> collection, IPaginationInfo pagination) =>
-            new ItemsWithPagination<T>(collection, pagination);
+        public int Page { get; set; }
+        public int PageSize { get; set; }
     }
 
-    public class ItemsWithPagination<T> : IPaginationInfo
+    public class PagerModel
     {
-        public IEnumerable<T> Items { get; }
+        public int Pages { get; set; }
+    }
 
-        public ItemsWithPagination(IEnumerable<T> items, IPaginationInfo pagination)
-            : this(pagination)
+    public static class PaginationBla
+    {
+        public static PagerModel GetPagerModel<T>(this IQueryable<T> query, IPaginationInfo info)
         {
-            Items = items ?? throw new ArgumentException(nameof(items));
+            var total = query.Count();
+
+            return new PagerModel
+            {
+                // ReSharper disable once PossibleLossOfFraction
+                Pages = (int)Math.Ceiling((double)(total / info.PageSize))
+            };
         }
-
-        private ItemsWithPagination(IPaginationInfo pagination)
-        {
-            if (pagination == null)
-                throw new ArgumentNullException(nameof(pagination));
-
-            Page = pagination.Page;
-            PageSize = pagination.PageSize;
-        }
-
-        public int Page { get; }
-        public int PageSize { get; }
     }
 }

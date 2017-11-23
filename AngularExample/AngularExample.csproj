@@ -25,6 +25,10 @@
     <ProjectReference Include="..\AutoMapper.EF6.Pagination\AutoMapper.EF6.Pagination.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\shared\pagination.ts" />
+  </ItemGroup>
+
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
