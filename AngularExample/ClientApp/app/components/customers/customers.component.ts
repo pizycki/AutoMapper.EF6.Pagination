@@ -26,7 +26,7 @@ export class CustomersList implements IPaginatedView<ICustomer> {
     }
 
     private ps: number = 20;
-    private p: number = 1;
+    private p: number = 4;
     private c: string = 'Id';
 
     constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
