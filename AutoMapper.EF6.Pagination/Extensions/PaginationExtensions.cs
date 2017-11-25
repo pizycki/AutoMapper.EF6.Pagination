@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper.EF6.Pagination.Models;
 
-namespace AutoMapper.EF6.Pagination
+namespace AutoMapper.EF6.Pagination.Extensions
 {
     using Pagination = Models.Pagination;
 

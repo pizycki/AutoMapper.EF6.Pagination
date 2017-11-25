@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using AngularExample.EF;
-using AutoMapper.EF6.Pagination;
+using AutoMapper.EF6.Pagination.Extensions;
 using AutoMapper.EF6.Pagination.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,9 +25,40 @@ namespace AngularExample.Controllers
         }
 
         [HttpGet, Route("api/customers")]
-        public IEnumerable<Customer> GetAllCompanies(AllCustomersQuery query) =>
-            _context.Customers
-                    .SortAndPaginate(query)
-                    .ToList();
+        public ItemsWithPagination<Customer> GetAllCompanies(AllCustomersQuery query) =>
+            AllCustomersQuery
+                .SortAndPaginate(query)
+                .ToList()
+                .ToItemsWithPagination(query);
+
+        private IQueryable<Customer> AllCustomersQuery => _context.Customers.AsQueryable();
+
+        [HttpGet, Route("api/customers/pagination")]
+        public PagerModel GetAllCompaniesPagerModel(AllCustomersQuery pagination) => AllCustomersQuery.GetPagerModel(pagination);
+    }
+
+    public class CommonPaginationQuery : IPaginationInfo
+    {
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+    }
+
+    public class PagerModel
+    {
+        public int Pages { get; set; }
+    }
+
+    public static class PaginationBla
+    {
+        public static PagerModel GetPagerModel<T>(this IQueryable<T> query, IPaginationInfo info)
+        {
+            var total = query.Count();
+
+            return new PagerModel
+            {
+                // ReSharper disable once PossibleLossOfFraction
+                Pages = (int)Math.Ceiling((double)(total / info.PageSize))
+            };
+        }
     }
 }

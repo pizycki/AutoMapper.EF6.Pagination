@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using AutoMapper.EF6.Pagination;
+using AutoMapper.EF6.Pagination.Extensions;
 using AutoMapper.EF6.Pagination.Models;
 using NUnit.Framework;
 using RealDatabaseTests.Setup;
