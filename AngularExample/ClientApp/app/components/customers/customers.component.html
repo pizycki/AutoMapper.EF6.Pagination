@@ -11,10 +11,10 @@
     <tbody>
     <tr *ngFor="let customer of items">
         <td>{{customer.name}}</td>
-        <td>{{customer.birth}}</td>
+        <td>{{customer.birthDate}}</td>
         <td>{{customer.gender}}</td>
     </tr>
     </tbody>
 </table>
 
-<pager pagination="itemsWithPagination" itemsTotal="pagerModel.count"></pager>
+<pager pagination="itemsWithPagination" [pagesTotal]="pagesTotal"></pager>

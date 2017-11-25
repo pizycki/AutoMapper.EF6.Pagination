@@ -4,7 +4,7 @@ import { IPaginatedView, IItemsWithPagination, IPagerModel } from "../../shared/
 
 interface ICustomer {
     name: string;
-    birth: number;
+    birthDate: number;
     gender: number;
 }
 
@@ -15,7 +15,11 @@ interface ICustomer {
 export class CustomersList implements IPaginatedView<ICustomer> {
 
     public itemsWithPagination: IItemsWithPagination<ICustomer>;
-    public pagerModel: IPagerModel;
+    private pagerModel: IPagerModel;
+    
+    get pagesTotal(): number {
+        return !this.pagerModel ? 0 : this.pagerModel.pages;
+    }
 
     get items(): ICustomer[] {
         return !this.itemsWithPagination ? [] : this.itemsWithPagination.items;
