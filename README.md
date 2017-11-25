@@ -1,16 +1,16 @@
-# AutoMapper EF6 Pagination
+# PagiNET
 
-##What is it?
+## What is it?
+It's .NET library designed for building Web API with pagination feature.
 
+## TODO
 
-
-## Todo
-
-- [ ] Pagination
-- [ ] Sorting
+- [X] Pagination
+- [X] Sorting
 - [ ] Multilevel sorting
 - [ ] Integration testing (real db? in memory?)
-- [ ] EF Core
-
-
-
+- [X] EF Core
+- [X] Example app (Angular2)
+  - [X] Pager component
+  - [X] List view
+- [ ] CI&CD (AppVeyor)
