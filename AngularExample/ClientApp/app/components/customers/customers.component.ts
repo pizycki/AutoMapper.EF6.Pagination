@@ -14,9 +14,12 @@ interface ICustomer {
 })
 export class CustomersList implements IPaginatedView<ICustomer> {
 
-    public itemsWithPagination: IItemsWithPagination<ICustomer>;
+    private http: Http;
+    private baseUrl: string;
     private pagerModel: IPagerModel;
-    
+
+    public itemsWithPagination: IItemsWithPagination<ICustomer>;
+
     get pagesTotal(): number {
         return !this.pagerModel ? 0 : this.pagerModel.pages;
     }
@@ -25,19 +28,34 @@ export class CustomersList implements IPaginatedView<ICustomer> {
         return !this.itemsWithPagination ? [] : this.itemsWithPagination.items;
     }
 
-    private ps: number = 20;
-    private p: number = 4;
-    private c: string = 'Id';
+    public onPageSelected(page: number): void {
+        this.loadData(page);
+    }
 
-    constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
-        http.get(baseUrl + `api/customers?pageSize=${this.ps}&page=${this.p}&orderby=${this.c}`)
+    private loadData(page: number = 1): void {
+        this.http.get(this.baseUrl + `api/customers?pageSize=${this.ps}&page=${page}&orderby=${this.c}`)
             .subscribe(result => {
                 this.itemsWithPagination = result.json();
             }, error => console.error(error));
+    }
 
-        http.get(baseUrl + `api/customers/pagination?pageSize=${this.ps}&page=${this.p}&orderby=${this.c}`)
+    private loadPagination(): void {
+        this.http.get(this.baseUrl + `api/customers/pagination?pageSize=${this.ps}&page=${1}&orderby=${this.c}`)
             .subscribe(result => {
                 this.pagerModel = result.json();
             }, error => console.error(error));
+    }
+
+    private ps: number = 20;
+    private c: string = 'Id';
+
+    constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
+
+        this.http = http;
+        this.baseUrl = baseUrl;
+
+        this.loadData();
+        this.loadPagination();
+
     }
 }

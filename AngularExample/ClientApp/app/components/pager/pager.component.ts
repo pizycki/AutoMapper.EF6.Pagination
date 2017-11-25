@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnChanges, SimpleChanges, Output } from "@angular/core";
+﻿import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import { IPagination } from "../../shared/pagination";
 
 @Component({
@@ -11,7 +11,15 @@ export class Pager{
     pagination: IPagination;
 
     @Input()
-    pagesTotal: number;
+    pagesTotal: number; 
+
+    @Output()
+    pageSelected = new EventEmitter();
+
+    selectPage(page: number): void {
+        console.log(page);
+        this.pageSelected.emit(page);
+    }
 
     get pages(): number[] {
         if (!this.pagesTotal) {
