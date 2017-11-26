@@ -27,7 +27,7 @@ Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-    NuGetRestore("./src/Example.sln");
+    NuGetRestore("./PagiNET.sln");
 });
 
 Task("Build")
@@ -35,7 +35,7 @@ Task("Build")
     .Does(() =>
 {
   // Use MSBuild
-  MSBuild("./src/Example.sln", settings =>
+  MSBuild("./PagiNET.sln", settings =>
     settings.SetConfiguration(configuration));    
 });
 
@@ -43,7 +43,7 @@ Task("Run-Unit-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    NUnit3("./src/**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings {
+    NUnit3("./tests/UnitTests/bin/" + configuration + "/UnitTests.dll", new NUnit3Settings {
             NoResults = true
         });
 });
@@ -52,7 +52,7 @@ Task("Run-Integration-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    NUnit3("./src/**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings {
+    NUnit3("./tests/RealDatabaseTests/" + configuration + "/RealDatabaseTests.dll", new NUnit3Settings {
             NoResults = true
         });
 });

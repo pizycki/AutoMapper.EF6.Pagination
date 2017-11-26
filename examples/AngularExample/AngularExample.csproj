@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PagiNET\PagiNET.csproj" />
+    <ProjectReference Include="..\..\src\PagiNET\PagiNET.csproj" />
   </ItemGroup>
 
   <ItemGroup>
