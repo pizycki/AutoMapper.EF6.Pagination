@@ -7,8 +7,8 @@
     <ProjectGuid>{B06DE0D1-91BD-4806-9F09-28CF912EE8F0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoMapper.EF6.Pagination</RootNamespace>
-    <AssemblyName>AutoMapper.EF6.Pagination</AssemblyName>
+    <RootNamespace>PagiNET</RootNamespace>
+    <AssemblyName>PagiNET</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

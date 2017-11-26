@@ -1,7 +1,4 @@
 ﻿using System;
-using AutoMapper.EF6.Pagination.Models;
-using NUnit.Framework;
-using Shouldly;
 
 namespace UnitTests
 {

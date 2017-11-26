@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoMapper.EF6.Pagination\AutoMapper.EF6.Pagination.csproj" />
+    <ProjectReference Include="..\PagiNET\PagiNET.csproj" />
   </ItemGroup>
 
   <ItemGroup>

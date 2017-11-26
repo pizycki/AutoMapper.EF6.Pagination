@@ -1,6 +1,6 @@
 ﻿using System;
-using AutoMapper.EF6.Pagination.Models;
 using NUnit.Framework;
+using PagiNET.Models;
 using Shouldly;
 
 namespace UnitTests

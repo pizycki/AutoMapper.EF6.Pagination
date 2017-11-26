@@ -85,9 +85,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoMapper.EF6.Pagination\AutoMapper.EF6.Pagination.csproj">
-      <Project>{b06de0d1-91bd-4806-9f09-28cf912ee8f0}</Project>
-      <Name>AutoMapper.EF6.Pagination</Name>
+    <ProjectReference Include="..\PagiNET\PagiNET.csproj">
+      <Project>{B06DE0D1-91BD-4806-9F09-28CF912EE8F0}</Project>
+      <Name>PagiNET</Name>
     </ProjectReference>
     <ProjectReference Include="..\SampleDatabase\SampleDatabase.csproj">
       <Project>{d281ec33-3c38-47f2-b5ac-84fd4f200a88}</Project>
