@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using AutoMapper.EF6.Pagination;
-using AutoMapper.EF6.Pagination.Extensions;
-using AutoMapper.EF6.Pagination.Models;
 using NUnit.Framework;
+using PagiNET.Extensions;
+using PagiNET.Models;
 using RealDatabaseTests.Setup;
 using SampleDatabase.Context;
 using SampleDatabase.Context.Entities;

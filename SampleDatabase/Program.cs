@@ -1,8 +1,4 @@
-﻿using System;
-using AutoMapper;
-using AutoMapper.EF6.Pagination.Models;
-
-namespace SampleDatabase
+﻿namespace SampleDatabase
 {
     class Program
     {

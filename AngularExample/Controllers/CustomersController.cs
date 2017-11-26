@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 using AngularExample.EF;
-using AutoMapper.EF6.Pagination.Extensions;
-using AutoMapper.EF6.Pagination.Models;
 using Microsoft.AspNetCore.Mvc;
+using PagiNET.Extensions;
+using PagiNET.Models;
 
 namespace AngularExample.Controllers
 {

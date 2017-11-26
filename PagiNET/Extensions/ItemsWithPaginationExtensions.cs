@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using AutoMapper.EF6.Pagination.Models;
+using PagiNET.Models;
 
-namespace AutoMapper.EF6.Pagination.Extensions
+namespace PagiNET.Extensions
 {
     public static class ItemsWithPaginationExtensions
     {

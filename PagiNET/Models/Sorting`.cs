@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace AutoMapper.EF6.Pagination.Models
+namespace PagiNET.Models
 {
     public class Sorting<T>
     {

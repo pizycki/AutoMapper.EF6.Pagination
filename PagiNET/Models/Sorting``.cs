@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace AutoMapper.EF6.Pagination.Models
+namespace PagiNET.Models
 {
     public abstract class Sorting<T, K>
     {

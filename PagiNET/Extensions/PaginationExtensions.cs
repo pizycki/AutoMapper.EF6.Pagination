@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using AutoMapper.EF6.Pagination.Models;
+using PagiNET.Models;
 
-namespace AutoMapper.EF6.Pagination.Extensions
+namespace PagiNET.Extensions
 {
     using Pagination = Models.Pagination;
 
