@@ -48,11 +48,12 @@ Task("Run-Unit-Tests")
         });
 });
 
+// Tested localy only for now
 Task("Run-Integration-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    NUnit3("./tests/RealDatabaseTests/" + configuration + "/RealDatabaseTests.dll", new NUnit3Settings {
+    NUnit3("./tests/RealDatabaseTests/bin/" + configuration + "/RealDatabaseTests.dll", new NUnit3Settings {
             NoResults = true
         });
 });
