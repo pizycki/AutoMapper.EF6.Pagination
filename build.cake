@@ -43,10 +43,20 @@ Task("Run-Unit-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
+    RunUnitTests();
+});
+
+Task("Run-Unit-Tests-Solo")
+    .Does(() =>
+{
+    RunUnitTests();
+});
+
+void RunUnitTests() {
     NUnit3("./tests/UnitTests/bin/" + configuration + "/UnitTests.dll", new NUnit3Settings {
             NoResults = true
         });
-});
+}
 
 // Tested localy only for now
 Task("Run-Integration-Tests")
