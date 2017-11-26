@@ -5,7 +5,7 @@ using PagiNET.Models;
 
 namespace PagiNET.Extensions
 {
-    using Pagination = Models.Pagination;
+    using Pagination = Pagination;
 
     public static class AutoMapperPaginationExtensions
     {
