@@ -55,7 +55,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PagiNET\PagiNET.csproj">
+    <ProjectReference Include="..\..\src\PagiNET\PagiNET.csproj">
       <Project>{B06DE0D1-91BD-4806-9F09-28CF912EE8F0}</Project>
       <Name>PagiNET</Name>
     </ProjectReference>
