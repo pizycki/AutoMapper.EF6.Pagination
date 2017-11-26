@@ -1,5 +1,7 @@
 # PagiNET
 
+[![Build status](https://ci.appveyor.com/api/projects/status/a689qih74at6hyx0/branch/master?svg=true)](https://ci.appveyor.com/project/pizycki/paginet/branch/master)
+
 ## What is it?
 It's .NET library designed for building Web API with pagination feature.
 
