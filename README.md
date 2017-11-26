@@ -10,9 +10,14 @@ It's .NET library designed for building Web API with pagination feature.
 - [X] Pagination
 - [X] Sorting
 - [ ] Multilevel sorting
-- [ ] Integration testing (real db? in memory?)
+- [X] Integration testing
+- [X] Pager model
 - [X] EF Core
 - [X] Example app (Angular2)
   - [X] Pager component
   - [X] List view
 - [ ] CI&CD (AppVeyor)
+  - [X] Build
+  - [X] Unit tests
+  - [ ] Integration tests (real db)
+  - [ ] Nuget publish
