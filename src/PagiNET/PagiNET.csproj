@@ -38,18 +38,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\IQueryWithPaginationExtensions.cs" />
-    <Compile Include="Models\ItemsWithPagination.cs" />
-    <Compile Include="Extensions\ItemsWithPaginationExtensions.cs" />
-    <Compile Include="Models\QueryWithPagination.cs" />
-    <Compile Include="Models\Sorting`.cs" />
-    <Compile Include="Extensions\PaginationExtensions.cs" />
-    <Compile Include="Models\Pagination.cs" />
+    <Compile Include="Queryable\QueryableExtensions.cs" />
+    <Compile Include="Paginate\CommonPaginationQuery.cs" />
+    <Compile Include="Paginate\IQueryWithPagination.cs" />
+    <Compile Include="Sort\ISortingInfo.cs" />
+    <Compile Include="Paginate\ItemsWithPagination.cs" />
+    <Compile Include="Paginate\IPaginationInfo.cs" />
+    <Compile Include="Sort\Sorting`.cs" />
+    <Compile Include="Paginate\Pagination.cs" />
+    <Compile Include="Pager\PagerModel.cs" />
+    <Compile Include="Pager\PagerModelExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Sorting``.cs" />
+    <Compile Include="Sort\Sorting``.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

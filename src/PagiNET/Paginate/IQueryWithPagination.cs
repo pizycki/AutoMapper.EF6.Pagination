@@ -1,8 +1,10 @@
 ﻿using System;
-using PagiNET.Models;
+using PagiNET.Sort;
 
-namespace PagiNET.Extensions
+namespace PagiNET.Paginate
 {
+    public interface IQueryWithPagination : IPaginationInfo, ISortingInfo { }
+
     public static class IQueryWithPaginationExtensions
     {
         public static (Sorting<T> sorting, Pagination pagination) CreatePagination<T>(this IQueryWithPagination query)

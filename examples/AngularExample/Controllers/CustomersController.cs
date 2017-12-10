@@ -1,9 +1,10 @@
-using System;
 using System.Linq;
 using AngularExample.EF;
 using Microsoft.AspNetCore.Mvc;
-using PagiNET.Extensions;
-using PagiNET.Models;
+using PagiNET;
+using PagiNET.Pager;
+using PagiNET.Paginate;
+using PagiNET.Queryable;
 
 namespace AngularExample.Controllers
 {
@@ -37,28 +38,4 @@ namespace AngularExample.Controllers
         public PagerModel GetAllCompaniesPagerModel(AllCustomersQuery pagination) => AllCustomersQuery.GetPagerModel(pagination);
     }
 
-    public class CommonPaginationQuery : IPaginationInfo
-    {
-        public int Page { get; set; }
-        public int PageSize { get; set; }
-    }
-
-    public class PagerModel
-    {
-        public int Pages { get; set; }
-    }
-
-    public static class PaginationBla
-    {
-        public static PagerModel GetPagerModel<T>(this IQueryable<T> query, IPaginationInfo info)
-        {
-            var total = query.Count();
-
-            return new PagerModel
-            {
-                // ReSharper disable once PossibleLossOfFraction
-                Pages = (int)Math.Ceiling((double)(total / info.PageSize))
-            };
-        }
-    }
 }

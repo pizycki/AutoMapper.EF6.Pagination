@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PagiNET.Models
+namespace PagiNET.Paginate
 {
     public class ItemsWithPagination<T> : IPaginationInfo
     {
@@ -24,5 +24,11 @@ namespace PagiNET.Models
 
         public int Page { get; }
         public int PageSize { get; }
+    }
+    
+    public static class ItemsWithPaginationExtensions
+    {
+        public static ItemsWithPagination<T> ToItemsWithPagination<T>(this IEnumerable<T> collection, IPaginationInfo pagination) =>
+            new ItemsWithPagination<T>(collection, pagination);
     }
 }

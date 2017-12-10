@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace PagiNET.Models
+namespace PagiNET.Sort
 {
     public abstract class Sorting<T, K>
     {

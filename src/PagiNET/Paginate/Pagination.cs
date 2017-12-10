@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PagiNET.Models
+namespace PagiNET.Paginate
 {
     public struct Pagination
     {
@@ -14,5 +14,11 @@ namespace PagiNET.Models
         }
 
         public static Pagination Set(int page, int pageSize) => new Pagination(page, pageSize);
+    }
+    
+    public static class PaginationExtensions
+    {
+        internal static int CalculateNumberOfItemsToSkip(this Pagination pagination) =>
+            (pagination.PageNumber - 1) * pagination.PageSize;
     }
 }

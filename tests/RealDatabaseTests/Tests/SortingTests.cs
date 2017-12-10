@@ -1,10 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
+﻿using System.Linq;
 using NUnit.Framework;
-using PagiNET.Extensions;
-using PagiNET.Models;
+using PagiNET;
+using PagiNET.Paginate;
+using PagiNET.Queryable;
+using PagiNET.Sort;
 using RealDatabaseTests.Setup;
 using SampleDatabase.Context;
 using SampleDatabase.Context.Entities;

@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace PagiNET.Models
+namespace PagiNET.Sort
 {
     public class Sorting<T>
     {

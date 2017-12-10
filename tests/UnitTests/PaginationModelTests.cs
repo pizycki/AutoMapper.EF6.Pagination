@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using PagiNET.Models;
+using PagiNET.Paginate;
 using Shouldly;
 
 namespace UnitTests
