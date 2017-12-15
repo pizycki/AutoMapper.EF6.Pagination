@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UnitTests
+namespace PagiNET.UnitTests
 {
     public class SortingModelTests
     {
