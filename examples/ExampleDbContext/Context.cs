@@ -4,7 +4,7 @@ namespace AngularExample.EF
 {
     public class Context : DbContext
     {
-        public Context(DbContextOptions<Context> options) 
+        public Context(DbContextOptions<Context> options)
             : base(options) { }
 
         public DbSet<Customer> Customers { get; set; }

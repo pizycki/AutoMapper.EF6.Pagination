@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\PagiNET\PagiNET.csproj" />
+    <ProjectReference Include="..\ExampleDbContext\ExampleDbContext.csproj" />
   </ItemGroup>
 
   <ItemGroup>

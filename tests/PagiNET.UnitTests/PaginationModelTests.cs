@@ -3,7 +3,7 @@ using NUnit.Framework;
 using PagiNET.Paginate;
 using Shouldly;
 
-namespace UnitTests
+namespace PagiNET.UnitTests
 {
     public class PaginationModelTests
     {
