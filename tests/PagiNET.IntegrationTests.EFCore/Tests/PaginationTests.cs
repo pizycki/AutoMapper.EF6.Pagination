@@ -60,10 +60,10 @@ namespace PagiNET.IntegrationTests.EFCore.Tests
                                     Pagination.Set(page, pageSize));
 
             // Act
-            using (var ctx = CreateDbContext())
+            using (var ctx = DbManager.CreateDbContext())
                 ls1 = await GetCustomers(ctx).ToListAsync();
 
-            using (var ctx = CreateDbContext())
+            using (var ctx = DbManager.CreateDbContext())
                 ls2 = await GetCustomers(ctx).ToListAsync();
 
             // Assert
@@ -74,7 +74,7 @@ namespace PagiNET.IntegrationTests.EFCore.Tests
         [Test]
         public async Task running_out_of_pages_range_doesnt_causes_rising_exception()
         {
-            using (var ctx = CreateDbContext())
+            using (var ctx = DbManager.CreateDbContext())
             {
                 var totalItems = await ctx.Customers.CountAsync();
                 const int pageSize = 50;
@@ -98,7 +98,7 @@ namespace PagiNET.IntegrationTests.EFCore.Tests
             const int pageSize = 20;
             const int page = 1;
 
-            using (var ctx = CreateDbContext())
+            using (var ctx = DbManager.CreateDbContext())
             {
                 var companies =
                     await ctx.Customers

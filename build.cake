@@ -53,17 +53,17 @@ Task("Run-Unit-Tests-Solo")
 });
 
 void RunUnitTests() {
-    NUnit3("./tests/UnitTests/bin/" + configuration + "/UnitTests.dll", new NUnit3Settings {
+    NUnit3("./tests/PagiNET.UnitTests/bin/" + configuration + "/netstandard2.0/PagiNET.UnitTests.dll", new NUnit3Settings {
             NoResults = true
         });
 }
 
 // Tested localy only for now
 Task("Run-Integration-Tests")
-    .IsDependentOn("Build")
+    //.IsDependentOn("Build")
     .Does(() =>
 {
-    NUnit3("./tests/RealDatabaseTests/bin/" + configuration + "/RealDatabaseTests.dll", new NUnit3Settings {
+    NUnit3("./tests/PagiNET.IntegrationTests.EFCore/bin/" + configuration + "/netstandard2.0/PagiNET.IntegrationTests.EFCore.dll", new NUnit3Settings {
             NoResults = true
         });
 });
