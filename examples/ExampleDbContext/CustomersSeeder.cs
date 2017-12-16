@@ -1,21 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using ExampleDbContext.Entities;
 
-namespace AngularExample.EF
+namespace ExampleDbContext
 {
-    public static class DbInitializer
+    public static class CustomersSeeder
     {
-        public static void Initialize(Context context)
+        public static int SampleCustomersCount { get; private set; }
+        public static IList<Customer> CreateSampleCustomersList() => new List<Customer>
         {
-            context.Database.EnsureCreated();
-
-            if (context.Customers.Any())
-            {
-                return;
-            }
-
-            var customers = new[]
-            {
                 new Customer{ Id = Guid.Parse("108cd56b-3eb6-41ab-ac85-81893c370d7c"), Name = "Barbara Chapman", Gender = Gender.Female, BirthDate = DateTime.Parse("3/17/1987") },
                 new Customer{ Id = Guid.Parse("4686383b-3346-435a-a3ce-8527e14ac19e"), Name = "Mary Moreno", Gender = Gender.Female, BirthDate = DateTime.Parse("6/15/1933") },
                 new Customer{ Id = Guid.Parse("5ea70b5c-6062-4975-9103-7d97abb30e20"), Name = "John Rodriguez", Gender = Gender.Male, BirthDate = DateTime.Parse("9/17/1936") },
@@ -217,13 +211,18 @@ namespace AngularExample.EF
                 new Customer{ Id = Guid.Parse("25d85333-8219-4aa1-892b-e472a41fa0dc"), Name = "Brittany Ball", Gender = Gender.Female, BirthDate = DateTime.Parse("3/20/1955") },
             };
 
-            context.AddRange(customers);
-            context.SaveChanges();
-        }
-    }
+        public static void Seed(Context context)
+        {
+            context.Database.EnsureCreated();
 
-    public enum Gender
-    {
-        Male, Female
+            if (context.Customers.Any())
+                return;
+
+            var customersList = CreateSampleCustomersList();
+            context.AddRange();
+            context.SaveChanges();
+            
+            SampleCustomersCount = customersList.Count;
+        }
     }
 }

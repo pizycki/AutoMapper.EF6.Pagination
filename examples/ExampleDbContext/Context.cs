@@ -1,13 +1,15 @@
+using ExampleDbContext.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AngularExample.EF
+namespace ExampleDbContext
 {
     public class Context : DbContext
     {
+        public DbSet<Customer> Customers { get; set; }
+
         public Context(DbContextOptions<Context> options)
             : base(options) { }
 
-        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

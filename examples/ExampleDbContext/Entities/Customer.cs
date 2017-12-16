@@ -1,6 +1,6 @@
 using System;
 
-namespace AngularExample.EF
+namespace ExampleDbContext.Entities
 {
     public class Customer
     {

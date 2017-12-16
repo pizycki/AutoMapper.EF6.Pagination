@@ -1,5 +1,5 @@
 using System;
-using AngularExample.EF;
+using ExampleDbContext;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +19,7 @@ namespace AngularExample
                 try
                 {
                     var context = services.GetRequiredService<Context>();
-                    DbInitializer.Initialize(context);
+                    CustomersSeeder.Seed(context);
                 }
                 catch (Exception ex)
                 {

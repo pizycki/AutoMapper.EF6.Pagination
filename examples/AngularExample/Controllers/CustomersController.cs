@@ -1,5 +1,6 @@
 using System.Linq;
-using AngularExample.EF;
+using ExampleDbContext;
+using ExampleDbContext.Entities;
 using Microsoft.AspNetCore.Mvc;
 using PagiNET;
 using PagiNET.Pager;
