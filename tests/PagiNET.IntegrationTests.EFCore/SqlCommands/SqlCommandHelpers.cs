@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace RealDatabaseTests.SqlCommands
+namespace PagiNET.IntegrationTests.EFCore.SqlCommands
 {
     public static class SqlCommandHelpers
     {
