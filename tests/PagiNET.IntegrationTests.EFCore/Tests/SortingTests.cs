@@ -32,7 +32,7 @@ namespace PagiNET.IntegrationTests.EFCore.Tests
             var sorting = Ascending<Customer, DateTime>.By(c => c.BirthDate);
             var pagination = Pagination.Set(page, pageSize);
 
-            using (var ctx = CreateDbContext())
+            using (var ctx = DbManager.CreateDbContext())
             {
                 var customers = await ctx.Customers
                     .SortAndPaginate(sorting, pagination)
@@ -54,7 +54,7 @@ namespace PagiNET.IntegrationTests.EFCore.Tests
             var sorting = Descending<Customer, DateTime>.By(c => c.BirthDate);
             var pagination = Pagination.Set(page, pageSize);
 
-            using (var ctx = CreateDbContext())
+            using (var ctx = DbManager.CreateDbContext())
             {
                 var customers = await ctx.Customers
                     .SortAndPaginate(sorting, pagination)

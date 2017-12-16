@@ -1,6 +1,5 @@
 ﻿using System.Data.SqlClient;
 using ExampleDbContext;
-using PagiNET.IntegrationTests.EFCore.Tests;
 
 namespace PagiNET.IntegrationTests.EFCore.Setup
 {
@@ -16,9 +15,9 @@ namespace PagiNET.IntegrationTests.EFCore.Setup
         {
             var dbCfg = new DatabaseConfig(MasterConnString, DatabaseName, DatabaseFileName);
 
-            CreateDatabase = new CreateDatabase(dbCfg);
-            DropDatabase = new DropDatabase(dbCfg);
             DbContextProvider = new DbContextProvider(dbCfg);
+            CreateDatabase = new CreateDatabase(dbCfg, DbContextProvider);
+            DropDatabase = new DropDatabase(dbCfg);
         }
 
         void ITestDatabaseManager.CreateDatabase()

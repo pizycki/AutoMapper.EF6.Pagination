@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ExampleDbContext.Entities;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using PagiNET.IntegrationTests.EFCore.Setup;
 using PagiNET.Paginate;
+using PagiNET.Queryable;
 using PagiNET.Sort;
+using Shouldly;
 
 namespace PagiNET.IntegrationTests.EFCore.Tests
 {
@@ -29,7 +33,7 @@ namespace PagiNET.IntegrationTests.EFCore.Tests
             var sorting = Ascending<Customer>.By(columnName);
             var pagination = Pagination.Set(page, pageSize);
 
-            using (var ctx = CreateDbContext())
+            using (var ctx = DbManager.CreateDbContext())
             {
                 var customers = await ctx.Customers
                     .SortAndPaginate(sorting, pagination)
