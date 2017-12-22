@@ -1,4 +1,4 @@
-﻿namespace PagiNET.IntegrationTests.EFCore.Setup
+﻿namespace PagiNET.IntegrationTests.Setup
 {
     public class DatabaseConfig
     {

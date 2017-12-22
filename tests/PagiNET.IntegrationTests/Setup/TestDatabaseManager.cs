@@ -1,17 +1,15 @@
 ﻿using System.Data.SqlClient;
 using ExampleDbContext;
 
-namespace PagiNET.IntegrationTests.EFCore.Setup
+namespace PagiNET.IntegrationTests.Setup
 {
     public class TestDatabaseManager : ITestDatabaseManager
     {
-        public static TestDatabaseManager Create() => new TestDatabaseManager();
-
         private CreateDatabase CreateDatabase { get; }
         private DropDatabase DropDatabase { get; }
         private DbContextProvider DbContextProvider { get; }
 
-        private TestDatabaseManager()
+        public TestDatabaseManager()
         {
             var dbCfg = new DatabaseConfig(MasterConnString, DatabaseName, DatabaseFileName);
 

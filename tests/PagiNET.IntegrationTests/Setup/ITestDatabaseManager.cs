@@ -1,6 +1,6 @@
 ﻿using ExampleDbContext;
 
-namespace PagiNET.IntegrationTests.EFCore.Setup
+namespace PagiNET.IntegrationTests.Setup
 {
     public interface ITestDatabaseManager
     {

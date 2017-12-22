@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Linq;
-using PagiNET.IntegrationTests.EFCore.SqlCommands;
+using PagiNET.IntegrationTests.SqlCommands;
 
-namespace PagiNET.IntegrationTests.EFCore.Setup
+namespace PagiNET.IntegrationTests.Setup
 {
     public class DropDatabase
     {

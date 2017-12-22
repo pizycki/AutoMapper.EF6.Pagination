@@ -1,8 +1,8 @@
 ﻿using ExampleDbContext;
 using Microsoft.EntityFrameworkCore;
-using PagiNET.IntegrationTests.EFCore.SqlCommands;
+using PagiNET.IntegrationTests.SqlCommands;
 
-namespace PagiNET.IntegrationTests.EFCore.Setup
+namespace PagiNET.IntegrationTests.Setup
 {
     public class CreateDatabase
     {
@@ -25,6 +25,7 @@ namespace PagiNET.IntegrationTests.EFCore.Setup
 
             var context = _dbContextProvider.CreateDbContext();
             context.Database.Migrate();
+
             if (seed)
                 CustomersSeeder.Seed(context);
 
