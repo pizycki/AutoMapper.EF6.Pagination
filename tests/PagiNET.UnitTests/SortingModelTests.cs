@@ -1,4 +1,7 @@
 ﻿using System;
+using NUnit.Framework;
+using PagiNET.Sort;
+using Shouldly;
 
 namespace PagiNET.UnitTests
 {

@@ -1,4 +1,4 @@
-#tool nuget:?package=NUnit.ConsoleRunner&version=3.4.0
+#tool "nuget:?package=xunit.runner.console"
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
@@ -52,9 +52,20 @@ Task("Run-Unit-Tests-Solo")
     RunUnitTests();
 });
 
-void RunUnitTests() {
-    NUnit3("./tests/PagiNET.UnitTests/bin/" + configuration + "/netstandard2.0/PagiNET.UnitTests.dll", new NUnit3Settings {
-            NoResults = true
+void RunUnitTests() {   
+
+    // NUnit3("./tests/PagiNET.UnitTests/bin/" + configuration + "/PagiNET.UnitTests.dll", new NUnit3Settings {
+    //         NoResults = true
+    //     });
+
+    XUnit2(new []{
+        "./tests/PagiNET.UnitTests/bin/debug/netcoreapp2.0/PagiNET.UnitTests.dll"
+        },
+        new XUnit2Settings {
+            Parallelism = ParallelismOption.All,
+            HtmlReport = false,
+            NoAppDomain = false,
+            //OutputDirectory = "./build"
         });
 }
 

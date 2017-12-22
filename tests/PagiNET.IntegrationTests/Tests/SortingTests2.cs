@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ExampleDbContext;
 using ExampleDbContext.Entities;
 using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PagiNET.IntegrationTests.EFCore.Setup;
+using PagiNET.IntegrationTests.Setup;
 using PagiNET.Paginate;
 using PagiNET.Queryable;
 using PagiNET.Sort;
 using Shouldly;
+using Xunit;
 
-namespace PagiNET.IntegrationTests.EFCore.Tests
+namespace PagiNET.IntegrationTests.Tests
 {
-    [TestFixture]
-    public class SortingTests2
+    public class SortingTests2 : IClassFixture<RealDatabaseTestFixture>
     {
-        private ITestDatabaseManager DbManager { get; } = TestDatabaseManager.Create();
+        private readonly RealDatabaseTestFixture _realDbFixture;
 
-        [OneTimeSetUp]
-        public void Setup() => DbManager.CreateDatabase();
+        public SortingTests2(RealDatabaseTestFixture realDbFixture)
+        {
+            _realDbFixture = realDbFixture;
+        }
 
-        [OneTimeTearDown]
-        public void Teardown() => DbManager.DropDatabase();
-
-        [Test]
+        [Fact]
         public async Task should_not_fail()
         {
             const int page = 1;
@@ -33,7 +32,7 @@ namespace PagiNET.IntegrationTests.EFCore.Tests
             var sorting = Ascending<Customer>.By(columnName);
             var pagination = Pagination.Set(page, pageSize);
 
-            using (var ctx = DbManager.CreateDbContext())
+            using (var ctx = _realDbFixture.CreateContext())
             {
                 var customers = await ctx.Customers
                     .SortAndPaginate(sorting, pagination)
@@ -45,5 +44,22 @@ namespace PagiNET.IntegrationTests.EFCore.Tests
                     .ShouldBe(customers.First().BirthDate.Ticks);
             }
         }
+    }
+
+    public class RealDatabaseTestFixture : IDisposable
+    {
+        private ITestDatabaseManager DbManager { get; } = new TestDatabaseManager();
+
+        public RealDatabaseTestFixture()
+        {
+            DbManager.CreateDatabase();
+        }
+
+        public void Dispose()
+        {
+            DbManager.DropDatabase();
+        }
+
+        public Context CreateContext() => DbManager.CreateDbContext();
     }
 }
