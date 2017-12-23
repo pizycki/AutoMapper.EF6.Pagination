@@ -19,16 +19,14 @@ namespace PagiNET.IntegrationTests.Setup
 
         internal void Go()
         {
-            SqlCommandHelpers.ExecuteSqlCommand(_cfg.ConnectionString,
+            try
+            {
+                SqlCommandHelpers.ExecuteSqlCommand(_cfg.ConnectionString,
                 $@"CREATE DATABASE [{_cfg.DatabaseName}]
                   CONTAINMENT = NONE
                   ON  PRIMARY 
                   ( NAME = N'{_cfg.DatabaseName}', FILENAME = N'{_cfg.DatabaseFileName}' )");
 
-            try
-            {
-                var context = _dbContextProvider.CreateDbContext();
-                context.Database.Migrate();
             }
             catch (SqlException ex)
             {
@@ -39,10 +37,9 @@ namespace PagiNET.IntegrationTests.Setup
 
                 throw;
             }
-            catch (Exception ex)
-            {
 
-            }
+            var context = _dbContextProvider.CreateDbContext();
+            context.Database.Migrate();
         }
     }
 }
