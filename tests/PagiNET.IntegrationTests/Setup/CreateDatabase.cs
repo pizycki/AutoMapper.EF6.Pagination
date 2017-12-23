@@ -1,4 +1,6 @@
-﻿using ExampleDbContext;
+﻿using System;
+using System.Data.SqlClient;
+using ExampleDbContext;
 using Microsoft.EntityFrameworkCore;
 using PagiNET.IntegrationTests.SqlCommands;
 
@@ -15,7 +17,7 @@ namespace PagiNET.IntegrationTests.Setup
             _dbContextProvider = dbContextProvider;
         }
 
-        internal void Go(bool seed = false)
+        internal void Go()
         {
             SqlCommandHelpers.ExecuteSqlCommand(_cfg.ConnectionString,
                 $@"CREATE DATABASE [{_cfg.DatabaseName}]
@@ -23,12 +25,24 @@ namespace PagiNET.IntegrationTests.Setup
                   ON  PRIMARY 
                   ( NAME = N'{_cfg.DatabaseName}', FILENAME = N'{_cfg.DatabaseFileName}' )");
 
-            var context = _dbContextProvider.CreateDbContext();
-            context.Database.Migrate();
+            try
+            {
+                var context = _dbContextProvider.CreateDbContext();
+                context.Database.Migrate();
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains("already exists"))
+                {
+                    return;
+                }
 
-            if (seed)
-                CustomersSeeder.Seed(context);
+                throw;
+            }
+            catch (Exception ex)
+            {
 
+            }
         }
     }
 }

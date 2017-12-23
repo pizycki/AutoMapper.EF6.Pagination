@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using ExampleDbContext;
 using ExampleDbContext.Entities;
 using Microsoft.EntityFrameworkCore;
-using PagiNET.IntegrationTests.Setup;
+using PagiNET.IntegrationTests.Fixtures;
 using PagiNET.Paginate;
 using PagiNET.Queryable;
 using PagiNET.Sort;
@@ -27,7 +26,7 @@ namespace PagiNET.IntegrationTests.Tests
         {
             const int page = 1;
             const int pageSize = 5;
-            const string columnName = "OwnerId";
+            const string columnName = "BirthDate";
 
             var sorting = Ascending<Customer>.By(columnName);
             var pagination = Pagination.Set(page, pageSize);
@@ -44,22 +43,5 @@ namespace PagiNET.IntegrationTests.Tests
                     .ShouldBe(customers.First().BirthDate.Ticks);
             }
         }
-    }
-
-    public class RealDatabaseTestFixture : IDisposable
-    {
-        private ITestDatabaseManager DbManager { get; } = new TestDatabaseManager();
-
-        public RealDatabaseTestFixture()
-        {
-            DbManager.CreateDatabase();
-        }
-
-        public void Dispose()
-        {
-            DbManager.DropDatabase();
-        }
-
-        public Context CreateContext() => DbManager.CreateDbContext();
     }
 }

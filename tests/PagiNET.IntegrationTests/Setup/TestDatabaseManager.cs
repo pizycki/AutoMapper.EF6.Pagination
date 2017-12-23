@@ -1,13 +1,14 @@
-﻿using System.Data.SqlClient;
+﻿using System.Configuration;
+using System.Data.SqlClient;
 using ExampleDbContext;
 
 namespace PagiNET.IntegrationTests.Setup
 {
     public class TestDatabaseManager : ITestDatabaseManager
     {
+        private DbContextProvider DbContextProvider { get; }
         private CreateDatabase CreateDatabase { get; }
         private DropDatabase DropDatabase { get; }
-        private DbContextProvider DbContextProvider { get; }
 
         public TestDatabaseManager()
         {
@@ -21,7 +22,7 @@ namespace PagiNET.IntegrationTests.Setup
         void ITestDatabaseManager.CreateDatabase()
         {
             DropDatabase.Go();
-            CreateDatabase.Go(seed: true);
+            CreateDatabase.Go();
         }
 
         void ITestDatabaseManager.DropDatabase()
@@ -35,7 +36,7 @@ namespace PagiNET.IntegrationTests.Setup
         }
 
         private static string DatabaseName = "SampleDatabase";
-        private static string DatabaseFileName => @"C:\Users\pizycki\SampleDatabase.mdf"; // TODO Change with configuration
+        private static string DatabaseFileName => ConfigurationManager.AppSettings["DatabasePath"];
         private static string MasterConnString => Master.ToString();
 
         private static SqlConnectionStringBuilder Master =>

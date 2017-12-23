@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7E34F9C0-DD30-4C19-B969-0F8BF43E6DCB}"
 EndProject
@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagiNET.UnitTests", "tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagiNET.IntegrationTests", "tests\PagiNET.IntegrationTests\PagiNET.IntegrationTests.csproj", "{069DD920-F7E7-4906-8737-8F64A9C203A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleDbContext", "examples\ExampleDbContext\ExampleDbContext.csproj", "{3F7D77A6-7600-475A-B626-3EAA01776570}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleDbContext", "examples\ExampleDbContext\ExampleDbContext.csproj", "{1980F884-83D0-464B-A5CF-0EBCE06EE067}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +46,10 @@ Global
 		{069DD920-F7E7-4906-8737-8F64A9C203A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{069DD920-F7E7-4906-8737-8F64A9C203A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{069DD920-F7E7-4906-8737-8F64A9C203A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F7D77A6-7600-475A-B626-3EAA01776570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F7D77A6-7600-475A-B626-3EAA01776570}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F7D77A6-7600-475A-B626-3EAA01776570}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F7D77A6-7600-475A-B626-3EAA01776570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1980F884-83D0-464B-A5CF-0EBCE06EE067}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1980F884-83D0-464B-A5CF-0EBCE06EE067}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1980F884-83D0-464B-A5CF-0EBCE06EE067}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1980F884-83D0-464B-A5CF-0EBCE06EE067}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,7 +59,7 @@ Global
 		{F0095B62-CE96-4A08-97B1-4F6273BA8969} = {7E34F9C0-DD30-4C19-B969-0F8BF43E6DCB}
 		{DEA4BBF9-5920-41A9-B953-B3BC4A08880F} = {925DA57C-2DCF-4EAA-A148-17BC7E60F936}
 		{069DD920-F7E7-4906-8737-8F64A9C203A9} = {925DA57C-2DCF-4EAA-A148-17BC7E60F936}
-		{3F7D77A6-7600-475A-B626-3EAA01776570} = {F095269C-49A5-418B-8112-AFE1376AA5A2}
+		{1980F884-83D0-464B-A5CF-0EBCE06EE067} = {F095269C-49A5-418B-8112-AFE1376AA5A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {004D0422-C7C8-4A09-B7B7-D059EC163D33}

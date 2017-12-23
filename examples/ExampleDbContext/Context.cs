@@ -14,7 +14,7 @@ namespace ExampleDbContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>()
-                //.ToTable("Customers")
+                .ToTable("Customers")
                 .HasKey(x => x.Id);
         }
     }
