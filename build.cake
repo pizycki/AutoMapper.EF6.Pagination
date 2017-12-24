@@ -59,7 +59,7 @@ void RunUnitTests() {
     //     });
 
     XUnit2(new []{
-        "./tests/PagiNET.UnitTests/bin/debug/netcoreapp2.0/PagiNET.UnitTests.dll"
+        "./tests/PagiNET.UnitTests/bin/" + configuration + "/PagiNET.UnitTests.dll"
         },
         new XUnit2Settings {
             Parallelism = ParallelismOption.All,
