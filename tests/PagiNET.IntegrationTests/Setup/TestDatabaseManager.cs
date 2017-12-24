@@ -38,9 +38,16 @@ namespace PagiNET.IntegrationTests.Setup
 
         private static string DatabaseName = "SampleDatabase";
         private static string DatabaseFileName =>
-            Environment.GetEnvironmentVariable("PAGINET_DATABASE_PATH")
+            TryGetAppVeyorDatabasePath()
+            ?? Environment.GetEnvironmentVariable("PAGINET_DATABASE_PATH")
             ?? ConfigurationManager.AppSettings["DatabasePath"]
             ?? @"C:\Users\pawelizycki\SampleDatabase.mdf";
+
+        private static string TryGetAppVeyorDatabasePath() =>
+            Environment.GetEnvironmentVariable("APPVEYOR") == "True"
+                ? Environment.GetEnvironmentVariable("APPVEYOR_BUILD_FOLDER") + @"\SampleDatabase.mdf"
+                : null;
+
         private static string MasterConnString => Master.ToString();
 
         private static SqlConnectionStringBuilder Master =>
