@@ -54,13 +54,8 @@ Task("Run-Unit-Tests-Solo")
 
 void RunUnitTests() {   
 
-    // NUnit3("./tests/PagiNET.UnitTests/bin/" + configuration + "/PagiNET.UnitTests.dll", new NUnit3Settings {
-    //         NoResults = true
-    //     });
-
-    XUnit2(new []{
-        "./tests/PagiNET.UnitTests/bin/" + configuration + "/PagiNET.UnitTests.dll"
-        },
+    XUnit2(
+        new [] { "./tests/PagiNET.UnitTests/bin/" + configuration + "/PagiNET.UnitTests.dll" },
         new XUnit2Settings {
             Parallelism = ParallelismOption.All,
             HtmlReport = false,
@@ -69,15 +64,22 @@ void RunUnitTests() {
         });
 }
 
-// Tested localy only for now
 Task("Run-Integration-Tests")
-    //.IsDependentOn("Build")
+    .IsDependentOn("Build")
     .Does(() =>
 {
-    NUnit3("./tests/PagiNET.IntegrationTests.EFCore/bin/" + configuration + "/netstandard2.0/PagiNET.IntegrationTests.EFCore.dll", new NUnit3Settings {
-            NoResults = true
-        });
+    RunIntegrationTests();
 });
+
+Task("Run-Integration-Tests-Solo")
+    .Does(() =>
+{
+    RunIntegrationTests();
+});
+
+void RunIntegrationTests() {
+    XUnit2(new [] { "./tests/PagiNET.IntegrationTests/bin/" + configuration + "/PagiNET.IntegrationTests.dll" } );
+}
 
 //////////////////////////////////////////////////////////////////////
 // TASK TARGETS

@@ -4,7 +4,7 @@ using PagiNET.IntegrationTests.Fixtures;
 using Shouldly;
 using Xunit;
 
-namespace PagiNET.IntegrationTests.Tests.Pre
+namespace PagiNET.IntegrationTests.Tests.Env
 {
     /// <summary>
     /// Those tests are supposed to check if deployed sample database is in expected state.

@@ -129,7 +129,7 @@
     <Compile Include="Setup\ITestDatabaseManager.cs" />
     <Compile Include="Setup\TestDatabaseManager.cs" />
     <Compile Include="SqlCommands\SqlCommandHelpers.cs" />
-    <Compile Include="Tests\Pre\DeployedDatabaseTests.cs" />
+    <Compile Include="Tests\Env\DeployedDatabaseTests.cs" />
     <Compile Include="Tests\PaginationTests.cs" />
     <Compile Include="Fixtures\RealDatabaseTestFixture.cs" />
     <Compile Include="Tests\SortingTests.cs" />
