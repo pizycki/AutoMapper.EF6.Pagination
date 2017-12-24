@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using ExampleDbContext;
 
@@ -36,7 +37,10 @@ namespace PagiNET.IntegrationTests.Setup
         }
 
         private static string DatabaseName = "SampleDatabase";
-        private static string DatabaseFileName => ConfigurationManager.AppSettings["DatabasePath"];
+        private static string DatabaseFileName =>
+            Environment.GetEnvironmentVariable("PAGINET_DATABASE_PATH")
+            ?? ConfigurationManager.AppSettings["DatabasePath"]
+            ?? @"C:\Users\pawelizycki\SampleDatabase.mdf";
         private static string MasterConnString => Master.ToString();
 
         private static SqlConnectionStringBuilder Master =>
