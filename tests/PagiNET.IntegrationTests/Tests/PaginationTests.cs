@@ -1,116 +1,99 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
-//using ExampleDbContext;
-//using ExampleDbContext.Entities;
-//using Microsoft.EntityFrameworkCore;
-//using NUnit.Framework;
-//using PagiNET.IntegrationTests.EFCore.Setup;
-//using PagiNET.Paginate;
-//using PagiNET.Queryable;
-//using PagiNET.Sort;
-//using Shouldly;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using ExampleDbContext;
+using ExampleDbContext.Entities;
+using Microsoft.EntityFrameworkCore;
+using PagiNET.IntegrationTests.Fixtures;
+using PagiNET.Paginate;
+using PagiNET.Queryable;
+using PagiNET.Sort;
+using Shouldly;
+using Xunit;
 
-//namespace PagiNET.IntegrationTests.EFCore.Tests
-//{
-//    [TestFixture]
-//    public class PaginationTests
-//    {
-//        private ITestDatabaseManager DbManager { get; } = new TestDatabaseManager();
+namespace PagiNET.IntegrationTests.Tests
+{
+    public class PaginationTests : IClassFixture<RealDatabaseTestFixture>
+    {
+        private readonly RealDatabaseTestFixture _realDbFixture;
 
-//        [OneTimeSetUp]
-//        public void Setup() => DbManager.CreateDatabase();
+        public PaginationTests(RealDatabaseTestFixture realDbFixture)
+        {
+            _realDbFixture = realDbFixture;
+        }
 
-//        [OneTimeTearDown]
-//        public void Teardown() => DbManager.DropDatabase();
+        [Fact]
+        public async Task pagination_returns_correct_number_of_items()
+        {
+            const int page = 1;
+            const int pageSize = 20;
 
-//        [Test]
-//        public async Task pagination_returns_correct_number_of_items()
-//        {
-//            const int page = 1;
-//            const int pageSize = 20;
+            var companies =
+                await _realDbFixture.QueryAsync(ctx =>
+                    ctx.Customers
+                        .SortAndPaginate(
+                            Ascending<Customer, Guid>.By(x => x.Id),
+                            Pagination.Set(page, pageSize))
+                        .ToListAsync());
 
-//            using (var ctx = DbManager.CreateDbContext())
-//            {
-//                var companies =
-//                    await ctx.Customers
-//                             .SortAndPaginate(
-//                                 Ascending<Customer, Guid>.By(x => x.Id),
-//                                 Pagination.Set(page, pageSize))
-//                             .ToListAsync();
+            companies.Count.ShouldBe(pageSize);
+        }
 
-//                companies.Count.ShouldBe(pageSize);
-//            }
-//        }
+        [Fact(Skip = "Waits for generic comparer")]
+        public async Task pagination_called_twice_returns_the_same_set()
+        {
+            // Arrange
+            const int page = 1;
+            const int pageSize = 20;
+            IQueryable<Customer> GetCustomers(Context ctx) =>
+                ctx.Customers
+                   .SortAndPaginate(Ascending<Customer, Guid>.By(x => x.Id),
+                                    Pagination.Set(page, pageSize));
 
+            // Act
+            var ls1 = await _realDbFixture.QueryAsync(ctx => GetCustomers(ctx).ToListAsync());
+            var ls2 = await _realDbFixture.QueryAsync(ctx => GetCustomers(ctx).ToListAsync());
 
-//        [Ignore("Waits for generic comparer")]
-//        [Test]
-//        public async Task pagination_called_twice_returns_the_same_set()
-//        {
-//            // Arrange
-//            const int page = 1;
-//            const int pageSize = 20;
-//            List<Customer> ls1;
-//            List<Customer> ls2;
-//            IQueryable<Customer> GetCustomers(Context ctx) =>
-//                ctx.Customers
-//                   .SortAndPaginate(Ascending<Customer, Guid>.By(x => x.Id),
-//                                    Pagination.Set(page, pageSize));
+            // Assert
+            // Length equality
+            ls1.Count.ShouldBeSameAs(ls2);
+        }
 
-//            // Act
-//            using (var ctx = DbManager.CreateDbContext())
-//                ls1 = await GetCustomers(ctx).ToListAsync();
+        [Fact]
+        public async Task running_out_of_pages_range_doesnt_causes_rising_exception()
+        {
+            var totalItems = await _realDbFixture.QueryAsync(ctx => ctx.Customers.CountAsync());
+            const int pageSize = 50;
+            var lastPage = totalItems / pageSize;
 
-//            using (var ctx = DbManager.CreateDbContext())
-//                ls2 = await GetCustomers(ctx).ToListAsync();
+            var companies = await _realDbFixture.QueryAsync(ctx =>
+                ctx.Customers
+                   .SortAndPaginate(
+                       Ascending<Customer, Guid>.By(x => x.Id),
+                       Pagination.Set(lastPage + 2, pageSize))
+                   .ToListAsync());
 
-//            // Assert
-//            // Length equality
-//            ls1.Count.ShouldBeSameAs(ls2);
-//        }
+            companies.ShouldNotBeNull();
+            companies.ShouldBeEmpty();
+        }
 
-//        [Test]
-//        public async Task running_out_of_pages_range_doesnt_causes_rising_exception()
-//        {
-//            using (var ctx = DbManager.CreateDbContext())
-//            {
-//                var totalItems = await ctx.Customers.CountAsync();
-//                const int pageSize = 50;
-//                var lastPage = totalItems / pageSize;
+        [Fact]
+        public async Task paginating_empty_set_returns_empty_list()
+        {
+            const int pageSize = 20;
+            const int page = 1;
 
-//                var companies =
-//                    await ctx.Customers
-//                             .SortAndPaginate(
-//                                 Ascending<Customer, Guid>.By(x => x.Id),
-//                                 Pagination.Set(lastPage + 1, pageSize))
-//                             .ToListAsync();
+            var companies =
+                await _realDbFixture.QueryAsync(ctx =>
+                    ctx.Customers
+                        .Where(x => x.Id == Guid.Empty) // will always return no entities
+                        .SortAndPaginate(
+                            Ascending<Customer, Guid>.By(x => x.Id),
+                            Pagination.Set(page, pageSize))
+                        .ToListAsync());
 
-//                companies.ShouldNotBeNull();
-//                companies.ShouldBeEmpty();
-//            }
-//        }
-
-//        [Test]
-//        public async Task paginating_empty_set_returns_empty_list()
-//        {
-//            const int pageSize = 20;
-//            const int page = 1;
-
-//            using (var ctx = DbManager.CreateDbContext())
-//            {
-//                var companies =
-//                    await ctx.Customers
-//                        .Where(x => x.Id == Guid.Empty) // will always return no entities
-//                        .SortAndPaginate(
-//                            Ascending<Customer, Guid>.By(x => x.Id),
-//                            Pagination.Set(page, pageSize))
-//                        .ToListAsync();
-
-//                companies.ShouldNotBeNull();
-//                companies.ShouldBeEmpty();
-//            }
-//        }
-//    }
-//}
+            companies.ShouldNotBeNull();
+            companies.ShouldBeEmpty();
+        }
+    }
+}
