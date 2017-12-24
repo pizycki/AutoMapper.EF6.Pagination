@@ -31,17 +31,15 @@ namespace PagiNET.IntegrationTests.Tests
             var sorting = Ascending<Customer>.By(columnName);
             var pagination = Pagination.Set(page, pageSize);
 
-            using (var ctx = _realDbFixture.CreateContext())
-            {
-                var customers = await ctx.Customers
+            var customers =
+                await _realDbFixture.QueryAsync(ctx => ctx.Customers
                     .SortAndPaginate(sorting, pagination)
-                    .ToListAsync();
+                    .ToListAsync());
 
-                customers
-                    .Select(c => c.BirthDate.Ticks)
-                    .Aggregate(Math.Min)
-                    .ShouldBe(customers.First().BirthDate.Ticks);
-            }
+            customers
+                .Select(c => c.BirthDate.Ticks)
+                .Aggregate(Math.Min)
+                .ShouldBe(customers.First().BirthDate.Ticks);
         }
     }
 }

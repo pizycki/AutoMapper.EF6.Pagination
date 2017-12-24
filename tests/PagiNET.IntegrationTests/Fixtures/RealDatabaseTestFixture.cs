@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ExampleDbContext;
 using PagiNET.IntegrationTests.Setup;
 
@@ -20,5 +21,30 @@ namespace PagiNET.IntegrationTests.Fixtures
         }
 
         public Context CreateContext() => DbManager.CreateDbContext();
+    }
+
+    public static class RealDatabaseTestFixtureExtensions
+    {
+        public static T Query<T>(this RealDatabaseTestFixture fixture, Func<Context, T> query)
+        {
+            if (fixture == null)
+                throw new ArgumentNullException(nameof(fixture));
+
+            using (var ctx = fixture.CreateContext())
+            {
+                return query(ctx);
+            }
+        }
+
+        public static async Task<T> QueryAsync<T>(this RealDatabaseTestFixture fixture, Func<Context, Task<T>> query)
+        {
+            if (fixture == null)
+                throw new ArgumentNullException(nameof(fixture));
+
+            using (var ctx = fixture.CreateContext())
+            {
+                return await query(ctx);
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@ using PagiNET.IntegrationTests.Fixtures;
 using Shouldly;
 using Xunit;
 
-namespace PagiNET.IntegrationTests.Tests
+namespace PagiNET.IntegrationTests.Tests.Pre
 {
     /// <summary>
     /// Those tests are supposed to check if deployed sample database is in expected state.
@@ -19,23 +19,21 @@ namespace PagiNET.IntegrationTests.Tests
         }
 
         [Fact]
-        public void database_is_not_empty()
-        {
-            using (var context = _realDbFixture.CreateContext())
-                context.Customers
-                    .Any()
-                    .ShouldBeTrue();
-        }
+        public void database_is_not_empty() =>
+            _realDbFixture
+                .Query(ctx => ctx.Customers.Any())
+                .ShouldBeTrue();
 
         [Fact]
         public void there_are_n_customers()
         {
             var expected = CustomersSeeder.CreateSampleCustomersList().Count;
-            using (var context = _realDbFixture.CreateContext())
-                context.Customers
-                    .Select(x => x.Id)
-                    .Count()
-                    .ShouldBe(expected);
+            _realDbFixture
+                .Query(ctx =>
+                    ctx.Customers
+                       .Select(x => x.Id)
+                       .Count())
+                .ShouldBe(expected);
         }
     }
 }

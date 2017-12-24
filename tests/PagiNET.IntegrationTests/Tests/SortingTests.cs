@@ -30,17 +30,16 @@ namespace PagiNET.IntegrationTests.Tests
             var sorting = Ascending<Customer, DateTime>.By(c => c.BirthDate);
             var pagination = Pagination.Set(page, pageSize);
 
-            using (var ctx = _realDbFixture.CreateContext())
-            {
-                var customers = await ctx.Customers
+            var customers =
+                await _realDbFixture.QueryAsync(ctx => ctx.Customers
                     .SortAndPaginate(sorting, pagination)
-                    .ToListAsync();
+                    .ToListAsync());
 
-                customers
-                    .Select(c => c.BirthDate.Ticks)
-                    .Aggregate(Math.Min)
-                    .ShouldBe(customers.First().BirthDate.Ticks);
-            }
+            customers
+                .Select(c => c.BirthDate.Ticks)
+                .Aggregate(Math.Min)
+                .ShouldBe(customers.First().BirthDate.Ticks);
+
         }
 
         [Fact]
@@ -52,17 +51,16 @@ namespace PagiNET.IntegrationTests.Tests
             var sorting = Descending<Customer, DateTime>.By(c => c.BirthDate);
             var pagination = Pagination.Set(page, pageSize);
 
-            using (var ctx = _realDbFixture.CreateContext())
-            {
-                var customers = await ctx.Customers
-                    .SortAndPaginate(sorting, pagination)
-                    .ToListAsync();
+            var customers =
+                await _realDbFixture.QueryAsync(ctx =>
+                    ctx.Customers
+                       .SortAndPaginate(sorting, pagination)
+                       .ToListAsync());
 
-                customers
-                    .Select(c => c.BirthDate.Ticks)
-                    .Aggregate(Math.Max)
-                    .ShouldBe(customers.First().BirthDate.Ticks);
-            }
+            customers
+                .Select(c => c.BirthDate.Ticks)
+                .Aggregate(Math.Max)
+                .ShouldBe(customers.First().BirthDate.Ticks);
         }
     }
 }
