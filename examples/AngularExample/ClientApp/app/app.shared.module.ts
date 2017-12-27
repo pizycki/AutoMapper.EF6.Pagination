@@ -4,6 +4,8 @@ import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { RouterModule } from "@angular/router";
 
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
+
 import { AppComponent } from "./components/app/app.component";
 import { NavMenuComponent } from "./components/navmenu/navmenu.component";
 import { CustomersFixed } from "./components/customers-fixed/customers-fixed.component";
@@ -22,6 +24,7 @@ import { CustomersInfinite } from "./components/customers-infinite/customers-inf
         CommonModule,
         HttpModule,
         FormsModule,
+        InfiniteScrollModule,
         RouterModule.forRoot([
             { path: "", redirectTo: "customers-fixed", pathMatch: "full" },
             { path: "customers-fixed", component: CustomersFixed },
