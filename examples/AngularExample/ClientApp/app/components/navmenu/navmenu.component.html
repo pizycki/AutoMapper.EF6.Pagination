@@ -13,8 +13,13 @@
         <div class='navbar-collapse collapse'>
             <ul class='nav navbar-nav'>
                 <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/customers']">
-                        <span class='glyphicon glyphicon-th-list'></span> Customers
+                    <a [routerLink]="['/customers-fixed']">
+                        <span class='glyphicon glyphicon-th-list'></span> Fixed page size grid
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/customers-infinite']">
+                        <span class='glyphicon glyphicon-th-list'></span> Infinite scrolled page
                     </a>
                 </li>
             </ul>

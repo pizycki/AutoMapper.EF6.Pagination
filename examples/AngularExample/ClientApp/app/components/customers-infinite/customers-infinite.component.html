@@ -1,6 +1,6 @@
 <p *ngIf="!items"><em>Loading...</em></p>
 
-<h2>Customers - fixed page size grid</h2>
+<h2>Customers - Infinite scrolled page</h2>
 
 <table class="table" *ngIf="items">
     <thead>
@@ -18,5 +18,3 @@
     </tr>
     </tbody>
 </table>
-
-<pager [pagination]="itemsWithPagination" [pagesTotal]="pagesTotal" (pageSelected)="onPageSelected($event)"></pager>
