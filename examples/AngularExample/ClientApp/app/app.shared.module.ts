@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { HttpModule } from "@angular/http";
+import { RouterModule } from "@angular/router";
 
-import { AppComponent } from './components/app/app.component';
-import { NavMenuComponent } from './components/navmenu/navmenu.component';
+import { AppComponent } from "./components/app/app.component";
+import { NavMenuComponent } from "./components/navmenu/navmenu.component";
 import { CustomersList } from "./components/customers/customers.component";
 import { Pager } from "./components/pager/pager.component";
 
@@ -21,9 +21,9 @@ import { Pager } from "./components/pager/pager.component";
         HttpModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: '', redirectTo: 'customers', pathMatch: 'full' },
-            { path: 'customers', component: CustomersList },
-            { path: '**', redirectTo: 'customers' }
+            { path: "", redirectTo: "customers", pathMatch: "full" },
+            { path: "customers", component: CustomersList },
+            { path: "**", redirectTo: "customers" }
         ])
     ]
 })
