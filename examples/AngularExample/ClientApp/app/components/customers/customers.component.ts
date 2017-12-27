@@ -1,6 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { Http } from '@angular/http';
+import { Component, Inject } from "@angular/core";
+import { Http } from "@angular/http";
 import { IPaginatedView, IItemsWithPagination, IPagerModel } from "../../shared/pagination";
+import { CustomersService } from "../../services/customers.service";
 
 interface ICustomer {
     name: string;
@@ -9,14 +10,15 @@ interface ICustomer {
 }
 
 @Component({
-    selector: 'customers',
-    templateUrl: './customers.component.html'
+    selector: "customers",
+    templateUrl: "./customers.component.html",
+    providers: [CustomersService]
 })
 export class CustomersList implements IPaginatedView<ICustomer> {
 
-    private http: Http;
-    private baseUrl: string;
     private pagerModel: IPagerModel;
+    private pageSize: number = 20;
+    private columnToOrderBy: string = "Id";
 
     public itemsWithPagination: IItemsWithPagination<ICustomer>;
 
@@ -33,29 +35,24 @@ export class CustomersList implements IPaginatedView<ICustomer> {
     }
 
     private loadData(page: number = 1): void {
-        this.http.get(this.baseUrl + `api/customers?pageSize=${this.ps}&page=${page}&orderby=${this.c}`)
+        this.customersService
+            .customersPaginated(page, this.pageSize, this.columnToOrderBy)
             .subscribe(result => {
                 this.itemsWithPagination = result.json();
             }, error => console.error(error));
     }
 
     private loadPagination(): void {
-        this.http.get(this.baseUrl + `api/customers/pagination?pageSize=${this.ps}&page=${1}&orderby=${this.c}`)
+        this.customersService
+            .customersPaginatedPager(this.pageSize, this.columnToOrderBy)
             .subscribe(result => {
                 this.pagerModel = result.json();
             }, error => console.error(error));
     }
 
-    private ps: number = 20;
-    private c: string = 'Id';
 
-    constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
-
-        this.http = http;
-        this.baseUrl = baseUrl;
-
+    constructor(private customersService: CustomersService) {
         this.loadData();
         this.loadPagination();
-
     }
 }
