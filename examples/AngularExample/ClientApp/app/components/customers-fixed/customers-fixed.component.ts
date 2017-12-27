@@ -10,11 +10,11 @@ interface ICustomer {
 }
 
 @Component({
-    selector: "customers",
-    templateUrl: "./customers.component.html",
+    selector: "customers-fixed",
+    templateUrl: "./customers-fixed.component.html",
     providers: [CustomersService]
 })
-export class CustomersList implements IPaginatedView<ICustomer> {
+export class CustomersFixed implements IPaginatedView<ICustomer> {
 
     private pagerModel: IPagerModel;
     private pageSize: number = 20;
