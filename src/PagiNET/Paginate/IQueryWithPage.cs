@@ -4,7 +4,10 @@ using PagiNET.Sort;
 
 namespace PagiNET.Paginate
 {
-    public interface IQueryWithPage : IPageInfo, ISortInfo { }
+    public interface IQueryWithPage : IPageInfo, ISortInfo
+    {
+        bool IncludeTotalPages { get; set; }
+    }
 
     public static class IQueryWithPaginationExtensions
     {
@@ -19,15 +22,15 @@ namespace PagiNET.Paginate
             return (sorting, pagination);
         }
 
-        public static PagedResult<TItem> GetPaginatedResult<TItem>(
+        public static PageAndPager<TItem> GetPageAndTotalPages<TItem>(
             this IQueryWithPage query,
-            Func<IQueryWithPage, Page<TItem>> getItems,
-            Func<IQueryWithPage, PagerModel> getPager)
+            Func<IQueryWithPage, Page<TItem>> getPage,
+            Func<IQueryWithPage, int> getTotalPages)
         {
-            if (getItems == null) throw new ArgumentNullException(nameof(getItems));
-            if (getPager == null) throw new ArgumentNullException(nameof(getPager));
+            if (getPage == null) throw new ArgumentNullException(nameof(getPage));
+            if (getTotalPages == null) throw new ArgumentNullException(nameof(getTotalPages));
 
-            return new PagedResult<TItem>(getItems(query), getPager(query));
+            return new PageAndPager<TItem>(getPage(query), getTotalPages(query));
         }
     }
 }
