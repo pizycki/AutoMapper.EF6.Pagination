@@ -18,7 +18,7 @@ namespace PagiNET.Queryable
                 .Sort(sorting)
                 .Paginate(pagination);
 
-        public static IQueryable<T> SortAndPaginate<T>(this IQueryable<T> queryable, IQueryWithPagination query) =>
+        public static IQueryable<T> SortAndPaginate<T>(this IQueryable<T> queryable, IQueryWithPage query) =>
             queryable.SortAndPaginate(query.CreatePagination<T>());
 
         public static IQueryable<T> SortAndPaginate<T, K>(this IQueryable<T> queryable, (Sorting<T, K> sorting, Pagination pagination) snp) =>
