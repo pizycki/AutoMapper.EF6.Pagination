@@ -1,18 +1,18 @@
 ﻿using System;
-using PagiNET.Pager;
 using PagiNET.Paginate;
 
 namespace PagiNET
 {
-    public class PageAndPager<T>
+    public class PageAndPager<T> : Page<T>
     {
-        public PageAndPager(Page<T> items, PagerModel pager)
-        {
-            Page = items ?? throw new ArgumentNullException(nameof(items));
-            Pager = pager ?? throw new ArgumentNullException(nameof(pager));
-        }
+        public virtual int PagesTotal { get; set; }
 
-        public virtual Page<T> Page { get; }
-        public virtual PagerModel Pager { get; }
+        public PageAndPager(Page<T> page, int pagesTotal) : base(page.Items, page)
+        {
+            if (pagesTotal < 0) throw new ArgumentException("Total count of pages cannot be negative number.");
+            if (pagesTotal < page.Number) throw new ArgumentException("Total count of pages cannot be less then actual number.");
+
+            PagesTotal = pagesTotal;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PagiNET.Paginate
 {
@@ -22,12 +23,13 @@ namespace PagiNET.Paginate
 
             Number = page.Number;
             Size = page.Size;
+            Items = Enumerable.Empty<T>();
         }
     }
 
-    public static class ItemsWithPaginationExtensions
+    public static class PageExtensions
     {
-        public static Page<T> ToItemsWithPagination<T>(this IEnumerable<T> collection, IPageInfo page) =>
-            new Page<T>(collection, page);
+        public static Page<T> AsPage<T>(this IEnumerable<T> collection, IPageInfo pageInfo) =>
+            new Page<T>(collection, pageInfo);
     }
 }

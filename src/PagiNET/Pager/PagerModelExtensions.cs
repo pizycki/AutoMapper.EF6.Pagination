@@ -6,15 +6,11 @@ namespace PagiNET.Pager
 {
     public static class PagerModelExtensions
     {
-        public static PagerModel GetPagerModel<T>(this IQueryable<T> query, IPageInfo info)
+        public static int CountPages<T>(this IQueryable<T> query, IPageInfo info)
         {
             var total = query.Count();
 
-            return new PagerModel
-            {
-                // ReSharper disable once PossibleLossOfFraction
-                Pages = (int)Math.Ceiling((double)(total / info.Size))
-            };
+            return (int)Math.Ceiling((double)(total / info.Size));
         }
     }
 }

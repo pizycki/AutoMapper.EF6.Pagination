@@ -2,7 +2,6 @@ using System.Linq;
 using ExampleDbContext;
 using ExampleDbContext.Entities;
 using Microsoft.AspNetCore.Mvc;
-using PagiNET;
 using PagiNET.Pager;
 using PagiNET.Paginate;
 using PagiNET.Queryable;
@@ -15,6 +14,7 @@ namespace AngularExample.Controllers
         public bool Descending { get; set; }
         public int Number { get; set; }
         public int Size { get; set; }
+        public bool IncludeTotalPages { get; set; } = false;
     }
 
     public class CustomersController : Controller
@@ -27,26 +27,19 @@ namespace AngularExample.Controllers
         }
 
         [HttpGet, Route("api/customers")]
-        public Page<Customer> GetAllCompanies(AllCustomersQuery query) =>
+        public Page<Customer> GetPageOfAllCustomers(AllCustomersQuery query) =>
+            query.IncludeTotalPages
+            ? GetPageOfCustomers(query)
+            : query.GetPageAndTotalPages(
+                getPage: q => GetPageOfCustomers(q),
+                getTotalPages: q => AllCustomersQuery.CountPages(q));
+
+        private Page<Customer> GetPageOfCustomers(IQueryWithPage query) =>
             AllCustomersQuery
                 .SortAndPaginate(query)
                 .ToList()
-                .ToItemsWithPagination(query);
+                .AsPage(query);
 
         private IQueryable<Customer> AllCustomersQuery => _context.Customers.AsQueryable();
-
-
-        [HttpGet, Route("api/paginated/customers")]
-        public PageAndPager<Customer> GetAllCompaniesWithPager(AllCustomersQuery query) =>
-            query.GetPaginatedResult(
-                getItems: q => AllCustomersQuery
-                    .SortAndPaginate(q)
-                    .ToList()
-                    .ToItemsWithPagination(q),
-                getPager: q => AllCustomersQuery.GetPagerModel(q));
-
-        [HttpGet, Route("api/customers/pagination")]
-        public PagerModel GetAllCompaniesPagerModel(AllCustomersQuery pagination) => AllCustomersQuery.GetPagerModel(pagination);
     }
-
 }
