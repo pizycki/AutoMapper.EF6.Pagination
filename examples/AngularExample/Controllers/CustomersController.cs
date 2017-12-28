@@ -9,12 +9,12 @@ using PagiNET.Queryable;
 
 namespace AngularExample.Controllers
 {
-    public class AllCustomersQuery : IQueryWithPagination
+    public class AllCustomersQuery : IQueryWithPage
     {
         public string OrderBy { get; set; }
         public bool Descending { get; set; }
-        public int Page { get; set; }
-        public int PageSize { get; set; }
+        public int Number { get; set; }
+        public int Size { get; set; }
     }
 
     public class CustomersController : Controller
@@ -27,13 +27,23 @@ namespace AngularExample.Controllers
         }
 
         [HttpGet, Route("api/customers")]
-        public ItemsWithPagination<Customer> GetAllCompanies(AllCustomersQuery query) =>
+        public Page<Customer> GetAllCompanies(AllCustomersQuery query) =>
             AllCustomersQuery
                 .SortAndPaginate(query)
                 .ToList()
                 .ToItemsWithPagination(query);
 
         private IQueryable<Customer> AllCustomersQuery => _context.Customers.AsQueryable();
+
+
+        [HttpGet, Route("api/paginated/customers")]
+        public PageAndPager<Customer> GetAllCompaniesWithPager(AllCustomersQuery query) =>
+            query.GetPaginatedResult(
+                getItems: q => AllCustomersQuery
+                    .SortAndPaginate(q)
+                    .ToList()
+                    .ToItemsWithPagination(q),
+                getPager: q => AllCustomersQuery.GetPagerModel(q));
 
         [HttpGet, Route("api/customers/pagination")]
         public PagerModel GetAllCompaniesPagerModel(AllCustomersQuery pagination) => AllCustomersQuery.GetPagerModel(pagination);
