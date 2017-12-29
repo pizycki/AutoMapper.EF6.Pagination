@@ -10,9 +10,6 @@ export class CustomersService {
         @Inject("BASE_URL") private baseUrl: string) {
     }
 
-    customersPaginated = (page: number, size: number, orderBy: string): Observable<any> =>
-        this.http.get(this.baseUrl + `api/customers?pageSize=${size}&page=${page}&orderby=${orderBy}`)
-
-    customersPaginatedPager = (size: number, orderBy: string): Observable<any> =>
-        this.http.get(this.baseUrl + `api/customers/pagination?pageSize=${size}&page=${2}&orderby=${orderBy}`)
+    customersPaginated = (page: number, size: number, orderBy: string, totalPages: boolean): Observable<any> =>
+        this.http.get(this.baseUrl + `api/customers?size=${size}&number=${page}&orderby=${orderBy}&${totalPages ? "includeTotalPages" : ""}`)
 }
