@@ -27,16 +27,16 @@ namespace AngularExample.Controllers
         }
 
         [HttpGet, Route("api/customers")]
-        public Page<Customer> GetPageOfAllCustomers(AllCustomersQuery query) =>
+        public Page<Customer> GetCustomersPage(AllCustomersQuery query) =>
             query.IncludeTotalPages
-            ? GetPageOfCustomers(query)
+            ? QueryForCustomersPage(query)
             : query.GetPageAndTotalPages(
-                getPage: q => GetPageOfCustomers(q),
+                getPage: q => QueryForCustomersPage(q),
                 getTotalPages: q => AllCustomersQuery.CountPages(q));
 
-        private Page<Customer> GetPageOfCustomers(IQueryWithPage query) =>
+        private Page<Customer> QueryForCustomersPage(IQueryWithPage query) =>
             AllCustomersQuery
-                .SortAndPaginate(query)
+                .SortAndTakePage(query)
                 .ToList()
                 .AsPage(query);
 

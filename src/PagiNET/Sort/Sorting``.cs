@@ -29,4 +29,9 @@ namespace PagiNET.Sort
 
         public static Descending<TEntity, TSort> By(Expression<Func<TEntity, TSort>> orderBy) => new Descending<TEntity, TSort>(orderBy);
     }
+
+    public static class SortingExtensions
+    {
+        public static Sorting<T, K> AsSorting<T, K>(this Sorting<T, K> sorting) => sorting;
+    }
 }
