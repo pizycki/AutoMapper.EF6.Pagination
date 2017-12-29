@@ -1,6 +1,6 @@
 import { Component, Inject, HostListener } from "@angular/core";
 import { Http } from "@angular/http";
-import { IPaginatedView, IItemsWithPagination, IPagerModel } from "../../shared/pagination";
+//import { IPaginatedView, IPage, IPagerModel } from "../../shared/pagination";
 import { CustomersService } from "../../services/customers.service";
 import { Observable } from "rxjs/Observable";
 import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
@@ -17,55 +17,55 @@ interface ICustomer {
     templateUrl: "./customers-infinite.component.html",
     providers: [CustomersService]
 })
-export class CustomersInfinite implements IPaginatedView<ICustomer>, OnInit {
+export class CustomersInfinite  {
 
-    private page: number = 0;
-    private pageSize: number = 50;
-    private columnToOrderBy: string = "Id";
-    private thereIsMore: boolean = true; // stay positive!
+    // private page: number = 0;
+    // private pageSize: number = 50;
+    // private columnToOrderBy: string = "Id";
+    // private thereIsMore: boolean = true; // stay positive!
 
-    public itemsWithPagination: IItemsWithPagination<ICustomer>;
+    // public page: IPage<ICustomer>;
 
-    get items(): ICustomer[] {
-        return !this.itemsWithPagination ? [] : this.itemsWithPagination.items;
-    }
+    // get items(): ICustomer[] {
+    //     return !this.page ? [] : this.page.items;
+    // }
 
-    ngOnInit(): void {
-        if (this.shouldLoadData()) {
-            this.loadData(++this.page);
-        }
-    }
+    // ngOnInit(): void {
+    //     if (this.shouldLoadData()) {
+    //         this.loadData(++this.page);
+    //     }
+    // }
 
-    @HostListener("window:scroll", ["$event"])
-    onScroll(): void {
-        if (this.shouldLoadData()) {
-            this.loadData(++this.page);
-        }
-    }
+    // @HostListener("window:scroll", ["$event"])
+    // onScroll(): void {
+    //     if (this.shouldLoadData()) {
+    //         this.loadData(++this.page);
+    //     }
+    // }
 
-    private loadData(page: number = 1): void {
-        this.customersService
-            .customersPaginated(page, this.pageSize, this.columnToOrderBy)
-            .subscribe(result => {
-                let newData: IItemsWithPagination<ICustomer> = result.json();
+    // private loadData(page: number = 1): void {
+    //     this.customersService
+    //         .customersPaginated(page, this.pageSize, this.columnToOrderBy)
+    //         .subscribe(result => {
+    //             let newData: IPage<ICustomer> = result.json();
 
-                if (newData.items.length === 0) {
-                    this.thereIsMore = false;
-                    return;
-                }
+    //             if (newData.items.length === 0) {
+    //                 this.thereIsMore = false;
+    //                 return;
+    //             }
 
-                this.itemsWithPagination = {
-                    page: newData.page,
-                    pageSize: newData.pageSize,
-                    items: this.itemsWithPagination !== undefined
-                        ? this.itemsWithPagination.items.concat(newData.items)
-                        : newData.items
-                };
-            }, error => console.error(error));
-    }
+    //             this.page = {
+    //                 page: newData.page,
+    //                 pageSize: newData.pageSize,
+    //                 items: this.page !== undefined
+    //                     ? this.page.items.concat(newData.items)
+    //                     : newData.items
+    //             };
+    //         }, error => console.error(error));
+    // }
 
-    private shouldLoadData = (): boolean => this.thereIsMore && (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
+    // private shouldLoadData = (): boolean => this.thereIsMore && (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
 
-    constructor(private customersService: CustomersService) {
-    }
+    // constructor(private customersService: CustomersService) {
+    // }
 }

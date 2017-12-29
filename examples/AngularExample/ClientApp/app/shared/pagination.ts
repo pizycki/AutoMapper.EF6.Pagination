@@ -1,17 +1,9 @@
-﻿export interface IPaginatedView<T> {
-    itemsWithPagination: IItemsWithPagination<T>;
+﻿export interface IPage<T> extends IPagination {
     items: T[];
-}
-
-export interface IItemsWithPagination<T> extends IPagination {
-    items: T[];
+    pagesTotal: number;
 }
 
 export interface IPagination {
-    page: number;
-    pageSize: number;
-}
-
-export interface IPagerModel {
-    pages: number;
+    number: number;
+    size: number;
 }

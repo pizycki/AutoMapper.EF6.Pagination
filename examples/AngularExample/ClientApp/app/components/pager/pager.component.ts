@@ -8,7 +8,7 @@ import { IPagination } from "../../shared/pagination";
 export class Pager{
 
     @Input()
-    pagination: IPagination;
+    number: number;
 
     @Input()
     pagesTotal: number; 
@@ -17,7 +17,6 @@ export class Pager{
     pageSelected = new EventEmitter();
 
     selectPage(page: number): void {
-        console.log(page);
         this.pageSelected.emit(page);
     }
 
