@@ -1,3 +1,8 @@
 <div>
-    <span *ngFor="let p of pages"><span *ngIf="p !== number; else elseBlock">[ <a (click)="selectPage(p)">{{p}}</a> ]</span><ng-template #elseBlock>[ <strong>{{p}}</strong> ]</ng-template></span>
+    <span *ngFor="let p of pages">
+        <span *ngIf="p !== number; else elseBlock">[
+            <a (click)="selectPage(p)" style="cursor:pointer">{{p}}</a> ]</span>
+        <ng-template #elseBlock>[
+            <strong>{{p}}</strong> ]</ng-template>
+    </span>
 </div>
