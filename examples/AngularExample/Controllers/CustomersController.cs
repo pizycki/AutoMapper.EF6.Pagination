@@ -10,8 +10,11 @@ namespace AngularExample.Controllers
 {
     public class AllCustomersQuery : IQueryWithPage
     {
+        // Sorting
         public string OrderBy { get; set; }
         public bool Descending { get; set; }
+
+        // Pagination
         public int Number { get; set; }
         public int Size { get; set; }
         public bool IncludeTotalPages { get; set; } = false;
@@ -21,18 +24,15 @@ namespace AngularExample.Controllers
     {
         private readonly Context _context;
 
-        public CustomersController(Context context)
-        {
-            _context = context;
-        }
+        public CustomersController(Context context) => _context = context;
 
         [HttpGet, Route("api/customers")]
         public Page<Customer> GetCustomersPage(AllCustomersQuery query) =>
             query.IncludeTotalPages
             ? QueryForCustomersPage(query)
             : query.GetPageAndTotalPages(
-                getPage: q => QueryForCustomersPage(q),
-                getTotalPages: q => AllCustomersQuery.CountPages(q));
+                getPage: QueryForCustomersPage,
+                getTotalPages: CountCustomerPages);
 
         private Page<Customer> QueryForCustomersPage(IQueryWithPage query) =>
             AllCustomersQuery
@@ -40,6 +40,10 @@ namespace AngularExample.Controllers
                 .ToList()
                 .AsPage(query);
 
-        private IQueryable<Customer> AllCustomersQuery => _context.Customers.AsQueryable();
+        private int CountCustomerPages(IQueryWithPage query) =>
+            AllCustomersQuery.CountPages(query);
+
+        private IQueryable<Customer> AllCustomersQuery =>
+            _context.Customers.AsQueryable();
     }
 }
