@@ -39,22 +39,22 @@ export class CustomersInfinite {
 
     @HostListener("window:scroll", ["$event"])
     onScroll(): void {
-        if (this.shouldLoadData()) {
-            this.loadPage(this.page.number + 1);
-        }
+        this.loadPage(this.page.number + 1);
     }
 
     private loadPage(page: number = 1, totalPages: boolean = false): void {
-        this.customersService
-            .customersPaginated(page, this.page.size, this.orderBy, totalPages)
-            .subscribe(result => {
-                let page = result.json();
-                page.items = this.page.items.concat(page.items);
-                this.page = page;
-            }, error => console.error(error));
+        if (this.canLoadData()) {
+            this.customersService
+                .customersPaginated(page, this.page.size, this.orderBy, totalPages)
+                .subscribe(result => {
+                    let page = result.json();
+                    page.items = this.page.items.concat(page.items);
+                    this.page = page;
+                }, error => console.error(error));
+        }
     }
 
-    private shouldLoadData = (): boolean =>
+    private canLoadData = (): boolean =>
         this.page.number !== this.page.pagesTotal
         && (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
 
