@@ -41,7 +41,7 @@ namespace PagiNET.IntegrationTests.Setup
             TryGetAppVeyorDatabasePath()
             ?? Environment.GetEnvironmentVariable("PAGINET_DATABASE_PATH")
             ?? ConfigurationManager.AppSettings["DatabasePath"]
-            ?? @"C:\Users\pawelizycki\SampleDatabase.mdf";
+            ?? Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\SampleDatabase.mdf");
 
         private static string TryGetAppVeyorDatabasePath() =>
             Environment.GetEnvironmentVariable("APPVEYOR") == "True"
