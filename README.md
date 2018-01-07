@@ -79,7 +79,7 @@ You can reach me on Twitter: [@pizycki](http://twitter.com/pizycki).
 - [ ] CI&CD (AppVeyor)
   - [x] Build
   - [x] Unit tests
-  - [ ] Integration tests (real db)
+  - [x] Integration tests (real db)
     - [x] Working localy
-    - [ ] On build server 
+    - [x] On build server 
   - [ ] Nuget publish
