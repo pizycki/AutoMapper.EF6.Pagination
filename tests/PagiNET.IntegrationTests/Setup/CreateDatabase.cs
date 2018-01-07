@@ -9,37 +9,45 @@ namespace PagiNET.IntegrationTests.Setup
     public class CreateDatabase
     {
         private readonly DatabaseConfig _cfg;
-        private readonly DbContextProvider _dbContextProvider;
+        private readonly string[] _createTableScripts;
 
-        public CreateDatabase(DatabaseConfig databaseConfig, DbContextProvider dbContextProvider)
+        public CreateDatabase(DatabaseConfig databaseConfig, params string[] scripts)
         {
             _cfg = databaseConfig;
-            _dbContextProvider = dbContextProvider;
+            _createTableScripts = scripts;
         }
 
         internal void Go()
         {
-            //try
-            //{
-            //    SqlCommandHelpers.ExecuteSqlCommand(_cfg.ConnectionString,
-            //    $@"CREATE DATABASE [{_cfg.DatabaseName}]
-            //      CONTAINMENT = NONE
-            //      ON  PRIMARY 
-            //      ( NAME = N'{_cfg.DatabaseName}', FILENAME = N'{_cfg.DatabaseFileName}' )");
+            TryCreateDatabase();
+            RunTableCreateScripts();
+        }
 
-            //}
-            //catch (SqlException ex)
-            //{
-            //    if (ex.Message.Contains("already exists"))
-            //    {
-            //        return;
-            //    }
+        private void RunTableCreateScripts()
+        {
+            foreach (var script in _createTableScripts)
+                SqlCommandHelpers.ExecuteSqlCommand(_cfg.ExampleDatabaseConnectionString, script);
+        }
 
-            //    throw;
-            //}
+        private void TryCreateDatabase()
+        {
+            try
+            {
+                SqlCommandHelpers.ExecuteSqlCommand(_cfg.MasterConnectionString,
+                    $@"CREATE DATABASE [{_cfg.DatabaseName}]
+                  CONTAINMENT = NONE
+                  ON  PRIMARY 
+                  ( NAME = N'{_cfg.DatabaseName}', FILENAME = N'{_cfg.DatabaseFileName}' )");
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains("already exists"))
+                {
+                    return;
+                }
 
-            var context = _dbContextProvider.CreateDbContext();
-            context.Database.EnsureCreated();
+                throw;
+            }
         }
     }
 }
