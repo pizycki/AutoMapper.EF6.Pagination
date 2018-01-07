@@ -10,20 +10,31 @@ namespace PagiNET.IntegrationTests.Setup
         private DbContextProvider DbContextProvider { get; }
         private CreateDatabase CreateDatabase { get; }
         private DropDatabase DropDatabase { get; }
+        private CreateTableScriptsProvider CreateTableScriptsProvider { get; }
 
         public TestDatabaseManager()
         {
-            var dbCfg = new DatabaseConfig(MasterConnString, DatabaseName, DatabaseFileName);
+            var dbCfg = new DatabaseConfig(MasterConnString, ExampleDatabaseConnString, DatabaseName, DatabaseFileName);
 
             DbContextProvider = new DbContextProvider(dbCfg);
-            CreateDatabase = new CreateDatabase(dbCfg, DbContextProvider);
+            CreateTableScriptsProvider = new CreateTableScriptsProvider();
+            CreateDatabase = new CreateDatabase(dbCfg, CreateTableScriptsProvider.GetScripts());
             DropDatabase = new DropDatabase(dbCfg);
+        }
+
+        private void SeedCustomersTable()
+        {
+            using (var dbCtx = DbContextProvider.CreateDbContext())
+            {
+                CustomersSeeder.Seed(dbCtx);
+            }
         }
 
         void ITestDatabaseManager.CreateDatabase()
         {
             DropDatabase.Go();
             CreateDatabase.Go();
+            SeedCustomersTable();
         }
 
         void ITestDatabaseManager.DropDatabase()
@@ -36,25 +47,34 @@ namespace PagiNET.IntegrationTests.Setup
             return DbContextProvider.CreateDbContext();
         }
 
-        private static string DatabaseName = "SampleDatabase";
+        private static string DatabaseName = "ExampleDatabase";
         private static string DatabaseFileName =>
             TryGetAppVeyorDatabasePath()
             ?? Environment.GetEnvironmentVariable("PAGINET_DATABASE_PATH")
             ?? ConfigurationManager.AppSettings["DatabasePath"]
-            ?? Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\SampleDatabase.mdf");
+            ?? Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\ExampleDatabase.mdf");
 
         private static string TryGetAppVeyorDatabasePath() =>
             Environment.GetEnvironmentVariable("APPVEYOR") == "True"
-                ? Environment.GetEnvironmentVariable("APPVEYOR_BUILD_FOLDER") + @"\SampleDatabase.mdf"
+                ? Environment.GetEnvironmentVariable("APPVEYOR_BUILD_FOLDER") + @"\ExampleDatabase.mdf"
                 : null;
 
         private static string MasterConnString => Master.ToString();
+        private static string ExampleDatabaseConnString => ExampleDatabase.ToString();
 
         private static SqlConnectionStringBuilder Master =>
             new SqlConnectionStringBuilder
             {
                 DataSource = @"(LocalDB)\MSSQLLocalDB",
                 InitialCatalog = "Master",
+                IntegratedSecurity = true
+            };
+
+        private static SqlConnectionStringBuilder ExampleDatabase =>
+            new SqlConnectionStringBuilder
+            {
+                DataSource = @"(LocalDB)\MSSQLLocalDB",
+                InitialCatalog = "ExampleDatabase",
                 IntegratedSecurity = true
             };
     }

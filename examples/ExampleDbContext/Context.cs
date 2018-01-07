@@ -9,7 +9,7 @@ namespace ExampleDbContext
         public Context CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<Context>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Companies;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ExampleDatabase;Trusted_Connection=True;");
 
             return new Context(optionsBuilder.Options);
         }

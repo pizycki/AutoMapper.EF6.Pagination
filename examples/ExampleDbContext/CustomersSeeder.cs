@@ -212,8 +212,6 @@ namespace ExampleDbContext
 
         public static void Seed(Context context)
         {
-            context.Database.EnsureCreated();
-
             if (context.Customers.Any())
                 return;
 

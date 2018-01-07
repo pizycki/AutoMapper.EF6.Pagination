@@ -3,16 +3,26 @@
     public class DatabaseConfig
     {
         public DatabaseConfig(
-            string connectionString,
+            string masterConnectionString,
+            string exampleDatabaseConnectionString,
             string databaseName,
             string databaseFileName)
         {
-            ConnectionString = connectionString;
+            MasterConnectionString = masterConnectionString;
+            ExampleDatabaseConnectionString = exampleDatabaseConnectionString;
             DatabaseName = databaseName;
             DatabaseFileName = databaseFileName;
         }
 
-        public string ConnectionString { get; }
+        /// <summary>
+        /// Used when creating new database
+        /// </summary>
+        public string MasterConnectionString { get; }
+
+        /// <summary>
+        /// For any query to existing database
+        /// </summary>
+        public string ExampleDatabaseConnectionString { get; }
         public string DatabaseName { get; }
         public string DatabaseFileName { get; }
     }

@@ -9,12 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Scripts\CreateTables.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="appsettings.Development.json">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Include="appsettings.json">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\CreateTables.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
