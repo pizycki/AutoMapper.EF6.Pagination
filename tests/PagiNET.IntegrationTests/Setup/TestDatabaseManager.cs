@@ -5,6 +5,13 @@ using ExampleDbContext;
 
 namespace PagiNET.IntegrationTests.Setup
 {
+    public interface ITestDatabaseManager
+    {
+        void CreateDatabase();
+        void DropDatabase();
+        Context CreateDbContext();
+    }
+
     public class TestDatabaseManager : ITestDatabaseManager
     {
         private DbContextProvider DbContextProvider { get; }
@@ -25,9 +32,7 @@ namespace PagiNET.IntegrationTests.Setup
         private void SeedCustomersTable()
         {
             using (var dbCtx = DbContextProvider.CreateDbContext())
-            {
                 CustomersSeeder.Seed(dbCtx);
-            }
         }
 
         void ITestDatabaseManager.CreateDatabase()
@@ -37,15 +42,9 @@ namespace PagiNET.IntegrationTests.Setup
             SeedCustomersTable();
         }
 
-        void ITestDatabaseManager.DropDatabase()
-        {
-            DropDatabase.Go();
-        }
+        void ITestDatabaseManager.DropDatabase() => DropDatabase.Go();
 
-        Context ITestDatabaseManager.CreateDbContext()
-        {
-            return DbContextProvider.CreateDbContext();
-        }
+        Context ITestDatabaseManager.CreateDbContext() => DbContextProvider.CreateDbContext();
 
         private static string DatabaseName = "ExampleDatabase";
         private static string DatabaseFileName =>

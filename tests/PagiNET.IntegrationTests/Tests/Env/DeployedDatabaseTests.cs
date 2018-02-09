@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ExampleDbContext;
+using ExampleDbContext.Entities;
 using PagiNET.IntegrationTests.Fixtures;
 using Shouldly;
 using Xunit;
@@ -13,10 +14,7 @@ namespace PagiNET.IntegrationTests.Tests.Env
     {
         private readonly RealDatabaseTestFixture _realDbFixture;
 
-        public DeployedDatabaseTests(RealDatabaseTestFixture realDbFixture)
-        {
-            _realDbFixture = realDbFixture;
-        }
+        public DeployedDatabaseTests(RealDatabaseTestFixture realDbFixture) => _realDbFixture = realDbFixture;
 
         [Fact]
         public void database_is_not_empty() =>
@@ -31,9 +29,15 @@ namespace PagiNET.IntegrationTests.Tests.Env
             _realDbFixture
                 .Query(ctx =>
                     ctx.Customers
-                       .Select(x => x.Id)
+                       .Select(c => c.Id)
                        .Count())
                 .ShouldBe(expected);
         }
+
+        [Theory]
+        [InlineData(Gender.Male)]
+        [InlineData(Gender.Female)]
+        public void not_all_customers_are_of_one_gender(Gender gender) =>
+            _realDbFixture.Query(ctx => ctx.Customers.All(c => c.Gender == gender));
     }
 }
