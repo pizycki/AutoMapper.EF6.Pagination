@@ -18,6 +18,7 @@ namespace PagiNET.IntegrationTests.Setup
         private CreateDatabase CreateDatabase { get; }
         private DropDatabase DropDatabase { get; }
         private CreateTableScriptsProvider CreateTableScriptsProvider { get; }
+        private DatabaseDirectoryManager DatabaseDirectoryManager { get; }
 
         public TestDatabaseManager()
         {
@@ -25,7 +26,8 @@ namespace PagiNET.IntegrationTests.Setup
 
             DbContextProvider = new DbContextProvider(dbCfg);
             CreateTableScriptsProvider = new CreateTableScriptsProvider();
-            CreateDatabase = new CreateDatabase(dbCfg, CreateTableScriptsProvider.GetScripts());
+            DatabaseDirectoryManager = new DatabaseDirectoryManager(dbCfg);
+            CreateDatabase = new CreateDatabase(dbCfg, DatabaseDirectoryManager, CreateTableScriptsProvider.GetScripts());
             DropDatabase = new DropDatabase(dbCfg);
         }
 
