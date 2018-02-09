@@ -1,7 +1,5 @@
-﻿using System;
-using System.Data.SqlClient;
-using ExampleDbContext;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Data.SqlClient;
+using System.Linq;
 using PagiNET.IntegrationTests.SqlCommands;
 
 namespace PagiNET.IntegrationTests.Setup
@@ -23,11 +21,11 @@ namespace PagiNET.IntegrationTests.Setup
             RunTableCreateScripts();
         }
 
-        private void RunTableCreateScripts()
-        {
-            foreach (var script in _createTableScripts)
-                SqlCommandHelpers.ExecuteSqlCommand(_cfg.ExampleDatabaseConnectionString, script);
-        }
+        private void RunTableCreateScripts() =>
+            _createTableScripts.ToList().ForEach(RunScriptAgainstDatabase);
+
+        private void RunScriptAgainstDatabase(string script) =>
+            SqlCommandHelpers.ExecuteSqlCommand(_cfg.ExampleDatabaseConnectionString, script);
 
         private void TryCreateDatabase()
         {
@@ -35,16 +33,14 @@ namespace PagiNET.IntegrationTests.Setup
             {
                 SqlCommandHelpers.ExecuteSqlCommand(_cfg.MasterConnectionString,
                     $@"CREATE DATABASE [{_cfg.DatabaseName}]
-                  CONTAINMENT = NONE
-                  ON  PRIMARY 
-                  ( NAME = N'{_cfg.DatabaseName}', FILENAME = N'{_cfg.DatabaseFileName}' )");
+                       CONTAINMENT = NONE
+                       ON  PRIMARY 
+                       ( NAME = N'{_cfg.DatabaseName}', FILENAME = N'{_cfg.DatabaseFileName}' )");
             }
             catch (SqlException ex)
             {
                 if (ex.Message.Contains("already exists"))
-                {
                     return;
-                }
 
                 throw;
             }

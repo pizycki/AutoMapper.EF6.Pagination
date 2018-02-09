@@ -10,15 +10,9 @@ namespace PagiNET.IntegrationTests.Fixtures
     {
         private ITestDatabaseManager DbManager { get; } = new TestDatabaseManager();
 
-        public RealDatabaseTestFixture()
-        {
-            DbManager.CreateDatabase();
-        }
+        public RealDatabaseTestFixture() => DbManager.CreateDatabase();
 
-        public void Dispose()
-        {
-            DbManager.DropDatabase();
-        }
+        public void Dispose() => DbManager.DropDatabase();
 
         public Context CreateContext() => DbManager.CreateDbContext();
     }
@@ -31,9 +25,7 @@ namespace PagiNET.IntegrationTests.Fixtures
                 throw new ArgumentNullException(nameof(fixture));
 
             using (var ctx = fixture.CreateContext())
-            {
                 return query(ctx);
-            }
         }
 
         public static async Task<T> QueryAsync<T>(this RealDatabaseTestFixture fixture, Func<Context, Task<T>> query)
@@ -42,9 +34,7 @@ namespace PagiNET.IntegrationTests.Fixtures
                 throw new ArgumentNullException(nameof(fixture));
 
             using (var ctx = fixture.CreateContext())
-            {
                 return await query(ctx);
-            }
         }
     }
 }

@@ -68,9 +68,8 @@ namespace PagiNET.IntegrationTests.Tests
 
             var companies = await _realDbFixture.QueryAsync(ctx =>
                 ctx.Customers
-                   .SortAndTakePage(
-                       Ascending<Customer, Guid>.By(x => x.Id),
-                       Pagination.Set(lastPage + 2, pageSize))
+                   .SortAndTakePage(Ascending<Customer, Guid>.By(x => x.Id),
+                                    Pagination.Set(lastPage + 2, pageSize))
                    .ToListAsync());
 
             companies.ShouldNotBeNull();

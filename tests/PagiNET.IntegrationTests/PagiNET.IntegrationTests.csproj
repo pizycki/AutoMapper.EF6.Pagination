@@ -127,7 +127,6 @@
     <Compile Include="Setup\DatabaseConfig.cs" />
     <Compile Include="Setup\DbContextProvider.cs" />
     <Compile Include="Setup\DropDatabase.cs" />
-    <Compile Include="Setup\ITestDatabaseManager.cs" />
     <Compile Include="Setup\TestDatabaseManager.cs" />
     <Compile Include="SqlCommands\SqlCommandHelpers.cs" />
     <Compile Include="Tests\Env\DeployedDatabaseTests.cs" />
