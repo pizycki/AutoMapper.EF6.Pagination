@@ -6,12 +6,12 @@
             string masterConnectionString,
             string exampleDatabaseConnectionString,
             string databaseName,
-            string databaseFileName)
+            string databasePath)
         {
             MasterConnectionString = masterConnectionString;
             ExampleDatabaseConnectionString = exampleDatabaseConnectionString;
             DatabaseName = databaseName;
-            DatabaseFileName = databaseFileName;
+            DatabasePath = databasePath;
         }
 
         /// <summary>
@@ -24,6 +24,6 @@
         /// </summary>
         public string ExampleDatabaseConnectionString { get; }
         public string DatabaseName { get; }
-        public string DatabaseFileName { get; }
+        public string DatabasePath { get; }
     }
 }
