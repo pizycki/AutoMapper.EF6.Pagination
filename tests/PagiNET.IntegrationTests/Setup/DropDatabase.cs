@@ -15,14 +15,14 @@ namespace PagiNET.IntegrationTests.Setup
 
         public void Go()
         {
-            var fileNames = SqlCommandHelpers.ExecuteSqlQuery(_cfg.MasterConnectionString, $@"
+            var fileNames = SqlCommandHelpers.ExecuteSqlQuery(_cfg.MasterConnString, $@"
                 SELECT [physical_name] FROM [sys].[master_files]
                 WHERE [database_id] = DB_ID('{_cfg.DatabaseName}')",
                 row => (string)row["physical_name"]);
 
             if (fileNames.Any())
             {
-                SqlCommandHelpers.ExecuteSqlCommand(_cfg.MasterConnectionString, $@"
+                SqlCommandHelpers.ExecuteSqlCommand(_cfg.MasterConnString, $@"
                     ALTER DATABASE [{_cfg.DatabaseName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
                     EXEC sp_detach_db '{_cfg.DatabaseName}'");
 

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Configuration;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using ExampleDbContext;
+using PagiNET.IntegrationTests.Config;
 
 namespace PagiNET.IntegrationTests.Setup
 {
@@ -14,6 +13,7 @@ namespace PagiNET.IntegrationTests.Setup
 
     public class TestDatabaseManager : ITestDatabaseManager
     {
+        private EnvConfig EnvConfig { get; }
         private DbContextProvider DbContextProvider { get; }
         private CreateDatabase CreateDatabase { get; }
         private DropDatabase DropDatabase { get; }
@@ -22,7 +22,9 @@ namespace PagiNET.IntegrationTests.Setup
 
         public TestDatabaseManager()
         {
-            var dbCfg = new DatabaseConfig(MasterConnString, ExampleDatabaseConnString, DatabaseName, DatabaseFileName);
+            EnvConfig = new EnvConfig();
+
+            var dbCfg = new DatabaseConfig(EnvConfig);
 
             DbContextProvider = new DbContextProvider(dbCfg);
             CreateTableScriptsProvider = new CreateTableScriptsProvider();
@@ -48,35 +50,19 @@ namespace PagiNET.IntegrationTests.Setup
 
         Context ITestDatabaseManager.CreateDbContext() => DbContextProvider.CreateDbContext();
 
-        private static string DatabaseName = "ExampleDatabase";
-        private static string DatabaseFileName =>
-            TryGetAppVeyorDatabasePath()
-            ?? Environment.GetEnvironmentVariable("PAGINET_DATABASE_PATH")
-            ?? ConfigurationManager.AppSettings["DatabasePath"]
-            ?? Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\ExampleDatabase.mdf");
+    }
 
-        private static string TryGetAppVeyorDatabasePath() =>
-            Environment.GetEnvironmentVariable("APPVEYOR") == "True"
-                ? Environment.GetEnvironmentVariable("APPVEYOR_BUILD_FOLDER") + @"\ExampleDatabase.mdf"
-                : null;
+    public static class ConnectionStringHelper
+    {
+        public static SqlConnectionStringBuilder CreateMasterCatalogConnString(string dataSource) => CreateConnString(dataSource, "Master");
 
-        private static string MasterConnString => Master.ToString();
-        private static string ExampleDatabaseConnString => ExampleDatabase.ToString();
-
-        private static SqlConnectionStringBuilder Master =>
+        public static SqlConnectionStringBuilder CreateConnString(string dataSource, string initCatalog) =>
             new SqlConnectionStringBuilder
             {
-                DataSource = @"(LocalDB)\MSSQLLocalDB",
-                InitialCatalog = "Master",
+                DataSource = dataSource, // @"(LocalDB)\MSSQLLocalDB"
+                InitialCatalog = initCatalog,
                 IntegratedSecurity = true
             };
 
-        private static SqlConnectionStringBuilder ExampleDatabase =>
-            new SqlConnectionStringBuilder
-            {
-                DataSource = @"(LocalDB)\MSSQLLocalDB",
-                InitialCatalog = "ExampleDatabase",
-                IntegratedSecurity = true
-            };
     }
 }

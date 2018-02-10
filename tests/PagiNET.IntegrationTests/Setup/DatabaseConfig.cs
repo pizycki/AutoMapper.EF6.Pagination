@@ -1,29 +1,32 @@
-﻿namespace PagiNET.IntegrationTests.Setup
+﻿using System;
+using PagiNET.IntegrationTests.Config;
+
+namespace PagiNET.IntegrationTests.Setup
 {
     public class DatabaseConfig
     {
-        public DatabaseConfig(
-            string masterConnectionString,
-            string exampleDatabaseConnectionString,
-            string databaseName,
-            string databasePath)
+        private readonly EnvConfig _env;
+
+        public DatabaseConfig(EnvConfig env)
         {
-            MasterConnectionString = masterConnectionString;
-            ExampleDatabaseConnectionString = exampleDatabaseConnectionString;
-            DatabaseName = databaseName;
-            DatabasePath = databasePath;
+            _env = env ?? throw new ArgumentNullException(nameof(env));
         }
+
+        public string DatabaseName => _env.DatabaseName;
+
+        public string DatabasePath => _env.DatabasePath;
 
         /// <summary>
         /// Used when creating new database
         /// </summary>
-        public string MasterConnectionString { get; }
+        public string MasterConnString =>
+            ConnectionStringHelper.CreateMasterCatalogConnString(_env.DataSource).ToString();
 
         /// <summary>
         /// For any query to existing database
         /// </summary>
-        public string ExampleDatabaseConnectionString { get; }
-        public string DatabaseName { get; }
-        public string DatabasePath { get; }
+        public string ExampleDatabaseConnString =>
+            ConnectionStringHelper.CreateConnString(_env.DataSource, _env.DatabaseName).ToString();
+
     }
 }
