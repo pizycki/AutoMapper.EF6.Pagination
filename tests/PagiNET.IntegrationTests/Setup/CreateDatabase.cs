@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using PagiNET.IntegrationTests.SqlCommands;
 
@@ -35,13 +34,13 @@ namespace PagiNET.IntegrationTests.Setup
             _createTableScripts.ToList().ForEach(RunScriptAgainstDatabase);
 
         private void RunScriptAgainstDatabase(string script) =>
-            SqlCommandHelpers.ExecuteSqlCommand(_cfg.ExampleDatabaseConnectionString, script);
+            SqlCommandHelpers.ExecuteSqlCommand(_cfg.ExampleDatabaseConnString, script);
 
         private void TryCreateDatabase()
         {
             try
             {
-                SqlCommandHelpers.ExecuteSqlCommand(_cfg.MasterConnectionString,
+                SqlCommandHelpers.ExecuteSqlCommand(_cfg.MasterConnString,
                     $@"CREATE DATABASE [{_cfg.DatabaseName}]
                        CONTAINMENT = NONE
                        ON  PRIMARY 
@@ -54,49 +53,6 @@ namespace PagiNET.IntegrationTests.Setup
 
                 throw;
             }
-        }
-    }
-
-    public class DatabaseDirectoryManager
-    {
-        private readonly DatabaseConfig _cfg;
-
-        public DatabaseDirectoryManager(DatabaseConfig databaseConfig)
-        {
-            _cfg = databaseConfig ?? throw new ArgumentNullException(nameof(databaseConfig));
-        }
-
-        public bool DoesDatabaseDirectoryExists()
-        {
-            var dbFileDirectory = GetDirectoryOfFile(_cfg.DatabasePath);
-            return dbFileDirectory.Exists;
-        }
-
-        // TODO This can be moved to general util helper class
-        private static DirectoryInfo GetDirectoryOfFile(string path)
-        {
-            var dbFileInfo = new FileInfo(path);
-            var dbFileDirectory = dbFileInfo.Directory;
-            if (dbFileDirectory == null)
-                throw new InvalidOperationException($"{nameof(dbFileDirectory)} is null!");
-
-            return dbFileDirectory;
-        }
-
-        public void TryCreateDatabaseDirectory()
-        {
-            var dbDirectory = GetDirectoryOfFile(_cfg.DatabasePath);
-
-            TryCreateDirectory(dbDirectory);
-        }
-
-        private static void TryCreateDirectory(DirectoryInfo directory)
-        {
-            var parentDir = directory.Parent;
-            if (parentDir != null && !parentDir.Exists)
-                TryCreateDirectory(parentDir); // Recursion!
-
-            directory.Create();
         }
     }
 }

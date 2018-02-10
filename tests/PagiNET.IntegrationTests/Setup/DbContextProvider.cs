@@ -16,7 +16,7 @@ namespace PagiNET.IntegrationTests.Setup
 
         private DbContextOptions<Context> BuildDbContextOptions() =>
             new DbContextOptionsBuilder<Context>()
-                .UseSqlServer(_databaseConfig.ExampleDatabaseConnectionString)
+                .UseSqlServer(_databaseConfig.ExampleDatabaseConnString)
                 .Options;
     }
 }
