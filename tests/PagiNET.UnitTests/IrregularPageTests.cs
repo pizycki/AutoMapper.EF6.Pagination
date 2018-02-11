@@ -1,5 +1,4 @@
-﻿using PagiNET.Paginate;
-using Ploeh.AutoFixture;
+﻿using Ploeh.AutoFixture;
 using Xunit;
 
 namespace PagiNET.UnitTests

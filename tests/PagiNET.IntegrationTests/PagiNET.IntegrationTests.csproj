@@ -77,6 +77,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Primitives.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=3.50.2.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoFixture.3.50.2\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
     <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Remotion.Linq.2.1.1\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
@@ -144,6 +147,7 @@
     <Compile Include="Tests\SortingTests.cs" />
     <Compile Include="Tests\SortingTests2.cs" />
     <Compile Include="Utilities\Comparers.cs" />
+    <Compile Include="Utilities\ItemIsTheBiggest.cs" />
     <Compile Include="Utilities\OrderChecks.cs" />
     <Compile Include="Utilities\DirectoryHelper.cs" />
   </ItemGroup>

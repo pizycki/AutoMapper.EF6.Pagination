@@ -1,5 +1,4 @@
 ﻿using System;
-using PagiNET.Pager;
 using PagiNET.Sort;
 
 namespace PagiNET.Paginate
