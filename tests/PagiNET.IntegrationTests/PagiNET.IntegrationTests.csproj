@@ -138,10 +138,13 @@
     <Compile Include="Setup\TestDatabaseManager.cs" />
     <Compile Include="SqlCommands\SqlCommandHelpers.cs" />
     <Compile Include="Tests\Env\DeployedDatabaseTests.cs" />
+    <Compile Include="Tests\Lab.cs" />
     <Compile Include="Tests\PaginationTests.cs" />
     <Compile Include="Fixtures\RealDatabaseTestFixture.cs" />
     <Compile Include="Tests\SortingTests.cs" />
     <Compile Include="Tests\SortingTests2.cs" />
+    <Compile Include="Utilities\Comparers.cs" />
+    <Compile Include="Utilities\OrderChecks.cs" />
     <Compile Include="Utilities\DirectoryHelper.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,8 @@ using PagiNET.Queryable;
 using PagiNET.Sort;
 using Shouldly;
 using Xunit;
+using static PagiNET.IntegrationTests.Utilities.Comparers;
+using static PagiNET.IntegrationTests.Utilities.OrderChecks;
 
 namespace PagiNET.IntegrationTests.Tests
 {
@@ -35,12 +37,12 @@ namespace PagiNET.IntegrationTests.Tests
                     .SortAndTakePage(sorting, pagination)
                     .ToListAsync());
 
-            customers
-                .Select(c => c.BirthDate.Ticks)
-                .Aggregate(Math.Min)
-                .ShouldBe(customers.First().BirthDate.Ticks);
-
+            IsOrderedAscending(
+                items: customers.Select(x => x.BirthDate.Ticks),
+                compare: LongsComparer,
+                equal: LongsEquals).ShouldBeTrue();
         }
+
 
         [Fact]
         public async Task pagination_returns_items_in_correct_order_descending()
@@ -57,10 +59,12 @@ namespace PagiNET.IntegrationTests.Tests
                        .SortAndTakePage(sorting, pagination)
                        .ToListAsync());
 
-            customers
-                .Select(c => c.BirthDate.Ticks)
-                .Aggregate(Math.Max)
-                .ShouldBe(customers.First().BirthDate.Ticks);
+            IsOrderedDescending(
+                items: customers.Select(x => x.BirthDate.Ticks),
+                compare: LongsComparer,
+                equal: LongsEquals).ShouldBeTrue();
         }
+
+
     }
 }
