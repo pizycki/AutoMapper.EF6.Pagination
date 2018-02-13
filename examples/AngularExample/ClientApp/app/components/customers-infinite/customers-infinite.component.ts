@@ -45,7 +45,7 @@ export class CustomersInfinite {
     private loadPage(page: number = 1, totalPages: boolean = false): void {
         if (this.canLoadData()) {
             this.customersService
-                .customersPaginated(page, this.page.size, this.orderBy, totalPages)
+                .customersPaginated(page, this.page.size, totalPages, this.orderBy)
                 .subscribe(result => {
                     let page = result.json();
                     page.items = this.page.items.concat(page.items);

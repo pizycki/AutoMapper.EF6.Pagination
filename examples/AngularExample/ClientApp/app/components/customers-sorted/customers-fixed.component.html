@@ -1,0 +1,22 @@
+<p *ngIf="!items"><em>Loading...</em></p>
+
+<h2>Customers - fixed page size grid</h2>
+
+<table class="table" *ngIf="items">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Birth</th>
+        <th>Gender</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let customer of items">
+        <td>{{customer.name}}</td>
+        <td>{{customer.birthDate}}</td>
+        <td>{{customer.gender}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<pager [number]="pageNumber" [pagesTotal]="pagesTotal" (pageSelected)="onPageSelected($event)"></pager>

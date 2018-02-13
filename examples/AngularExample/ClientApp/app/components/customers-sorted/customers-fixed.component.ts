@@ -41,7 +41,6 @@ class PageHelper {
 export class CustomersFixed implements OnInit {
 
     private pageSize: number = 10;
-    private columnToOrderBy: string = "Id";
 
     page: IPage<ICustomer>;
 

@@ -22,7 +22,7 @@ namespace PagiNET.Queryable
                 .TakePage(pagination);
 
         public static IQueryable<T> SortAndTakePage<T>(this IQueryable<T> queryable, IQueryWithPage query) =>
-            queryable.SortAndTakePage(query.CreatePagination<T>());
+            queryable.SortAndTakePage(query.CreateSortingAndPagination<T>());
 
         public static IQueryable<T> SortAndTakePage<T, K>(this IQueryable<T> queryable, (Sorting<T, K> sorting, Pagination pagination) snp) =>
             queryable.SortAndTakePage(snp.sorting, snp.pagination);
@@ -75,9 +75,12 @@ namespace PagiNET.Queryable
     /// </summary>
     public static class TakePageExtensions
     {
-        internal static IQueryable<T> TakePage<T>(this IOrderedQueryable<T> queryable, Pagination pagination) =>
+        public static IQueryable<T> TakePage<T>(this IQueryable<T> queryable, Pagination pagination) =>
             queryable
                 .Skip(pagination.CalculateNumberOfItemsToSkip())
                 .Take(pagination.PageSize);
+
+        public static IQueryable<T> TakePage<T>(this IQueryable<T> queryable, IQueryWithPage query) =>
+            queryable.TakePage(query.CreatePagination<T>());
     }
 }
