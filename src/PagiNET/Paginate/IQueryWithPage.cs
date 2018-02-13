@@ -10,7 +10,7 @@ namespace PagiNET.Paginate
 
     public static class IQueryWithPaginationExtensions
     {
-        public static (Sorting<T> sorting, Pagination pagination) CreatePagination<T>(this IQueryWithPage query)
+        public static (Sorting<T> sorting, Pagination pagination) CreateSortingAndPagination<T>(this IQueryWithPage query)
         {
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
@@ -19,6 +19,16 @@ namespace PagiNET.Paginate
             var sorting = Sorting<T>.By(query.OrderBy, query.Descending);
 
             return (sorting, pagination);
+        }
+
+        public static Pagination CreatePagination<T>(this IQueryWithPage query)
+        {
+            if (query == null)
+                throw new ArgumentNullException(nameof(query));
+
+            var pagination = Pagination.Set(query.Number, query.Size);
+
+            return pagination;
         }
 
         public static PageAndPager<TItem> GetPageAndTotalPages<TItem>(

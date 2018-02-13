@@ -26,17 +26,31 @@ namespace AngularExample.Controllers
 
         public CustomersController(Context context) => _context = context;
 
+        [HttpGet, Route("api/customers/sorted")]
+        public Page<Customer> GetCustomersSortedPage(AllCustomersQuery query) =>
+            query.IncludeTotalPages
+            ? QueryForSortedCustomersPage(query)
+            : query.GetPageAndTotalPages(
+                getPage: QueryForSortedCustomersPage,
+                getTotalPages: CountCustomerPages);
+
         [HttpGet, Route("api/customers")]
         public Page<Customer> GetCustomersPage(AllCustomersQuery query) =>
             query.IncludeTotalPages
-            ? QueryForCustomersPage(query)
-            : query.GetPageAndTotalPages(
-                getPage: QueryForCustomersPage,
-                getTotalPages: CountCustomerPages);
+                ? QueryForCustomersPage(query)
+                : query.GetPageAndTotalPages(
+                    getPage: QueryForSortedCustomersPage,
+                    getTotalPages: CountCustomerPages);
+
+        private Page<Customer> QueryForSortedCustomersPage(IQueryWithPage query) =>
+            AllCustomersQuery
+                .SortAndTakePage(query)
+                .ToList()
+                .AsPage(query);
 
         private Page<Customer> QueryForCustomersPage(IQueryWithPage query) =>
             AllCustomersQuery
-                .SortAndTakePage(query)
+                .TakePage(query)
                 .ToList()
                 .AsPage(query);
 
