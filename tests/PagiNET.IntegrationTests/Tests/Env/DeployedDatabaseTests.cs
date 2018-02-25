@@ -19,7 +19,7 @@ namespace PagiNET.IntegrationTests.Tests.Env
         [Fact]
         public void database_is_not_empty() =>
             _realDbFixture
-                .Query(ctx => ctx.Customers.Any())
+                .Query(ctx => ctx.People.Any())
                 .ShouldBeTrue();
 
         [Fact]
@@ -28,7 +28,7 @@ namespace PagiNET.IntegrationTests.Tests.Env
             var expected = CustomersSeeder.CreateSampleCustomersList().Count;
             _realDbFixture
                 .Query(ctx =>
-                    ctx.Customers
+                    ctx.People
                        .Select(c => c.Id)
                        .Count())
                 .ShouldBe(expected);
@@ -38,6 +38,6 @@ namespace PagiNET.IntegrationTests.Tests.Env
         [InlineData(Gender.Male)]
         [InlineData(Gender.Female)]
         public void not_all_customers_are_of_one_gender(Gender gender) =>
-            _realDbFixture.Query(ctx => ctx.Customers.All(c => c.Gender == gender));
+            _realDbFixture.Query(ctx => ctx.People.All(c => c.Gender == gender));
     }
 }

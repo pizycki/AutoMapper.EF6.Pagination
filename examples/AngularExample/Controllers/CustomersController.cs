@@ -8,56 +8,41 @@ using PagiNET.Queryable;
 
 namespace AngularExample.Controllers
 {
-    public class AllCustomersQuery : IQueryWithPage
-    {
-        // Sorting
-        public string OrderBy { get; set; }
-        public bool Descending { get; set; }
-
-        // Pagination
-        public int Number { get; set; }
-        public int Size { get; set; }
-        public bool IncludeTotalPages { get; set; } = false;
-    }
-
     public class CustomersController : Controller
     {
         private readonly Context _context;
 
         public CustomersController(Context context) => _context = context;
 
-        [HttpGet, Route("api/customers/sorted")]
-        public Page<Customer> GetCustomersSortedPage(AllCustomersQuery query) =>
-            query.IncludeTotalPages
-            ? QueryForSortedCustomersPage(query)
-            : query.GetPageAndTotalPages(
-                getPage: QueryForSortedCustomersPage,
-                getTotalPages: CountCustomerPages);
-
         [HttpGet, Route("api/customers")]
-        public Page<Customer> GetCustomersPage(AllCustomersQuery query) =>
-            query.IncludeTotalPages
-                ? QueryForCustomersPage(query)
-                : query.GetPageAndTotalPages(
-                    getPage: QueryForSortedCustomersPage,
+        public Page<Person> GetCustomersPage(AllCustomersQueryParams queryParams) =>
+            queryParams.IncludeTotalPages
+                ? QueryForCustomersPage(queryParams)
+                : queryParams.GetPageAndTotalPages(
+                    getPage: QueryForCustomersPage,
                     getTotalPages: CountCustomerPages);
 
-        private Page<Customer> QueryForSortedCustomersPage(IQueryWithPage query) =>
-            AllCustomersQuery
-                .SortAndTakePage(query)
-                .ToList()
-                .AsPage(query);
-
-        private Page<Customer> QueryForCustomersPage(IQueryWithPage query) =>
-            AllCustomersQuery
+        private Page<Person> QueryForCustomersPage(IQueryWithPage query) =>
+            CustomersQueryable
                 .TakePage(query)
                 .ToList()
                 .AsPage(query);
 
         private int CountCustomerPages(IQueryWithPage query) =>
-            AllCustomersQuery.CountPages(query);
+            CustomersQueryable.CountPages(query);
 
-        private IQueryable<Customer> AllCustomersQuery =>
-            _context.Customers.AsQueryable();
+        private IQueryable<Person> CustomersQueryable => _context.People.AsQueryable();
+
+        public class AllCustomersQueryParams : IQueryWithPage
+        {
+            // Sorting
+            public string OrderBy { get; set; }
+            public bool Descending { get; set; }
+
+            // Pagination
+            public int Number { get; set; }
+            public int Size { get; set; }
+            public bool IncludeTotalPages { get; set; } = false;
+        }
     }
 }
