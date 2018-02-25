@@ -29,11 +29,11 @@ namespace PagiNET.IntegrationTests.Tests
             const int page = 1;
             const int pageSize = 5;
 
-            var sorting = Ascending<Customer, DateTime>.By(c => c.BirthDate);
+            var sorting = Ascending<Person, DateTime>.By(c => c.BirthDate);
             var pagination = Pagination.Set(page, pageSize);
 
             var customers =
-                await _realDbFixture.QueryAsync(ctx => ctx.Customers
+                await _realDbFixture.QueryAsync(ctx => ctx.People
                     .SortAndTakePage(sorting, pagination)
                     .ToListAsync());
 
@@ -50,12 +50,12 @@ namespace PagiNET.IntegrationTests.Tests
             const int page = 1;
             const int pageSize = 5;
 
-            var sorting = Descending<Customer, DateTime>.By(c => c.BirthDate);
+            var sorting = Descending<Person, DateTime>.By(c => c.BirthDate);
             var pagination = Pagination.Set(page, pageSize);
 
             var customers =
                 await _realDbFixture.QueryAsync(ctx =>
-                    ctx.Customers
+                    ctx.People
                        .SortAndTakePage(sorting, pagination)
                        .ToListAsync());
 

@@ -28,11 +28,11 @@ namespace PagiNET.IntegrationTests.Tests
             const int pageSize = 5;
             const string columnName = "BirthDate";
 
-            var sorting = Ascending<Customer>.By(columnName);
+            var sorting = Ascending<Person>.By(columnName);
             var pagination = Pagination.Set(page, pageSize);
 
             var customers =
-                await _realDbFixture.QueryAsync(ctx => ctx.Customers
+                await _realDbFixture.QueryAsync(ctx => ctx.People
                     .SortAndTakePage(sorting, pagination)
                     .ToListAsync());
 

@@ -30,9 +30,9 @@ namespace PagiNET.IntegrationTests.Tests
 
             var companies =
                 await _realDbFixture.QueryAsync(ctx =>
-                    ctx.Customers
+                    ctx.People
                         .SortAndTakePage(
-                            Ascending<Customer, Guid>.By(x => x.Id),
+                            Ascending<Person, Guid>.By(x => x.Id),
                             Pagination.Set(page, pageSize))
                         .ToListAsync());
 
@@ -45,9 +45,9 @@ namespace PagiNET.IntegrationTests.Tests
             // Arrange
             const int page = 1;
             const int pageSize = 20;
-            IQueryable<Customer> GetCustomers(Context ctx) =>
-                ctx.Customers
-                   .SortAndTakePage(Ascending<Customer, Guid>.By(x => x.Id),
+            IQueryable<Person> GetCustomers(Context ctx) =>
+                ctx.People
+                   .SortAndTakePage(Ascending<Person, Guid>.By(x => x.Id),
                                     Pagination.Set(page, pageSize));
 
             // Act
@@ -62,13 +62,13 @@ namespace PagiNET.IntegrationTests.Tests
         [Fact]
         public async Task running_out_of_pages_range_doesnt_causes_rising_exception()
         {
-            var totalItems = await _realDbFixture.QueryAsync(ctx => ctx.Customers.CountAsync());
+            var totalItems = await _realDbFixture.QueryAsync(ctx => ctx.People.CountAsync());
             const int pageSize = 50;
             var lastPage = totalItems / pageSize;
 
             var companies = await _realDbFixture.QueryAsync(ctx =>
-                ctx.Customers
-                   .SortAndTakePage(Ascending<Customer, Guid>.By(x => x.Id),
+                ctx.People
+                   .SortAndTakePage(Ascending<Person, Guid>.By(x => x.Id),
                                     Pagination.Set(lastPage + 2, pageSize))
                    .ToListAsync());
 
@@ -84,10 +84,10 @@ namespace PagiNET.IntegrationTests.Tests
 
             var companies =
                 await _realDbFixture.QueryAsync(ctx =>
-                    ctx.Customers
+                    ctx.People
                         .Where(x => x.Id == Guid.Empty) // will always return no entities
                         .SortAndTakePage(
-                            Ascending<Customer, Guid>.By(x => x.Id),
+                            Ascending<Person, Guid>.By(x => x.Id),
                             Pagination.Set(page, pageSize))
                         .ToListAsync());
 

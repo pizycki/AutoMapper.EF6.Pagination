@@ -17,16 +17,15 @@ namespace ExampleDbContext
 
     public class Context : DbContext
     {
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Person> People { get; set; }
 
         public Context(DbContextOptions<Context> options)
             : base(options) { }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>()
-                .ToTable("Customers")
+            modelBuilder.Entity<Person>()
+                .ToTable("People")
                 .HasKey(x => x.Id);
         }
     }
