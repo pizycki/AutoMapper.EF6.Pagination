@@ -36,7 +36,7 @@ namespace PagiNET.IntegrationTests.Setup
         private void SeedCustomersTable()
         {
             using (var dbCtx = DbContextProvider.CreateDbContext())
-                CustomersSeeder.Seed(dbCtx);
+                PeopleSeeder.Seed(dbCtx);
         }
 
         void ITestDatabaseManager.CreateDatabase()

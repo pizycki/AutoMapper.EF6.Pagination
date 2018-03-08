@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using ExampleDbContext;
 using ExampleDbContext.Entities;
+using Microsoft.EntityFrameworkCore;
 using PagiNET.IntegrationTests.Fixtures;
 using Shouldly;
 using Xunit;
@@ -19,18 +20,15 @@ namespace PagiNET.IntegrationTests.Tests.Env
         [Fact]
         public void database_is_not_empty() =>
             _realDbFixture
-                .Query(ctx => ctx.People.Any())
+                .Query(ctx => ctx.Persons.Any())
                 .ShouldBeTrue();
 
         [Fact]
-        public void there_are_n_customers()
+        public void there_are_correct_number_of_people()
         {
-            var expected = CustomersSeeder.CreateSampleCustomersList().Count;
+            var expected = PeopleSeeder.SampleCustomersList.Count;
             _realDbFixture
-                .Query(ctx =>
-                    ctx.People
-                       .Select(c => c.Id)
-                       .Count())
+                .Query(ctx => ctx.Persons.Count())
                 .ShouldBe(expected);
         }
 
@@ -38,6 +36,6 @@ namespace PagiNET.IntegrationTests.Tests.Env
         [InlineData(Gender.Male)]
         [InlineData(Gender.Female)]
         public void not_all_customers_are_of_one_gender(Gender gender) =>
-            _realDbFixture.Query(ctx => ctx.People.All(c => c.Gender == gender));
+            _realDbFixture.Query(ctx => ctx.Persons.All(c => c.Gender == gender));
     }
 }

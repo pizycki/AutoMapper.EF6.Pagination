@@ -14,11 +14,11 @@ namespace PagiNET.IntegrationTests.Tests
         [Theory, InlineData(5, 10)]
         public void can_take_page_without_sorting_with_ef(int skip, int take) =>
             _fixture.Query(ctx =>
-                ctx.People.Skip(skip).Take(take).ToList()).Count.ShouldBe(take);
+                ctx.Persons.Skip(skip).Take(take).ToList()).Count.ShouldBe(take);
 
         [Fact]
         public void can_sort_without_paging() =>
             _fixture.Query(ctx =>
-                ctx.People.OrderBy(c => c.Id));
+                ctx.Persons.OrderBy(c => c.Id));
     }
 }

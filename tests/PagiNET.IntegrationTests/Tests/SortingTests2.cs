@@ -31,10 +31,10 @@ namespace PagiNET.IntegrationTests.Tests
             var sorting = Ascending<Person>.By(columnName);
             var pagination = Pagination.Set(page, pageSize);
 
-            var customers =
-                await _realDbFixture.QueryAsync(ctx => ctx.People
-                    .SortAndTakePage(sorting, pagination)
-                    .ToListAsync());
+            var customers = await _realDbFixture.QueryAsync(
+                            ctx => ctx.Persons
+                                      .SortAndTakePage(sorting, pagination)
+                                      .ToListAsync());
 
             customers
                 .Select(c => c.BirthDate.Ticks)

@@ -7,19 +7,20 @@ BEGIN
     );
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20180105201923_Customers')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20180308180351_People')
 BEGIN
-    CREATE TABLE [Customers] (
+    CREATE TABLE [People] (
         [Id] uniqueidentifier NOT NULL,
         [BirthDate] datetime2 NOT NULL,
+        [Discriminator] nvarchar(max) NOT NULL,
         [Gender] int NOT NULL,
         [Name] nvarchar(max) NULL,
-        CONSTRAINT [PK_Customers] PRIMARY KEY ([Id])
+        CONSTRAINT [PK_People] PRIMARY KEY ([Id])
     );
 END;
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20180105201923_Customers')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20180308180351_People')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20180105201923_Customers', N'2.0.1-rtm-125');
+    VALUES (N'20180308180351_People', N'2.0.1-rtm-125');
 END;
