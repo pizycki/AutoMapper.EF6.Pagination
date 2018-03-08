@@ -2,7 +2,7 @@ using System;
 
 namespace ExampleDbContext.Entities
 {
-    public abstract class Person
+    public class Person
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }

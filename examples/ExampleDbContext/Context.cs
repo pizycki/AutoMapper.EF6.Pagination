@@ -17,7 +17,11 @@ namespace ExampleDbContext
 
     public class Context : DbContext
     {
-        public DbSet<Person> People { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employer> Employers { get; set; }
+        public DbSet<Manager> Managers { get; set; }
+        public DbSet<Director> Directors { get; set; }
 
         public Context(DbContextOptions<Context> options)
             : base(options) { }
@@ -27,6 +31,11 @@ namespace ExampleDbContext
             modelBuilder.Entity<Person>()
                 .ToTable("People")
                 .HasKey(x => x.Id);
+
+            modelBuilder.Entity<Customer>().HasBaseType<Person>();
+            modelBuilder.Entity<Employer>().HasBaseType<Person>();
+            modelBuilder.Entity<Director>().HasBaseType<Person>();
+            modelBuilder.Entity<Manager>().HasBaseType<Person>();
         }
     }
 }

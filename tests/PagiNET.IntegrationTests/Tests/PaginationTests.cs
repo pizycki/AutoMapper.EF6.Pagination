@@ -30,7 +30,7 @@ namespace PagiNET.IntegrationTests.Tests
 
             var companies =
                 await _realDbFixture.QueryAsync(ctx =>
-                    ctx.People
+                    ctx.Persons
                         .SortAndTakePage(
                             Ascending<Person, Guid>.By(x => x.Id),
                             Pagination.Set(page, pageSize))
@@ -46,7 +46,7 @@ namespace PagiNET.IntegrationTests.Tests
             const int page = 1;
             const int pageSize = 20;
             IQueryable<Person> GetCustomers(Context ctx) =>
-                ctx.People
+                ctx.Persons
                    .SortAndTakePage(Ascending<Person, Guid>.By(x => x.Id),
                                     Pagination.Set(page, pageSize));
 
@@ -62,12 +62,12 @@ namespace PagiNET.IntegrationTests.Tests
         [Fact]
         public async Task running_out_of_pages_range_doesnt_causes_rising_exception()
         {
-            var totalItems = await _realDbFixture.QueryAsync(ctx => ctx.People.CountAsync());
+            var totalItems = await _realDbFixture.QueryAsync(ctx => ctx.Persons.CountAsync());
             const int pageSize = 50;
             var lastPage = totalItems / pageSize;
 
             var companies = await _realDbFixture.QueryAsync(ctx =>
-                ctx.People
+                ctx.Persons
                    .SortAndTakePage(Ascending<Person, Guid>.By(x => x.Id),
                                     Pagination.Set(lastPage + 2, pageSize))
                    .ToListAsync());
@@ -84,7 +84,7 @@ namespace PagiNET.IntegrationTests.Tests
 
             var companies =
                 await _realDbFixture.QueryAsync(ctx =>
-                    ctx.People
+                    ctx.Persons
                         .Where(x => x.Id == Guid.Empty) // will always return no entities
                         .SortAndTakePage(
                             Ascending<Person, Guid>.By(x => x.Id),
