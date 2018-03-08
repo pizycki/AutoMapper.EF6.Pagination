@@ -80,7 +80,7 @@ namespace PagiNET.Queryable
                 .Skip(pagination.CalculateNumberOfItemsToSkip())
                 .Take(pagination.PageSize);
 
-        public static IQueryable<T> TakePage<T>(this IQueryable<T> queryable, IQueryWithPage query) =>
+        public static IQueryable<T> TakePage<T>(this IQueryable<T> queryable, IPageInfo query) =>
             queryable.TakePage(query.CreatePagination<T>());
     }
 }

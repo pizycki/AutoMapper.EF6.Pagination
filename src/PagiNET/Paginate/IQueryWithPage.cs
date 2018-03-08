@@ -21,7 +21,7 @@ namespace PagiNET.Paginate
             return (sorting, pagination);
         }
 
-        public static Pagination CreatePagination<T>(this IQueryWithPage query)
+        public static Pagination CreatePagination<T>(this IPageInfo query)
         {
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
@@ -32,14 +32,14 @@ namespace PagiNET.Paginate
         }
 
         public static PageAndPager<TItem> GetPageAndTotalPages<TItem>(
-            this IQueryWithPage query,
-            Func<IQueryWithPage, Page<TItem>> getPage,
-            Func<IQueryWithPage, int> getTotalPages)
+            this IPageInfo query,
+            Func<IPageInfo, Page<TItem>> page,
+            Func<IPageInfo, int> pagesTotal)
         {
-            if (getPage == null) throw new ArgumentNullException(nameof(getPage));
-            if (getTotalPages == null) throw new ArgumentNullException(nameof(getTotalPages));
+            if (page == null) throw new ArgumentNullException(nameof(page));
+            if (pagesTotal == null) throw new ArgumentNullException(nameof(pagesTotal));
 
-            return new PageAndPager<TItem>(getPage(query), getTotalPages(query));
+            return new PageAndPager<TItem>(page(query), pagesTotal(query));
         }
     }
 }
