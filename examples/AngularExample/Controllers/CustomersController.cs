@@ -33,9 +33,7 @@ namespace AngularExample.Controllers
         [HttpGet, Route("api/customers")]
         public Page<Person> GetCustomersPage(GetCustomersPageQueryParams queryParams)
         {
-            return queryParams.IncludeTotalPages
-                 ? QueryForCustomersPage(queryParams)
-                 : queryParams.GetPageAndTotalPages(page: QueryForCustomersPage, pagesTotal: CountCustomerPages);
+            return queryParams.GetPageAndTotalPages(page: QueryForCustomersPage, pagesTotal: CountCustomerPages);
 
             IQueryable<Person> GetCustomersQueryable() => _context.Customers.AsQueryable();
 
@@ -53,7 +51,5 @@ namespace AngularExample.Controllers
     {
         public int Number { get; set; } = 1;
         public int Size { get; set; } = 20;
-
-        public bool IncludeTotalPages { get; set; } = false;
     }
 }
