@@ -1,63 +1,59 @@
-//using System.Linq;
-//using ExampleDbContext;
-//using ExampleDbContext.Entities;
-//using Microsoft.AspNetCore.Mvc;
-//using PagiNET.Pager;
-//using PagiNET.Paginate;
-//using PagiNET.Queryable;
+using System.Linq;
+using ExampleDbContext;
+using ExampleDbContext.Entities;
+using Microsoft.AspNetCore.Mvc;
+using PagiNET;
+using PagiNET.Pager;
+using PagiNET.Paginate;
+using PagiNET.Queryable;
+using PagiNET.Sort;
 
-//namespace AngularExample.Controllers
-//{
+/**
+ * Employers fixed page with sorting
+ */
 
-//    public class EmployersController : Controller
-//    {
-//        private readonly Context _context;
+namespace AngularExample.Controllers
+{
+    public class EmployersController : Controller
+    {
+        private readonly Context _context;
 
-//        public EmployersController(Context context) => _context = context;
+        public EmployersController(Context context)
+        {
+            _context = context;
+        }
 
-//        [HttpGet, Route("api/employers/sorted")]
-//        public Page<Person> GetCustomersSortedPage(AllCustomersQuery query) =>
-//            query.IncludeTotalPages
-//            ? QueryForSortedCustomersPage(query)
-//            : query.GetPageAndTotalPages(
-//                getPage: QueryForSortedCustomersPage,
-//                getTotalPages: CountCustomerPages);
+        /// <summary>
+        /// Queries context for requested page of employers.
+        /// Customers are sorted in default manner.
+        /// </summary>
+        /// <param name="queryParams">Quering parameters.</param>
+        /// <returns>Requested page of customers.</returns>
+        [HttpGet, Route("api/employers")]
+        public Page<Employer> GetEmployersPage(GetEmployersPageQueryParams queryParams)
+        {
+            return queryParams.GetPageAndTotalPages(page: q => QueryForCustomersPage((IPageAndSortInfo)q), pagesTotal: CountPages);
 
-//        [HttpGet, Route("api/customers")]
-//        public Page<Person> GetCustomersPage(AllCustomersQuery query) =>
-//            query.IncludeTotalPages
-//                ? QueryForCustomersPage(query)
-//                : query.GetPageAndTotalPages(
-//                    getPage: QueryForSortedCustomersPage,
-//                    getTotalPages: CountCustomerPages);
+            IQueryable<Employer> GetEmployersQueryable() => _context.Employers.AsQueryable();
 
-//        private Page<Person> QueryForSortedCustomersPage(IQueryWithPage query) =>
-//            AllCustomersQuery
-//                .SortAndTakePage(query)
-//                .ToList()
-//                .AsPage(query);
+            Page<Employer> QueryForCustomersPage(IPageAndSortInfo info) =>
+                GetEmployersQueryable()
+                    .SortAndTakePage(
+                        sorting: Sorting<Employer>.By(info.OrderBy, info.Descending),
+                        pagination: Pagination.Set(info.Number, info.Size))
+                    .ToList()
+                    .AsPage(queryParams);
 
-//        private Page<Person> QueryForCustomersPage(IQueryWithPage query) =>
-//            AllCustomersQuery
-//                .TakePage(query)
-//                .ToList()
-//                .AsPage(query);
+            int CountPages(IPageInfo query) => GetEmployersQueryable().CountPages(query);
+        }
+    }
 
-//        private int CountCustomerPages(IQueryWithPage query) =>
-//            AllCustomersQuery.CountPages(query);
+    public class GetEmployersPageQueryParams : IPageAndSortInfo
+    {
+        public int Number { get; set; } = 1;
+        public int Size { get; set; } = 20;
 
-//        private IQueryable<Person> AllCustomersQuery => _context.People.AsQueryable();
-        
-//        public class AllEmployersQueryParams : IQueryWithPage
-//        {
-//            // Sorting
-//            public string OrderBy { get; set; }
-//            public bool Descending { get; set; }
-
-//            // Pagination
-//            public int Number { get; set; }
-//            public int Size { get; set; }
-//            public bool IncludeTotalPages { get; set; } = false;
-//        }
-//    }
-//}
+        public string OrderBy { get; }
+        public bool Descending { get; }
+    }
+}

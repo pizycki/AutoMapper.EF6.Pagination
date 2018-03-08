@@ -41,5 +41,16 @@ namespace PagiNET.Paginate
 
             return new PageAndPager<TItem>(page(query), pagesTotal(query));
         }
+
+        public static PageAndPager<TItem> GetPageAndTotalPages<TItem>(
+            this IPageAndSortInfo query,
+            Func<IPageInfo, Page<TItem>> page,
+            Func<IPageInfo, int> pagesTotal)
+        {
+            if (page == null) throw new ArgumentNullException(nameof(page));
+            if (pagesTotal == null) throw new ArgumentNullException(nameof(pagesTotal));
+
+            return new PageAndPager<TItem>(page(query), pagesTotal(query));
+        }
     }
 }
