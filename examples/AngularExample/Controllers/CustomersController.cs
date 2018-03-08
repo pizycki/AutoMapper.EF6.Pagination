@@ -6,43 +6,54 @@ using PagiNET.Pager;
 using PagiNET.Paginate;
 using PagiNET.Queryable;
 
+/**
+ * Customers fixed page
+ *
+ * The simplest form of pagination.
+ * Fixed page size, no sorting, page refreshed after clicking on another page.
+ */
+
 namespace AngularExample.Controllers
 {
     public class CustomersController : Controller
     {
         private readonly Context _context;
 
-        public CustomersController(Context context) => _context = context;
-
-        [HttpGet, Route("api/customers")]
-        public Page<Person> GetCustomersPage(AllCustomersQueryParams queryParams) =>
-            queryParams.IncludeTotalPages
-                ? QueryForCustomersPage(queryParams)
-                : queryParams.GetPageAndTotalPages(
-                    getPage: QueryForCustomersPage,
-                    getTotalPages: CountCustomerPages);
-
-        private Page<Person> QueryForCustomersPage(IQueryWithPage query) =>
-            CustomersQueryable
-                .TakePage(query)
-                .ToList()
-                .AsPage(query);
-
-        private int CountCustomerPages(IQueryWithPage query) =>
-            CustomersQueryable.CountPages(query);
-
-        private IQueryable<Person> CustomersQueryable => _context.People.AsQueryable();
-
-        public class AllCustomersQueryParams : IQueryWithPage
+        public CustomersController(Context context)
         {
-            // Sorting
-            public string OrderBy { get; set; }
-            public bool Descending { get; set; }
+            _context = context;
+        } 
 
-            // Pagination
-            public int Number { get; set; }
-            public int Size { get; set; }
-            public bool IncludeTotalPages { get; set; } = false;
+        /// <summary>
+        /// Queries context for requested page of customers.
+        /// Customers are sorted in default manner.
+        /// </summary>
+        /// <param name="queryParams">Quering parameters.</param>
+        /// <returns>Requested page of customers.</returns>
+        [HttpGet, Route("api/customers")]
+        public Page<Person> GetCustomersPage(GetCustomersPageQueryParams queryParams)
+        {
+            return queryParams.IncludeTotalPages
+                 ? QueryForCustomersPage(queryParams)
+                 : queryParams.GetPageAndTotalPages(page: QueryForCustomersPage, pagesTotal: CountCustomerPages);
+
+            IQueryable<Person> GetCustomersQueryable() => _context.Customers.AsQueryable();
+
+            Page<Person> QueryForCustomersPage(IPageInfo pageInfo) =>
+                GetCustomersQueryable()
+                    .TakePage(pageInfo)
+                    .ToList()
+                    .AsPage(pageInfo);
+
+            int CountCustomerPages(IPageInfo query) => GetCustomersQueryable().CountPages(query);
         }
+    }
+    
+    public class GetCustomersPageQueryParams : IPageInfo
+    {
+        public int Number { get; set; } = 1;
+        public int Size { get; set; } = 20;
+
+        public bool IncludeTotalPages { get; set; } = false;
     }
 }

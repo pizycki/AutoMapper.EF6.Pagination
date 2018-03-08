@@ -19,7 +19,7 @@ namespace AngularExample
                 try
                 {
                     var context = services.GetRequiredService<Context>();
-                    CustomersSeeder.Seed(context);
+                    PeopleSeeder.Seed(context);
                 }
                 catch (Exception ex)
                 {
