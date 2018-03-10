@@ -1,9 +1,9 @@
 import { Component, Inject } from "@angular/core";
 import { Http } from "@angular/http";
 import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
+import { IPerson } from "components/people/models/person";
 import { IPage } from "shared/pagination";
 import { PeopleProvider } from "providers/people.provider";
-import { IPerson } from "components/people/models/person";
 
 @Component({
     selector: "customers",

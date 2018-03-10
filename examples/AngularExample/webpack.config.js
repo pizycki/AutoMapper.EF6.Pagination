@@ -3,9 +3,10 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const AotPlugin = require('@ngtools/webpack').AotPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
+const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 function srcPath(subdir) {
-    return path.join(__dirname, "src", subdir);
+    return path.join(__dirname, "app", subdir);
 }
 
 module.exports = (env) => {
@@ -16,11 +17,12 @@ module.exports = (env) => {
         context: __dirname,
         resolve: {
             extensions: ['.js', '.ts'],
-            alias: {
-                providers: srcPath('app/providers'),
-                components: srcPath('app/components'),
-                shared: srcPath('app/shared'),
-            },
+            plugins: [
+                new TsConfigPathsPlugin({
+                        tsconfig: __dirname + '/tsconfig.json',
+                        compiler: 'typescript'
+                    })
+            ]
         },
         output: {
             filename: '[name].js',
