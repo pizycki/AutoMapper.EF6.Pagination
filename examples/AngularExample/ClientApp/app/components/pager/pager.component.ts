@@ -5,13 +5,13 @@ import { IPagination } from "../../shared/pagination";
     selector: 'pager',
     templateUrl: "pager.component.html"
 })
-export class Pager{
+export class Pager {
 
     @Input()
     number: number;
 
     @Input()
-    pagesTotal: number; 
+    pagesTotal: number;
 
     @Output()
     pageSelected = new EventEmitter();

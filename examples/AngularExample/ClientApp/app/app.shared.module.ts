@@ -6,19 +6,22 @@ import { RouterModule } from "@angular/router";
 
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 
-import { AppComponent } from "./components/app/app.component";
-import { NavMenuComponent } from "./components/navmenu/navmenu.component";
-import { CustomersFixed } from "./components/customers-fixed/customers-fixed.component";
-import { Pager } from "./components/pager/pager.component";
-import { CustomersInfinite } from "./components/customers-infinite/customers-infinite.component";
+import { AppComponent } from "components/app/app.component";
+import { NavMenuComponent } from "components/navmenu/navmenu.component";
+import { Pager } from "components/pager/pager.component";
+import { DirectorsComponent } from "components/people/directors/directors.component";
+import { CustomersComponent } from "components/people/customers/customers.component";
+import { EmployersComponent } from "components/people/employers/employers.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         NavMenuComponent,
-        CustomersFixed,
         Pager,
-        CustomersInfinite,
+
+        DirectorsComponent,
+        CustomersComponent,
+        EmployersComponent
     ],
     imports: [
         CommonModule,
@@ -26,10 +29,11 @@ import { CustomersInfinite } from "./components/customers-infinite/customers-inf
         FormsModule,
         InfiniteScrollModule,
         RouterModule.forRoot([
-            { path: "", redirectTo: "customers-fixed", pathMatch: "full" },
-            { path: "customers-fixed", component: CustomersFixed },
-            { path: "customers-infinite", component: CustomersInfinite },
-            { path: "**", redirectTo: "customers-fixed" }
+            { path: "", redirectTo: "customers", pathMatch: "full" },
+            { path: "customers", component: CustomersComponent },
+            { path: "employers", component: EmployersComponent },
+            { path: "directors", component: DirectorsComponent },
+            { path: "**", redirectTo: "customers" }
         ])
     ]
 })
