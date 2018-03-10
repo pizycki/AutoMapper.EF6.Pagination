@@ -83,3 +83,6 @@ You can reach me on Twitter: [@pizycki](http://twitter.com/pizycki).
     - [x] Working localy
     - [x] On build server 
   - [ ] Nuget publish
+- [ ] API improvments
+  - [ ] `TakePage` IQueryable -> IQueryable
+  - [ ] `SinglePage` IQueryable -> Page

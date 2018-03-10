@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using PagiNET.Paginate;
@@ -82,5 +83,10 @@ namespace PagiNET.Queryable
 
         public static IQueryable<T> TakePage<T>(this IQueryable<T> queryable, IPageInfo query) =>
             queryable.TakePage(query.CreatePagination<T>());
+
+        public static Page<T> TakeAsPage<T>(this IQueryable<T> queryable, IPageInfo pageInfo) =>
+            queryable.TakePage(pageInfo.CreatePagination<T>())
+                .ToList()
+                .AsPage(pageInfo);
     }
 }

@@ -32,15 +32,15 @@ namespace AngularExample.Controllers
         [HttpGet, Route("api/employers")]
         public Page<Employer> GetEmployersPage(GetEmployersPageQueryParams queryParams)
         {
-            return queryParams.GetPageAndTotalPages(page: q => QueryForCustomersPage((IPageAndSortInfo)q), pagesTotal: CountPages);
+            return queryParams.GetSortedPageAndPagesTotal(page: QueryForEmployersPage, pagesTotal: CountPages);
 
             IQueryable<Employer> GetEmployersQueryable() => _context.Employers.AsQueryable();
 
-            Page<Employer> QueryForCustomersPage(IPageAndSortInfo info) =>
+            Page<Employer> QueryForEmployersPage(IPageAndSortInfo info) =>
                 GetEmployersQueryable()
                     .SortAndTakePage(
-                        sorting: Sorting<Employer>.By(info.OrderBy, info.Descending),
-                        pagination: Pagination.Set(info.Number, info.Size))
+                        Sorting<Employer>.By(info.OrderBy, info.Descending),
+                        Pagination.Set(info.Number, info.Size))
                     .ToList()
                     .AsPage(queryParams);
 
