@@ -13,9 +13,9 @@
     "types": [ "webpack-env" ],
     "baseUrl": "ClientApp",
     "paths": {
-      "@providers/*": [ "app/providers/*" ],
-      "@components/*": [ "app/components/*" ],
-      "@shared/*": [ "app/shared/*" ]
+      "providers/*": [ "app/providers/*" ],
+      "components/*": [ "app/components/*" ],
+      "shared/*": [ "app/shared/*" ]
     }
   },
   "exclude": [ "bin", "node_modules" ],

@@ -1,5 +1,5 @@
 ﻿import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from "@angular/core";
-import { IPagination } from "../../shared/pagination";
+import { IPagination } from "shared/pagination";
 
 @Component({
     selector: 'pager',
