@@ -29,7 +29,6 @@ namespace PagiNET.Paginate
 
     public static class PageExtensions
     {
-        public static Page<T> AsPage<T>(this IEnumerable<T> collection, IPageInfo pageInfo) =>
-            new Page<T>(collection, pageInfo);
+        public static Page<T> AsPage<T>(this IEnumerable<T> collection, IPageInfo pageInfo) => new Page<T>(collection, pageInfo);
     }
 }
