@@ -34,8 +34,6 @@ namespace AngularExample.Controllers
         {
             return queryParams.GetSortedPageAndPagesTotal(page: QueryForEmployersPage, pagesTotal: CountPages);
 
-            IQueryable<Employer> GetEmployersQueryable() => _context.Employers.AsQueryable();
-
             Page<Employer> QueryForEmployersPage(IPageAndSortInfo info) =>
                 GetEmployersQueryable()
                     .SortAndTakePage(
@@ -43,6 +41,8 @@ namespace AngularExample.Controllers
                         Pagination.Set(info.Number, info.Size))
                     .ToList()
                     .AsPage(queryParams);
+
+            IQueryable<Employer> GetEmployersQueryable() => _context.Employers.AsQueryable();
 
             int CountPages(IPageInfo query) => GetEmployersQueryable().CountPages(query);
         }

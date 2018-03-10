@@ -22,11 +22,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\app\components\people\customers\pager-helper.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\PagiNET\PagiNET.csproj" />
     <ProjectReference Include="..\ExampleDbContext\ExampleDbContext.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\components\people\customers\pager-helper.ts" />
     <TypeScriptCompile Include="ClientApp\app\shared\pagination.ts" />
   </ItemGroup>
 

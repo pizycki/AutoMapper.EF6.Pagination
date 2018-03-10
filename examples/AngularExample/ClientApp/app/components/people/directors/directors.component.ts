@@ -1,14 +1,9 @@
 import { Component, Inject } from "@angular/core";
 import { Http } from "@angular/http";
-import { IPage } from "../../shared/pagination";
-import { CustomersService } from "../../services/customers.service";
 import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
-
-interface ICustomer {
-    name: string;
-    birthDate: number;
-    gender: number;
-}
+import { PeopleProvider } from "providers/people.provider";
+import { IPage } from "shared/pagination";
+import { IPerson } from "components/people/models/person";
 
 class PageHelper {
 
@@ -34,22 +29,21 @@ class PageHelper {
 }
 
 @Component({
-    selector: "customers-fixed",
-    templateUrl: "./customers-fixed.component.html",
-    providers: [CustomersService]
+    selector: "directors",
+    templateUrl: "./directors.component.html",
+    providers: [PeopleProvider]
 })
-export class CustomersFixed implements OnInit {
+export class DirectorsComponent implements OnInit {
 
     private pageSize: number = 10;
-    private columnToOrderBy: string = "Id";
 
-    page: IPage<ICustomer>;
+    page: IPage<IPerson>;
 
     get pageNumber(): number {
         return !!this.page ? this.page.number : 1;
     }
 
-    get items(): ICustomer[] {
+    get items(): IPerson[] {
         return !!this.page ? this.page.items : [];
     }
 
@@ -62,7 +56,7 @@ export class CustomersFixed implements OnInit {
     }
 
     private loadPage(page: number = 1, totalPages: boolean = false): void {
-        this.customersService
+        this.PeopleProvider
             .customersPaginated(page, this.pageSize, totalPages)
             .subscribe(result => {
                 let page = result.json();
@@ -77,6 +71,6 @@ export class CustomersFixed implements OnInit {
         this.loadPage(1, true);
     }
 
-    constructor(private customersService: CustomersService) {
+    constructor(private PeopleProvider: PeopleProvider) {
     }
 }

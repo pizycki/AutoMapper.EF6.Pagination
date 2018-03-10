@@ -1,28 +1,22 @@
-import { IPage } from '../../shared/pagination';
 import { Component, Inject, HostListener } from "@angular/core";
 import { Http } from "@angular/http";
-import { CustomersService } from "../../services/customers.service";
 import { Observable } from "rxjs/Observable";
 import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
-
-interface ICustomer {
-    id: string;
-    name: string;
-    birthDate: number;
-    gender: number;
-}
+import { IPage } from "shared/pagination";
+import { PeopleProvider } from "providers/people.provider";
+import { IPerson } from "components/people/models/person";
 
 @Component({
-    selector: "customers-infinite",
-    templateUrl: "./customers-infinite.component.html",
-    providers: [CustomersService]
+    selector: "employers",
+    templateUrl: "./employers.component.html",
+    providers: [PeopleProvider]
 })
-export class CustomersInfinite {
+export class EmployersComponent {
 
-    page: IPage<ICustomer>;
+    page: IPage<IPerson>;
     private orderBy = "Id";
 
-    get items(): ICustomer[] {
+    get items(): IPerson[] {
         return !!this.page ? this.page.items : [];
     }
 
@@ -44,7 +38,7 @@ export class CustomersInfinite {
 
     private loadPage(page: number = 1, totalPages: boolean = false): void {
         if (this.canLoadData()) {
-            this.customersService
+            this.PeopleProvider
                 .customersPaginated(page, this.page.size, totalPages, this.orderBy)
                 .subscribe(result => {
                     let page = result.json();
@@ -58,6 +52,6 @@ export class CustomersInfinite {
         this.page.number !== this.page.pagesTotal
         && (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
 
-    constructor(private customersService: CustomersService) {
+    constructor(private PeopleProvider: PeopleProvider) {
     }
 }

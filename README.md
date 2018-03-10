@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/a689qih74at6hyx0/branch/master?svg=true)](https://ci.appveyor.com/project/pizycki/paginet/branch/master)
 
-> This lib is till in earl stage of development, so things can change in future.
+> This lib is still in early stage of development, so things will more or less change.
 
 ## What is it?
 
