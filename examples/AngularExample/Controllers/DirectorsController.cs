@@ -30,7 +30,7 @@ namespace AngularExample.Controllers
         /// <param name="queryParams">Quering parameters.</param>
         /// <returns>Requested page of customers.</returns>
         [HttpGet, Route("api/directors")]
-        public Page<Director> GetDirectorsPage(GetDirectorsPageQueryParams queryParams) => DirectorsQueryable.TakeAsPage(queryParams);
+        public Page<Director> GetDirectorsPage(GetDirectorsPageQueryParams queryParams) => DirectorsQueryable.SinglePage(queryParams);
 
         private IQueryable<Director> DirectorsQueryable => _context.Directors.AsQueryable();
     }

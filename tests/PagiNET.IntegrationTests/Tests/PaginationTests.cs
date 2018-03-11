@@ -31,7 +31,7 @@ namespace PagiNET.IntegrationTests.Tests
             var companies =
                 await _realDbFixture.QueryAsync(ctx =>
                     ctx.Persons
-                        .SortAndTakePage(
+                        .TakeSortedPage(
                             Ascending<Person, Guid>.By(x => x.Id),
                             Pagination.Set(page, pageSize))
                         .ToListAsync());
@@ -47,7 +47,7 @@ namespace PagiNET.IntegrationTests.Tests
             const int pageSize = 20;
             IQueryable<Person> GetCustomers(Context ctx) =>
                 ctx.Persons
-                   .SortAndTakePage(Ascending<Person, Guid>.By(x => x.Id),
+                   .TakeSortedPage(Ascending<Person, Guid>.By(x => x.Id),
                                     Pagination.Set(page, pageSize));
 
             // Act
@@ -68,7 +68,7 @@ namespace PagiNET.IntegrationTests.Tests
 
             var companies = await _realDbFixture.QueryAsync(ctx =>
                 ctx.Persons
-                   .SortAndTakePage(Ascending<Person, Guid>.By(x => x.Id),
+                   .TakeSortedPage(Ascending<Person, Guid>.By(x => x.Id),
                                     Pagination.Set(lastPage + 2, pageSize))
                    .ToListAsync());
 
@@ -86,7 +86,7 @@ namespace PagiNET.IntegrationTests.Tests
                 await _realDbFixture.QueryAsync(ctx =>
                     ctx.Persons
                         .Where(x => x.Id == Guid.Empty) // will always return no entities
-                        .SortAndTakePage(
+                        .TakeSortedPage(
                             Ascending<Person, Guid>.By(x => x.Id),
                             Pagination.Set(page, pageSize))
                         .ToListAsync());

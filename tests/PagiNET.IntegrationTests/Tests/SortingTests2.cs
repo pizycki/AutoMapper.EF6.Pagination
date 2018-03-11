@@ -33,7 +33,7 @@ namespace PagiNET.IntegrationTests.Tests
 
             var customers = await _realDbFixture.QueryAsync(
                             ctx => ctx.Persons
-                                      .SortAndTakePage(sorting, pagination)
+                                      .TakeSortedPage(sorting, pagination)
                                       .ToListAsync());
 
             customers

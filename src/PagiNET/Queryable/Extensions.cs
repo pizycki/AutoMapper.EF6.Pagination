@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using PagiNET.Paginate;
@@ -12,40 +11,46 @@ namespace PagiNET.Queryable
     /// </summary>
     public static class SortAndTakePageExtensions
     {
-        public static IQueryable<T> SortAndTakePage<T, K>(this IQueryable<T> queryable, Sorting<T, K> sorting, Pagination pagination) =>
+        public static IQueryable<T> TakeSortedPage<T, K>(this IQueryable<T> queryable, Sorting<T, K> sorting, Pagination pagination) =>
             queryable
                 .Sort(sorting)
                 .TakePage(pagination);
 
-        public static IQueryable<T> SortAndTakePage<T>(this IQueryable<T> queryable, Sorting<T> sorting, Pagination pagination) =>
+        public static IQueryable<T> TakeSortedPage<T>(this IQueryable<T> queryable, Sorting<T> sorting, Pagination pagination) =>
             queryable
                 .Sort(sorting)
                 .TakePage(pagination);
 
-        public static IQueryable<T> SortAndTakePage<T>(this IQueryable<T> queryable, IQueryWithPage query) =>
-            queryable.SortAndTakePage(query.CreateSortingAndPagination<T>());
+        public static IQueryable<T> TakeSortedPage<T>(this IQueryable<T> queryable, IQueryWithPage query) => queryable.TakeSortedPage(query.CreateSortingAndPagination<T>());
 
-        public static IQueryable<T> SortAndTakePage<T, K>(this IQueryable<T> queryable, (Sorting<T, K> sorting, Pagination pagination) snp) =>
-            queryable.SortAndTakePage(snp.sorting, snp.pagination);
+        public static IQueryable<T> TakeSortedPage<T, K>(this IQueryable<T> queryable, (Sorting<T, K> sorting, Pagination pagination) snp) => queryable.TakeSortedPage(snp.sorting, snp.pagination);
 
-        public static IQueryable<T> SortAndTakePage<T>(this IQueryable<T> queryable, (Sorting<T> sorting, Pagination pagination) snp) =>
-            queryable.SortAndTakePage(snp.sorting, snp.pagination);
+        public static IQueryable<T> TakeSortedPage<T>(this IQueryable<T> queryable, (Sorting<T> sorting, Pagination pagination) snp) => queryable.TakeSortedPage(snp.sorting, snp.pagination);
 
-        public static IQueryable<T> SortAndTakePage<T, K>(this IQueryable<T> queryable, int page, int pageSize, Expression<Func<T, K>> columnToOrderBy, bool descending = false)
-        {
-            var pagination = Pagination.Set(page, pageSize);
-            var sorting = descending
-                ? Descending<T, K>.By(columnToOrderBy).AsSorting()
-                : Ascending<T, K>.By(columnToOrderBy).AsSorting();
-            return queryable.SortAndTakePage(sorting, pagination);
-        }
+        public static IQueryable<T> TakeSortedPage<T, K>(this IQueryable<T> queryable, int page, int pageSize, Expression<Func<T, K>> columnToOrderBy, bool descending = false) =>
+            queryable.TakeSortedPage(sorting: descending ? Descending<T, K>.By(columnToOrderBy).AsSorting()
+                                                         : Ascending<T, K>.By(columnToOrderBy).AsSorting(),
+                                     pagination: Pagination.Set(page, pageSize));
 
-        public static IQueryable<T> SortAndTakePage<T>(this IQueryable<T> queryable, int page, int pageSize, string columnToOrderBy, bool descending = false)
+        public static IQueryable<T> TakeSortedPage<T>(this IQueryable<T> queryable, int page, int pageSize, string columnToOrderBy, bool descending = false)
         {
             var pagination = Pagination.Set(page, pageSize);
             var sorting = new Sorting<T>(columnToOrderBy, descending);
-            return queryable.SortAndTakePage(sorting, pagination);
+            return queryable.TakeSortedPage(sorting, pagination);
         }
+
+        public static Page<T> SingleSortedPage<T, K>(this IQueryable<T> queryable, Sorting<T, K> sorting, Pagination pagination) =>
+            queryable
+                .TakeSortedPage(sorting, pagination)
+                .ToList()
+                .AsPage(pagination);
+
+        public static Page<T> SingleSortedPage<T>(this IQueryable<T> queryable, Sorting<T> sorting, Pagination pagination) =>
+            queryable
+                .TakeSortedPage(sorting, pagination)
+                .ToList()
+                .AsPage(pagination);
+
     }
 
     /// <summary>
@@ -78,14 +83,15 @@ namespace PagiNET.Queryable
     {
         public static IQueryable<T> TakePage<T>(this IQueryable<T> queryable, Pagination pagination) =>
             queryable
-                .Skip(pagination.CalculateNumberOfItemsToSkip())
+                .Skip(pagination.CalculateItemsNumberToSkip())
                 .Take(pagination.PageSize);
 
         public static IQueryable<T> TakePage<T>(this IQueryable<T> queryable, IPageInfo query) =>
             queryable.TakePage(query.CreatePagination<T>());
 
-        public static Page<T> TakeAsPage<T>(this IQueryable<T> queryable, IPageInfo pageInfo) =>
-            queryable.TakePage(pageInfo.CreatePagination<T>())
+        public static Page<T> SinglePage<T>(this IQueryable<T> queryable, IPageInfo pageInfo) =>
+            queryable
+                .TakePage(pageInfo.CreatePagination<T>())
                 .ToList()
                 .AsPage(pageInfo);
     }

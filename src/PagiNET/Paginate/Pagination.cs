@@ -2,10 +2,13 @@
 
 namespace PagiNET.Paginate
 {
-    public struct Pagination
+    public struct Pagination : IPageInfo
     {
         public readonly int PageNumber;
         public readonly int PageSize;
+
+        int IPageInfo.Number => PageNumber;
+        int IPageInfo.Size => PageSize;
 
         public Pagination(int page, int pageSize)
         {
@@ -15,10 +18,10 @@ namespace PagiNET.Paginate
 
         public static Pagination Set(int page, int pageSize) => new Pagination(page, pageSize);
     }
-    
+
     public static class PaginationExtensions
     {
-        internal static int CalculateNumberOfItemsToSkip(this Pagination pagination) =>
-            (pagination.PageNumber - 1) * pagination.PageSize;
+        internal static int CalculateItemsNumberToSkip(this IPageInfo pagination) =>
+            (pagination.Number - 1) * pagination.Size;
     }
 }

@@ -32,18 +32,13 @@ namespace AngularExample.Controllers
         [HttpGet, Route("api/employers")]
         public Page<Employer> GetEmployersPage(GetEmployersPageQueryParams queryParams)
         {
-            return queryParams.GetSortedPageAndPagesTotal(page: QueryForEmployersPage, pagesTotal: CountPages);
+            return queryParams.TotalPages
+                ? queryParams.GetSortedPageAndPagesTotal(page: QueryForEmployersPage, pagesTotal: CountPages)
+                : QueryForEmployersPage(queryParams);
 
             Page<Employer> QueryForEmployersPage(IPageAndSortInfo info) =>
-                GetEmployersQueryable()
-                    .SortAndTakePage(
-                        Sorting<Employer>.By(info.OrderBy, info.Descending),
-                        Pagination.Set(info.Number, info.Size))
-                    .ToList()
-                    .AsPage(queryParams);
-
+                GetEmployersQueryable().SingleSortedPage(Sorting<Employer>.By(info.OrderBy, info.Descending), Pagination.Set(info.Number, info.Size));
             IQueryable<Employer> GetEmployersQueryable() => _context.Employers.AsQueryable();
-
             int CountPages(IPageInfo query) => GetEmployersQueryable().CountPages(query);
         }
     }
@@ -55,8 +50,7 @@ namespace AngularExample.Controllers
 
         public string OrderBy { get; set; }
         public bool Descending { get; set; }
-
-        // TODO use
+        
         public bool TotalPages { get; set; }
     }
 }
