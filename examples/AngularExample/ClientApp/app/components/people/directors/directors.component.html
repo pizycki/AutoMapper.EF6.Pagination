@@ -1,22 +1,28 @@
-<p *ngIf="!items"><em>Loading...</em></p>
+<p *ngIf="!items">
+    <em>Loading...</em>
+</p>
 
-<h2>Customers - fixed page size grid</h2>
+<h2>Directors</h2>
+<i>Page content is loaded automaticly once reaching certain point of page while scrolling down. <br/> This paging doesn't involve pager.</i>
 
 <table class="table" *ngIf="items">
     <thead>
-    <tr>
-        <th>Name</th>
-        <th>Birth</th>
-        <th>Gender</th>
-    </tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Birth</th>
+            <th>Gender</th>
+        </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let customer of items">
-        <td>{{customer.name}}</td>
-        <td>{{customer.birthDate}}</td>
-        <td>{{customer.gender}}</td>
-    </tr>
+        <tr *ngFor="let person of items">
+            <td>{{person.id}}</td>
+            <td>{{person.name}}</td>
+            <td>{{person.birthDate}}</td>
+            <td>{{person.gender}}</td>
+        </tr>
     </tbody>
 </table>
-
-<pager [number]="pageNumber" [pagesTotal]="pagesTotal" (pageSelected)="onPageSelected($event)"></pager>
+<p class="text-center">
+    <a (click)="loadPage(this.page.number + 1)" class="text-center" style="cursor:pointer">» Load more «</a>
+</p>

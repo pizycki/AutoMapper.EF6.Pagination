@@ -35,7 +35,7 @@ export class CustomersComponent implements OnInit {
 
     private loadPage(page: number = 1, totalPages: boolean = false): void {
         this.PeopleProvider
-            .customersPaginated(page, this.pageSize, totalPages)
+            .getCustomers(page, this.pageSize, totalPages)
             .subscribe(result => {
                 let page = result.json();
                 if (!page.pagesTotal) {

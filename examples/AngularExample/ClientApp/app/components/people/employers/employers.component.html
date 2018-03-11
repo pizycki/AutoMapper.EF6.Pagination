@@ -1,27 +1,23 @@
-<p *ngIf="!items">
-    <em>Loading...</em>
-</p>
+<p *ngIf="!items"><em>Loading...</em></p>
 
-<h2>Customers - Infinite scrolled page</h2>
+<h2>Employers</h2>
+<i>Fixed size table with pager and sorted columns</i>
 
 <table class="table" *ngIf="items">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>Birth</th>
             <th>Gender</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let customer of items">
-            <td>{{customer.id}}</td>
-            <td>{{customer.name}}</td>
-            <td>{{customer.birthDate}}</td>
-            <td>{{customer.gender}}</td>
+        <tr *ngFor="let person of items">
+            <td>{{person.name}}</td>
+            <td>{{person.birthDate}}</td>
+            <td>{{person.gender}}</td>
         </tr>
     </tbody>
 </table>
-<p class="text-center">
-    <a (click)="loadPage(this.page.number + 1)" class="text-center" style="cursor:pointer">» Load more «</a>
-</p>
+
+<pager [number]="pageNumber" [pagesTotal]="pagesTotal" (pageSelected)="onPageSelected($event)"></pager>

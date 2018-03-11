@@ -1,9 +1,8 @@
-import { Component, Inject, HostListener } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { Http } from "@angular/http";
-import { Observable } from "rxjs/Observable";
 import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
-import { IPage } from "shared/pagination";
 import { PeopleProvider } from "providers/people.provider";
+import { IPage } from "shared/pagination";
 import { IPerson } from "components/people/models/person";
 
 @Component({
@@ -11,46 +10,59 @@ import { IPerson } from "components/people/models/person";
     templateUrl: "./employers.component.html",
     providers: [PeopleProvider]
 })
-export class EmployersComponent {
+export class EmployersComponent implements OnInit {
+
+    private pageSize: number = 10;
+
+    orderBy: string;
+    desc: boolean;
+
+    columns: string[] = ["Name", "BirthDate", "Gender"];
 
     page: IPage<IPerson>;
-    private orderBy = "Id";
+
+    get pageNumber(): number {
+        return !!this.page ? this.page.number : 1;
+    }
 
     get items(): IPerson[] {
         return !!this.page ? this.page.items : [];
     }
 
-    ngOnInit(): void {
-        this.page = {
-            number: 1,
-            size: 20,
-            items: [],
-            pagesTotal: 0
-        }
-
-        this.loadPage(1, true);
+    get pagesTotal(): number {
+        return !!this.page ? this.page.pagesTotal : 0;
     }
 
-    @HostListener("window:scroll", ["$event"])
-    onScroll(): void {
-        this.loadPage(this.page.number + 1);
+    public onPageSelected(page: number): void {
+        this.loadPage(page);
     }
 
     private loadPage(page: number = 1, totalPages: boolean = false): void {
-        if (this.canLoadData()) {
-            this.PeopleProvider
-                .customersPaginated(page, this.page.size, totalPages, this.orderBy)
-                .subscribe(result => {
-                    let page = result.json();
-                    page.items = this.page.items.concat(page.items);
-                    this.page = page;
-                }, error => console.error(error));
-        }
+        console.log("loadPage");
+        if (!this.orderBy || !this.desc)
+            return;
+
+        this.PeopleProvider
+            .getEmployers(page, this.pageSize, totalPages, this.orderBy, this.desc)
+            .subscribe(result => {
+                let page = result.json();
+                if (!page.pagesTotal) {
+                    page.pagesTotal = this.pagesTotal;
+                }
+                this.page = page;
+            },
+            error => console.error(error));
     }
 
-    private canLoadData = (): boolean =>
-        this.page.number !== this.page.pagesTotal
-        && (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
+    ngOnInit(): void {
+        console.log("ngOnInit");
+        // Default sorting
+        this.orderBy = this.columns[0];
+        console.log(this.orderBy);
+        this.desc = false;
+
+        this.loadPage(1, true);
+    }
 
     constructor(private PeopleProvider: PeopleProvider) {
     }
