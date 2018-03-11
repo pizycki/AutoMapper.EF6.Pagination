@@ -4,7 +4,7 @@ using ExampleDbContext.Entities;
 using Microsoft.AspNetCore.Mvc;
 using PagiNET.Pager;
 using PagiNET.Paginate;
-using PagiNET.Queryable;
+using PagiNET.Queryables;
 
 /**
  * Customers fixed page

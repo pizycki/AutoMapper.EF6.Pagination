@@ -3,7 +3,7 @@ using ExampleDbContext;
 using ExampleDbContext.Entities;
 using Microsoft.AspNetCore.Mvc;
 using PagiNET.Paginate;
-using PagiNET.Queryable;
+using PagiNET.Queryables;
 
 /**
  * Directors infinite page

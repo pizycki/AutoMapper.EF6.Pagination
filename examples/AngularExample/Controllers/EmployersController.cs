@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using PagiNET;
 using PagiNET.Pager;
 using PagiNET.Paginate;
-using PagiNET.Queryable;
+using PagiNET.Queryables;
 using PagiNET.Sort;
 
 /**
