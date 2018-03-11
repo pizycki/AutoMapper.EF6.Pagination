@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using PagiNET.Pager;
 using PagiNET.Paginate;
 using PagiNET.Sort;
 
@@ -81,7 +82,7 @@ namespace PagiNET.Queryables
     /// </summary>
     public static class TakePageExtensions
     {
-        public static IQueryable<T> TakePage<T>(this IQueryable<T> queryable, Pagination pagination) => queryable.Skip(pagination.CalculateItemsNumberToSkip()).Take(pagination.PageSize);
+        public static IQueryable<T> TakePage<T>(this IQueryable<T> queryable, Pagination pagination) => queryable.Skip(PageCalculations.CalculateItemsNumberToSkip(pagination)).Take(pagination.PageSize);
 
         public static IQueryable<T> TakePage<T>(this IQueryable<T> queryable, IPageInfo query) => queryable.TakePage(query.CreatePagination<T>());
 
