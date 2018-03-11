@@ -18,10 +18,4 @@ namespace PagiNET.Paginate
 
         public static Pagination Set(int page, int pageSize) => new Pagination(page, pageSize);
     }
-
-    public static class PaginationExtensions
-    {
-        internal static int CalculateItemsNumberToSkip(this IPageInfo pagination) =>
-            (pagination.Number - 1) * pagination.Size;
-    }
 }
