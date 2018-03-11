@@ -6,7 +6,7 @@ using ExampleDbContext.Entities;
 using Microsoft.EntityFrameworkCore;
 using PagiNET.IntegrationTests.Fixtures;
 using PagiNET.Paginate;
-using PagiNET.Queryable;
+using PagiNET.Queryables;
 using PagiNET.Sort;
 using Shouldly;
 using Xunit;

@@ -32,6 +32,8 @@ namespace PagiNET.Sort
 
     public static class SortingExtensions
     {
+        public static Sorting<T> AsSorting<T>(this Sorting<T> sorting) => sorting;
+
         public static Sorting<T, K> AsSorting<T, K>(this Sorting<T, K> sorting) => sorting;
     }
 }
