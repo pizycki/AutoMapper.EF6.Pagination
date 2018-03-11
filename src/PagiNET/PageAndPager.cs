@@ -5,7 +5,7 @@ namespace PagiNET
 {
     public class PageAndPager<T> : Page<T>
     {
-        public virtual int PagesTotal { get; set; }
+        public int PagesTotal { get; set; }
 
         public PageAndPager(Page<T> page, int pagesTotal) : base(page.Items, page)
         {

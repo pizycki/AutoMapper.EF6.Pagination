@@ -36,7 +36,7 @@ namespace AngularExample.Controllers
             return queryParams.GetPageAndTotalPages(page: QueryForCustomersPage, pagesTotal: CountCustomerPages);
 
             IQueryable<Person> GetCustomersQueryable() => _context.Customers.AsQueryable();
-            Page<Person> QueryForCustomersPage(IPageInfo pageInfo) => GetCustomersQueryable().TakeAsPage(pageInfo);
+            Page<Person> QueryForCustomersPage(IPageInfo pageInfo) => GetCustomersQueryable().SinglePage(pageInfo);
             int CountCustomerPages(IPageInfo query) => GetCustomersQueryable().CountPages(query);
         }
     }
