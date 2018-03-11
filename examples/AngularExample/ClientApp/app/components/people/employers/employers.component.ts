@@ -38,8 +38,7 @@ export class EmployersComponent implements OnInit {
     }
 
     private loadPage(page: number = 1, totalPages: boolean = false): void {
-        console.log("loadPage");
-        if (!this.orderBy || !this.desc)
+        if (!this.orderBy)
             return;
 
         this.PeopleProvider
@@ -55,10 +54,8 @@ export class EmployersComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log("ngOnInit");
         // Default sorting
         this.orderBy = this.columns[0];
-        console.log(this.orderBy);
         this.desc = false;
 
         this.loadPage(1, true);
