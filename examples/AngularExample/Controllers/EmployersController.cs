@@ -53,7 +53,10 @@ namespace AngularExample.Controllers
         public int Number { get; set; } = 1;
         public int Size { get; set; } = 20;
 
-        public string OrderBy { get; }
-        public bool Descending { get; }
+        public string OrderBy { get; set; }
+        public bool Descending { get; set; }
+
+        // TODO use
+        public bool TotalPages { get; set; }
     }
 }
